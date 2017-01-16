@@ -3,6 +3,9 @@ package Chess.Pieces;
 import Chess.ChessPiece;
 import Chess.Move;
 
+/**
+ * The Queen is a piece that can move in any of the 8 directions indefinitely until it hits its own piece, captures, or hits the edge of the board.
+ */
 public class Queen extends ChessPiece{
 
 	public Queen(ChessPiece.PieceColor color){
