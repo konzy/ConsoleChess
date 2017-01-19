@@ -1,11 +1,21 @@
 package Console;
 
+/**
+ * BoardMapper class handles translating user input to chessboard array coordinates
+ */
+
+
 class BoardMapper {
 
     public BoardMapper(){
 
     }
 
+    /**
+     * map returns the value of the chessbaord array equivalent to the users input coordinate (int)
+     * @param val
+     * @return int coordinate
+     */
     public int map(int val){
         switch(val){
             case 1: return 7;
@@ -19,7 +29,12 @@ class BoardMapper {
         }
         return -1;
     }
-
+    /**
+     * map returns the value of the chessbaord array equivalent to the users input coordinate (char)
+     *
+     * @param val is the input from user
+     * @return int coordinate
+     */
     public int map(char val){
         switch(Character.toLowerCase(val)){
             case 'a': return 0;
