@@ -42,7 +42,7 @@ public class ChessBoard {
 
     // initial project person TODO: Will break on boards with no Kings of 'color'. Should never happen.
     /**
-     * Retutrns the location of the King of a specific color.
+     * Returns the location of the King of a specific color.
      * @param color
      * @return a tuple containing the coordinates of the location
      */
