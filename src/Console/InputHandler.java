@@ -33,6 +33,7 @@ public class InputHandler {
      * getFrom returns the first half of the input from the user in modified form
      *
      * @param val is the input from user
+     * @return Tuple coordinates
      */
     public Tuple getFrom(String val){
         Matcher matcher = validMove.matcher(val);
@@ -45,6 +46,7 @@ public class InputHandler {
      * getTo returns the second half of the input from the user in modified form
      *
      * @param val is the input from user
+     * @return Tuple coordinates
      */
     public Tuple getTo(String val){
         Matcher matcher = validMove.matcher(val);
@@ -57,6 +59,7 @@ public class InputHandler {
      * isValid makes sure input is in valid form (eg: a2-a3)
      *
      * @param val is the input from user
+     * @return boolean value if valid
      */
     public boolean isValid(String val){
         Matcher matcher = validMove.matcher(val);
