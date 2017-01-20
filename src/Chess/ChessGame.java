@@ -1,6 +1,7 @@
 package Chess;
 
-import Chess.ChessPiece.PieceColor;
+import Chess.Pieces.ChessPiece;
+import Chess.Pieces.ChessPiece.PieceColor;
 import Console.BoardDisplay;
 import java.util.ArrayList;
 

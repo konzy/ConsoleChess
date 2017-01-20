@@ -1,6 +1,8 @@
 package Chess;
 
 
+import Chess.Pieces.ChessPiece;
+
 public class Tile {
 
     private ChessPiece piece;
