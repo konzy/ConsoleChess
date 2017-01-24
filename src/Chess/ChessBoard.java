@@ -5,15 +5,15 @@ import java.util.ArrayList;
 
 /**
  * Chess Board is a class for the board that is able to set up the starting positions of the pieces for a game of chess
- * as well as return tuples that correspond to the values of the chess pieces locations including a specific method for
- * the King's location.
+ * as well as return coordinates that correspond to the values of the chess pieces locations including a
+ * specific method for the King's location.
  */
 
 public class ChessBoard {
     private Tile[][] board;
 
     /**
-     * Initilizes the chess board of a 8x8 2d Tile array
+     * Initializes the chess board of a 8x8 2d Tile array
      */
     public ChessBoard(){
         board = new Tile[8][8];
@@ -44,16 +44,16 @@ public class ChessBoard {
     /**
      * Returns the location of the King of a specific color.
      * @param color
-     * @return a tuple containing the coordinates of the location
+     * @return a coordinate
      */
-    public Tuple getKingLocation(ChessPiece.PieceColor color){
-        Tuple location = new Tuple(-1,-1);
+    public Coord getKingLocation(ChessPiece.PieceColor color){
+        Coord location = new Coord(-1,-1);
         for (int x = 0; x < board.length; x++){
             for (int y = 0; y < board[x].length; y++){
                 if (!board[x][y].isEmpty()) {
                     ChessPiece piece = board[x][y].getPiece();
                     if (piece.color() == color && piece instanceof King){
-                       location = new Tuple(y, x);
+                       location = new Coord(y, x);
                     }
                 }
             }
@@ -62,28 +62,28 @@ public class ChessBoard {
     }
 
     /**
-     * returns an array of tuples containing the positions of the pieces of a color
+     * returns an array of coordinates containing the positions of the pieces of a color
      * @param color
-     * @return location tuple
+     * @return coordinate array of pieces of that color
      */
-    public Tuple[] getAllPiecesLocationForColor(ChessPiece.PieceColor color){
-        ArrayList<Tuple> locations = new ArrayList<>();
+    public Coord[] getAllPiecesLocationForColor(ChessPiece.PieceColor color){
+        ArrayList<Coord> locations = new ArrayList<>();
         for (int x = 0; x < board.length; x++){
             for (int y = 0; y < board[x].length; y++){
                if(!board[x][y].isEmpty() && board[x][y].getPiece().color() == color)
-                   locations.add(new Tuple(x,y));
+                   locations.add(new Coord(x,y));
             }
         }
-        return locations.toArray(new Tuple[0]);//allocate new array automatically.
+        return locations.toArray(new Coord[0]);//allocate new array automatically.
     }
 
     /**
-     * translates a tuple to the corresponding location on the board
-     * @param tuple to be translated
+     * Translates a coordinate to the corresponding location on the board
+     * @param coordinates to be translated
      * @return location of the board
      */
-    public Tile getTileFromTuple(Tuple tuple){
-        return board[tuple.Y()][tuple.X()];
+    public Tile getTileFromCoordinate(Coord coordinates){
+        return board[coordinates.Y()][coordinates.X()];
     }
 
     /**

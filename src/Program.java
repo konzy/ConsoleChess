@@ -1,5 +1,5 @@
 import Chess.ChessGame;
-import Chess.Tuple;
+import Chess.Coord;
 import Console.InputHandler;
 
 import java.util.Scanner;
@@ -23,8 +23,8 @@ public class Program {
                 System.out.println("Invalid input!");
                 System.out.println("Valid input is in form: A2-A3");
             } else {
-                Tuple from = handler.getFrom(input);  //first half of input
-                Tuple to = handler.getTo(input);     //second half of input
+                Coord from = handler.getFrom(input);  //first half of input
+                Coord to = handler.getTo(input);     //second half of input
 
                 if (game.isValidMove(from, to))
                     game.playMove(from, to);

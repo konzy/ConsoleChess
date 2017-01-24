@@ -3,7 +3,7 @@ package Chess;
 /**
  * Used to store an int/int pair to map to tiles on the chessboard.
  */
-public class Tuple {
+public class Coord {
     private int x;
     private int y;
 
@@ -11,7 +11,7 @@ public class Tuple {
      * @param x coordinate of the piece
      * @param y coordinate of the piece
      */
-    public Tuple(int x, int y){
+    public Coord(int x, int y){
             this.x = x;
             this.y =y;
     }

@@ -31,8 +31,7 @@ public class ChessGame {
      * @param from current position of the game piece
      * @param to future position of the game piece
      */
-    // Ryan Guard TODO: change tuple to a more descriptive structure
-    public void playMove(Tuple from, Tuple to){
+    public void playMove(Coord from, Coord to){
         if(isValidMove(from, to)) {
             Tile fromTile = board.getBoardArray()[from.Y()][from.X()];
             ChessPiece pieceToMove = fromTile.getPiece();
@@ -53,18 +52,18 @@ public class ChessGame {
      * @return Returns the check mate status.
      */
     public boolean isColorCheckMate(PieceColor color){
-        Tuple kingLocation = board.getKingLocation(color);
-        ChessPiece king = board.getTileFromTuple(kingLocation).getPiece();
+        Coord kingLocation = board.getKingLocation(color);
+        ChessPiece king = board.getTileFromCoordinate(kingLocation).getPiece();
         Move[] possibleMoves = allPossibleMovesForPiece(king, kingLocation);
         boolean checkMate = true;
         for (Move move : possibleMoves){
             int newX = kingLocation.X() + move.x;
             int newY = kingLocation.Y() + move.y;
-            Tuple newLocation = new Tuple(newX, newY);
+            Coord newLocation = new Coord(newX, newY);
 
             //(made by Original creator) TODO check if king can move here (eg. is own piece taking spot)
 
-            if (!isLocationCheckForColor(newLocation, color)){
+            if (!isLocationOpponent(newLocation, color)){
                 checkMate = false;
                 break;
             }
@@ -72,30 +71,28 @@ public class ChessGame {
         return checkMate;
     }
 
-    // Ryan Guard. TODO: remove pointless method below/confirm it is pointless
     /**
-     * Checks that moves doesn't put oneself in check.
+     * Checks that the move in question doesn't put you in check.
      * @param kingColor
      * @return
      */
-    public boolean isKingCheck(PieceColor kingColor){
-        Tuple kingLocation = board.getKingLocation(kingColor);
-        return isLocationCheckForColor(kingLocation, kingColor);
+    public boolean isKinginCheck(PieceColor kingColor){
+        Coord kingLocation = board.getKingLocation(kingColor);
+        return isLocationOpponent(kingLocation, kingColor);
     }
 
     /**
-     * checks if the given location contains the specified color
+     * Checks if the given location contains a piece of the opponent's color
      * @param location
      * @param color
-     * @return returns true if not specified color and is valid and false if not
+     * @return returns true if the piece is the opponents color
      */
-    // TODO: rename function to isLocation
-    private boolean isLocationCheckForColor(Tuple location, PieceColor color){
+    private boolean isLocationOpponent(Coord location, PieceColor color){
         PieceColor opponentColor = ChessPiece.opponent(color);
-        Tuple[] piecesLocation = board.getAllPiecesLocationForColor(opponentColor);
+        Coord[] piecesLocation = board.getAllPiecesLocationForColor(opponentColor);
         boolean isCheck = false;
-        for(Tuple fromTuple: piecesLocation){
-            if(isValidMove(fromTuple, location)){
+        for(Coord from: piecesLocation){
+            if(isValidMove(from, location)){
                 isCheck = true;
                 break;
             }
@@ -117,9 +114,9 @@ public class ChessGame {
      * @param to
      * @return returns true if the path is a legal move and false if it is not
      */
-    public boolean isValidMove(Tuple from, Tuple to){
-        Tile fromTile = board.getTileFromTuple(from);
-        Tile toTile = board.getTileFromTuple(to);
+    public boolean isValidMove(Coord from, Coord to){
+        Tile fromTile = board.getTileFromCoordinate(from);
+        Tile toTile = board.getTileFromCoordinate(to);
         ChessPiece fromPiece = fromTile.getPiece();
         ChessPiece toPiece = toTile.getPiece();
 
@@ -132,7 +129,7 @@ public class ChessGame {
         } else if (isPossibleMoveForPiece(from, to)){
             toTile.setPiece(fromPiece);//temporarily play the move
             fromTile.empty();
-            if (isKingCheck(currentPlayer)){//check that moves doesn't put oneself in check
+            if (isKinginCheck(currentPlayer)){//check that moves doesn't put oneself in check
                 toTile.setPiece(toPiece);
                 fromTile.setPiece(fromPiece);//revert
                 return false;
@@ -154,11 +151,11 @@ public class ChessGame {
      * @param locationToTake
      * @return true if valid/false if not
      */
-    public boolean canColorTakeLocation(PieceColor takeColor, Tuple locationToTake){
-        Tuple[] locations = board.getAllPiecesLocationForColor(takeColor);
+    public boolean canColorTakeLocation(PieceColor takeColor, Coord locationToTake){
+        Coord[] locations = board.getAllPiecesLocationForColor(takeColor);
         boolean canTake = false;
-        for (Tuple tuple: locations){
-            if (isValidMove(tuple, locationToTake)) {
+        for (Coord coordinate: locations){
+            if (isValidMove(coordinate, locationToTake)) {
                 canTake = true;
                 break;
             }
@@ -172,7 +169,7 @@ public class ChessGame {
      * @param currentLocation
      * @return array of moves.
      */
-    private Move[] allPossibleMovesForPiece(ChessPiece piece, Tuple currentLocation){
+    private Move[] allPossibleMovesForPiece(ChessPiece piece, Coord currentLocation){
         Move[] moves = piece.moves();
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
@@ -183,7 +180,7 @@ public class ChessGame {
             int newX = currentX + move.x;
             int newY = currentY + move.y;
 
-            Tuple newLocation = new Tuple(newX, newY);
+            Coord newLocation = new Coord(newX, newY);
 
             if (isPossibleMoveForPiece(currentLocation, newLocation)) possibleMoves.add(move);
         }
@@ -197,8 +194,8 @@ public class ChessGame {
      * @param to
      * @return returns true if valid and false if it isn't
      */
-    private boolean isPossibleMoveForPiece(Tuple from, Tuple to){
-        ChessPiece fromPiece = board.getTileFromTuple(from).getPiece();
+    private boolean isPossibleMoveForPiece(Coord from, Coord to){
+        ChessPiece fromPiece = board.getTileFromCoordinate(from).getPiece();
         Move[] validMoves = fromPiece.moves();
         boolean repeatableMoves = fromPiece.repeatableMoves();
         int xMove = from.X() - to.X();
@@ -215,7 +212,7 @@ public class ChessGame {
             for (Move move : validMoves) {
                 if (move.x == xMove && move.y == yMove) {
                     if (move.onTakeOnly){// if move is only legal on take (pawns)
-                        Tile toTile = board.getTileFromTuple(to);
+                        Tile toTile = board.getTileFromCoordinate(to);
                         if (toTile.isEmpty()) break;
 
                         ChessPiece toPiece = toTile.getPiece();
