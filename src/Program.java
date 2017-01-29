@@ -1,21 +1,28 @@
+import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Coord;
 import Console.InputHandler;
+import Data.Save;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
  * The Program class holds the main class to run the chess game in the console.
  */
 
-
 public class Program {
-
     public static void main(String args[]){
         InputHandler handler = new InputHandler();
         Scanner scanner = new Scanner(System.in);
         ChessGame game = new ChessGame();         //Sets up chess game, initial player is white, prints board to console
+        Save.clearAutoSave();
         while (!game.isFinished()){
+            try {
+                Save.AutoSave(game.getBoard());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println("Enter move (eg. A2-A3):");
             String input = scanner.nextLine().trim();
 

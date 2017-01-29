@@ -50,7 +50,7 @@ public class Tile {
      * checks if there is a piece on the tile, then outputs the tile appropriately, either with the piece or empty
      * @return
      */
-    public String value(){
+    public String toString(){
         if(piece != null){
             return "[" + piece.charValue() + "]";
         } else {

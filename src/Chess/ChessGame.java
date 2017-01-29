@@ -26,6 +26,10 @@ public class ChessGame {
         BoardDisplay.printBoard(board);
     }
 
+    public ChessBoard getBoard(){
+        return board;
+    }
+
     /**
      * Takes the input of a piece to be moved from and to a position and moves the piece if it is a valid move.
      * @param from current position of the game piece

@@ -20,7 +20,7 @@ public class BoardDisplay {
             System.out.print("[" + (8 - i) + "]   ");
 
             for (int j = 0; j < 8; j++){ //8 represents width of board
-                System.out.print(b[i][j].value());
+                System.out.print(b[i][j].toString());
             }
 
             System.out.println("   [" + (8 - i) + "]");
