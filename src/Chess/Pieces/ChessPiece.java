@@ -32,6 +32,17 @@ public abstract class ChessPiece {
     }
 
     /**
+     *
+     * @return a deep copy of the ChessPiece
+     * @throws CloneNotSupportedException
+     */
+    public Object clone() throws CloneNotSupportedException {
+        ChessPiece clone = (ChessPiece)super.clone();
+        clone.moves = moves.clone();
+        return super.clone();
+    }
+
+    /**
      * Valid pieces in Chess
      */
     public enum PieceType {

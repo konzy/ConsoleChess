@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * specific method for the King's location.
  */
 
-public class ChessBoard {
+public class ChessBoard implements Cloneable {
     private Tile[][] board;
 
     /**
@@ -19,6 +19,19 @@ public class ChessBoard {
         board = new Tile[8][8];
         initializeBoard();
         fillBoard();
+    }
+
+    /**
+     *
+     * @return A deep copy of ChessBoard
+     * @throws CloneNotSupportedException
+     */
+    public Object clone() throws CloneNotSupportedException {
+
+        ChessBoard clone = (ChessBoard)super.clone();
+        clone.board = board.clone();
+        return clone;
+
     }
 
     /**

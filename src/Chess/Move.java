@@ -21,4 +21,13 @@ public class Move{
         this.firstMoveOnly = firstMoveOnly;
         this.onTakeOnly = onTakeOnly;
     }
+
+    /**
+     *
+     * @return a deep copy of Move
+     * @throws CloneNotSupportedException
+     */
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

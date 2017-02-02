@@ -3,7 +3,7 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 
-public class Tile {
+public class Tile implements Cloneable {
 
     private ChessPiece piece;
     private TileColor color;
@@ -28,6 +28,15 @@ public class Tile {
     public Tile(TileColor color, ChessPiece piece){
         this.color = color;
         this.piece = piece;
+    }
+
+    /**
+     *
+     * @return the deep copy of Tile
+     * @throws CloneNotSupportedException
+     */
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**
