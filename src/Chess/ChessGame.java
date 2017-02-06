@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Methods for general play of chess.
  */
-public class ChessGame {
+public class ChessGame implements Cloneable {
 
     private ChessBoard board;
     private boolean isFinished;
@@ -24,6 +24,31 @@ public class ChessGame {
 
         BoardDisplay.clearConsole();
         BoardDisplay.printBoard(board);
+    }
+
+    public ChessGame deepCopy() {
+        try {
+            return (ChessGame)this.clone();
+        } catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        ChessGame clone = (ChessGame)this.clone();
+        clone.board = (ChessBoard)board.clone();
+
+        return clone;
+    }
+
+    public ChessBoard getBoard() {
+        return board;
+    }
+
+    public PieceColor getCurrentPlayer() {
+        return currentPlayer;
     }
 
     /**
@@ -169,7 +194,7 @@ public class ChessGame {
      * @param currentLocation
      * @return array of moves.
      */
-    private Move[] allPossibleMovesForPiece(ChessPiece piece, Coord currentLocation){
+    public Move[] allPossibleMovesForPiece(ChessPiece piece, Coord currentLocation){
         Move[] moves = piece.moves();
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
