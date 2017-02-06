@@ -37,7 +37,7 @@ public class ChessGame implements Cloneable {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        ChessGame clone = (ChessGame)this.clone();
+        ChessGame clone = (ChessGame)super.clone();
         clone.board = (ChessBoard)board.clone();
 
         return clone;
@@ -140,6 +140,11 @@ public class ChessGame implements Cloneable {
      * @return returns true if the path is a legal move and false if it is not
      */
     public boolean isValidMove(Coord from, Coord to){
+
+        if (!isInsideBoard(from, to)) {
+            return false;
+        }
+
         Tile fromTile = board.getTileFromCoordinate(from);
         Tile toTile = board.getTileFromCoordinate(to);
         ChessPiece fromPiece = fromTile.getPiece();
@@ -170,6 +175,11 @@ public class ChessGame implements Cloneable {
         return false;
     }
 
+    private boolean isInsideBoard(Coord from, Coord to) {
+        return !(from.X() < 0 || from.X() > 7 || from.Y() < 0 || from.X() > 7 ||
+                to.X() < 0 || to.X() > 7 || to.Y() < 0 || to.X() > 7);
+    }
+
     /**
      * Tests if the move is valid for the given color
      * @param takeColor
@@ -195,6 +205,12 @@ public class ChessGame implements Cloneable {
      * @return array of moves.
      */
     public Move[] allPossibleMovesForPiece(ChessPiece piece, Coord currentLocation){
+
+        if (piece == null || piece.moves() == null) {
+            return new Move[0];
+        }
+
+
         Move[] moves = piece.moves();
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
@@ -209,6 +225,7 @@ public class ChessGame implements Cloneable {
 
             if (isPossibleMoveForPiece(currentLocation, newLocation)) possibleMoves.add(move);
         }
+
         return possibleMoves.toArray(new Move[0]);//allocate new array automatically.
     }
 
@@ -220,6 +237,11 @@ public class ChessGame implements Cloneable {
      * @return returns true if valid and false if it isn't
      */
     private boolean isPossibleMoveForPiece(Coord from, Coord to){
+
+        if (!isInsideBoard(from, to)) {
+            return false;
+        }
+
         ChessPiece fromPiece = board.getTileFromCoordinate(from).getPiece();
         Move[] validMoves = fromPiece.moves();
         boolean repeatableMoves = fromPiece.repeatableMoves();

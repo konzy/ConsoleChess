@@ -19,11 +19,11 @@ public abstract class BaseAI {
     protected Random random;
     private static final long DEFAULT_SEED = 1234;
 
-    public BaseAI(ChessGame game) {
+    BaseAI(ChessGame game) {
         this(game, DEFAULT_SEED);
     }
 
-    public BaseAI(ChessGame game, long seed) {
+    BaseAI(ChessGame game, long seed) {
         projectedGame = game.deepCopy();
         currentGame = game;
         board = currentGame.getBoard();
@@ -31,10 +31,10 @@ public abstract class BaseAI {
         random = new Random(seed);
     }
 
-    public abstract Move getNextMove();
+    public abstract CoordPair getNextMove();
 
-    protected ArrayList<Move> availableMoves() {
-        ArrayList<Move> moves = new ArrayList<>();
+    protected ArrayList<CoordPair> availableMoves() {
+        ArrayList<CoordPair> moves = new ArrayList<>();
 
         for (Coord coord : board.getAllPiecesLocationForColor(currentPlayer)) {
             ArrayList<Move> tempMoves = new ArrayList<>();
@@ -45,8 +45,9 @@ public abstract class BaseAI {
             Collections.addAll(tempMoves, moveArray);
 
             for (Move tempMove : tempMoves) {
-                if (currentGame.isValidMove(coord, new Coord(tempMove.x, tempMove.y))) {
-                    moves.add(tempMove);
+                CoordPair pair = new CoordPair(coord, new Coord(tempMove.x, tempMove.y));
+                if (currentGame.isValidMove(pair.getFrom(), pair.getTo())) {
+                    moves.add(pair);
                 }
             }
         }

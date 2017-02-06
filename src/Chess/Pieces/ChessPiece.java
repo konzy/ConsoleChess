@@ -8,9 +8,7 @@ import Chess.Move;
  */
 
 public abstract class ChessPiece {
-    private PieceType type;
     private PieceColor color;
-    private Move[] moves;
     private String name;
     private char charValue;
     private boolean repeatableMoves;
@@ -23,9 +21,7 @@ public abstract class ChessPiece {
      * @param repeatableMoves whether moves extend to the edge of the board
      */
     protected ChessPiece(PieceType type, PieceColor color, boolean repeatableMoves){
-        this.type = type;
         this.color = color;
-        this.moves = moves;
         this.repeatableMoves = repeatableMoves;
         name = type.name();
         charValue = type.name().trim().charAt(0);
@@ -37,8 +33,6 @@ public abstract class ChessPiece {
      * @throws CloneNotSupportedException
      */
     public Object clone() throws CloneNotSupportedException {
-        ChessPiece clone = (ChessPiece)super.clone();
-        clone.moves = moves.clone();
         return super.clone();
     }
 
@@ -60,11 +54,6 @@ public abstract class ChessPiece {
      * @return an array of Moves that are valid for the piece
      */
     abstract public Move[] moves();
-
-    /**
-     * @return the long name of the piece eg. "Pawn"
-     */
-    public String name(){ return name; }
 
     /**
      * @return color of the piece eg. White or Black

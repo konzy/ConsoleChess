@@ -1,6 +1,7 @@
 package Console;
 
 import Chess.Coord;
+import Chess.CoordPair;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,6 +55,10 @@ public class InputHandler {
         String coords =  matcher.group(3);
 
         return parse(coords);
+    }
+
+    public CoordPair getCoordPair(String val) {
+        return new CoordPair(getFrom(val), getTo(val));
     }
     /**
      * isValid makes sure input is in valid form (eg: a2-a3)
