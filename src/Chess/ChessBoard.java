@@ -83,7 +83,7 @@ public class ChessBoard implements Cloneable {
         ArrayList<Coord> locations = new ArrayList<>();
         for (int x = 0; x < board.length; x++){
             for (int y = 0; y < board[x].length; y++){
-               if(!board[x][y].isEmpty() && board[x][y].getPiece().color() == color)
+               if(!board[y][x].isEmpty() && board[y][x].getPiece().color() == color)
                    locations.add(new Coord(x,y));
             }
         }

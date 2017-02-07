@@ -223,7 +223,9 @@ public class ChessGame implements Cloneable {
 
             Coord newLocation = new Coord(newX, newY);
 
-            if (isPossibleMoveForPiece(currentLocation, newLocation)) possibleMoves.add(move);
+            if (isPossibleMoveForPiece(currentLocation, newLocation) && isInsideBoard(currentLocation, newLocation)) {
+                possibleMoves.add(move);
+            }
         }
 
         return possibleMoves.toArray(new Move[0]);//allocate new array automatically.

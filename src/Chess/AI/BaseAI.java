@@ -36,16 +36,19 @@ public abstract class BaseAI {
     protected ArrayList<CoordPair> availableMoves() {
         ArrayList<CoordPair> moves = new ArrayList<>();
 
-        for (Coord coord : board.getAllPiecesLocationForColor(currentPlayer)) {
+        Coord[] temp = board.getAllPiecesLocationForColor(currentPlayer);
+
+        for (Coord from : board.getAllPiecesLocationForColor(currentPlayer)) {
             ArrayList<Move> tempMoves = new ArrayList<>();
-            Tile tile = board.getTileFromCoordinate(coord);
+            Tile tile = board.getTileFromCoordinate(from);
             ChessPiece piece = tile.getPiece();
-            Move [] moveArray = currentGame.allPossibleMovesForPiece(piece, coord);
+            Move [] moveArray = projectedGame.allPossibleMovesForPiece(piece, from);
 
             Collections.addAll(tempMoves, moveArray);
 
             for (Move tempMove : tempMoves) {
-                CoordPair pair = new CoordPair(coord, new Coord(tempMove.x, tempMove.y));
+                Coord to = new Coord(from.X() + tempMove.x,from.Y() + tempMove.y);
+                CoordPair pair = new CoordPair(from, to);
                 if (currentGame.isValidMove(pair.getFrom(), pair.getTo())) {
                     moves.add(pair);
                 }
