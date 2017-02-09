@@ -1,15 +1,29 @@
 package GUI;
 
+import Chess.ChessBoard;
+import Chess.ChessGame;
+import Chess.Coord;
+import Chess.Tile;
+import Console.BoardDisplay;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -17,12 +31,31 @@ import javafx.scene.paint.Color;
  */
 public class GameBoard extends Application {
 
-    public GameBoard(){}
+
+    ChessGame game;
+    public GameBoard(ChessGame g){
+        game = g;
+    }
+    int firstClickX = -1;
+    int firstClickY = -1;
+    int secondClickX = -1;
+    int secondClickY = -1;
+    Map<String,String> pieces = new HashMap<String,String>();
+
 
     @Override
-    public void start(Stage primaryStage) throws Exception {}
+    public void start(Stage primaryStage) throws Exception {
+
+    }
 
     public void setBoard (Stage stage) throws Exception {
+        String picPath = "/GUI/assets/";
+        pieces.put("[R]",picPath + "r.png");
+        pieces.put("[K]",picPath + "k.png");
+        pieces.put("[B]",picPath + "b.png");
+        pieces.put("[Q]",picPath + "q.png");
+        pieces.put("[P]",picPath + "p.png");
+
         BorderPane borderPane = new BorderPane();
         GridPane grid = new GridPane();
         //grid.setHgap(8);
@@ -31,52 +64,92 @@ public class GameBoard extends Application {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Button btn = new Button("button");
+               // Button btn = new Button("button");
                 Rectangle rectangle = new Rectangle(80,80);
-                rectangle.setStrokeWidth(3.0);
-
-                //if either col is even or row is even, not both
-                if((i % 2 == 0) ^ (j % 2 == 0)){
-                        //set to navy if col or row is even
-                        rectangle.setFill(Color.NAVY);
-                    rectangle.setStroke(Color.NAVY);
-
-                }else{
-                    //set to lightgray
-                    rectangle.setFill(Color.LIGHTGRAY);
-                    rectangle.setStroke(Color.LIGHTGRAY);
-
-                }
+               // rectangle.setStrokeWidth(4.0);
+                setRectangleColor(rectangle,i,j);
                 grid.add(rectangle,i,j);
+
+
+                Tile[][] b = game.board.getBoardArray();
+                String letter = b[j][i].value();
+                if (!letter.equals("[ ]")) {
+                    ImageView tmpView = new ImageView(pieces.get(letter));
+                    tmpView.setFitHeight(80);
+                    tmpView.setFitWidth(80);
+                    grid.add(tmpView, i, j);
+                }
             }
         }
+       // ImageView tmpView = new ImageView("/GUI/");
+        //tmpView.setFitHeight(80);
+        //tmpView.setFitWidth(80);
+        //grid.add(tmpView,0,0);
+        HBox hBox = new HBox();
+        Button backBtn = new Button("< Menu");
+        backBtn.setMinHeight(25);
 
+        hBox.getChildren().add(backBtn);
+
+        borderPane.setTop(hBox);
         borderPane.setCenter(grid);
-        Scene scene = new Scene(borderPane, 640, 640);
+        Scene scene = new Scene(borderPane, 640, 665);
         stage.setTitle("Chess Game");
         stage.setScene(scene);
         stage.show();
-
+        //highlight square when clicked
         grid.setOnMouseClicked( e -> {
-            int col = (int)Math.floor(e.getSceneX() / 80);
-            int row = (int)Math.floor(e.getSceneY() / 80);
-
-            Rectangle rectangle = new Rectangle(80,80);
-            rectangle.setStrokeWidth(3.0);
-            //if either col is even or row is even, not both
-            if((col % 2 == 0) ^ (row % 2 == 0)){
-                //set to navy if col or row is even
-                rectangle.setFill(Color.NAVY);
-                rectangle.setStroke(Color.YELLOW);
+            int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
+            int row = (int)Math.floor((e.getSceneY()-25)/ 80);
+            if (firstClickX == -1) {
+                firstClickX = col;
+                firstClickY = row;
             }else{
-                //set to lightgray
-                rectangle.setFill(Color.LIGHTGRAY);
-                rectangle.setStroke(Color.YELLOW);
+                secondClickX = col;
+                secondClickY = row;
+
+                try {
+                    Coord from = new Coord(firstClickX,firstClickY);
+                    Coord to = new Coord(secondClickX,secondClickY);
+                    //reset first click
+                    firstClickX = -1;
+                    firstClickY = -1;
+                    if (game.isValidMove(from, to)) {
+                        game.playMove(from, to);
+                        BoardDisplay.printBoard(game.board);
+                    }
+                    setBoard(stage);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
-            grid.add(rectangle,col,row);
+            Rectangle rectangle = new Rectangle(80,80);
+            rectangle.setFill(Color.YELLOW);
+            rectangle.setOpacity(.5);
+            if (e.getSceneX() < 640 && e.getSceneY() < 665) {
+                grid.add(rectangle, col, row);
+            }
         });
-
-
-
+        backBtn.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle (ActionEvent e){
+                Menu menu = new Menu();
+                try {
+                    menu.start(stage);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
+    void setRectangleColor(Rectangle rectangle,int col, int row){
+
+        if((col % 2 == 0) ^ (row % 2 == 0)){
+            //set to navy if col or row is even
+            rectangle.setFill(Color.NAVY);
+        }else{
+            //set to lightgray
+            rectangle.setFill(Color.LIGHTGRAY);
+        }
+    }
+
 }

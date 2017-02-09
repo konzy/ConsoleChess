@@ -1,5 +1,7 @@
 package GUI;
 
+import Chess.ChessGame;
+import Console.BoardDisplay;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -19,7 +21,7 @@ import javafx.event.EventHandler;
  * Created by Elizabeth on 1/25/2017.
  */
 public class Menu extends Application {
-
+    public Menu(){};
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -63,9 +65,14 @@ public class Menu extends Application {
 
         onePlayerBtn.setOnAction(new EventHandler<ActionEvent>(){
             public void handle (ActionEvent e){
-                GameBoard gamebrd = new GameBoard();
+                ChessGame game = new ChessGame();
+                GameBoard gamebrd = new GameBoard(game);
                 try {
+                           //Sets up chess game, initial player is white, prints board to console
+                    //BoardDisplay.clearConsole();
+                   // gamebrd.setBoard(game.board);
                     gamebrd.setBoard(stage);
+                    //gamebrd.setBoard(stage);
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
