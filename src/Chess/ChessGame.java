@@ -30,6 +30,9 @@ public class ChessGame {
         return board;
     }
 
+    public void setBoard(ChessBoard newBoard){
+        board = newBoard;
+    }
     /**
      * Takes the input of a piece to be moved from and to a position and moves the piece if it is a valid move.
      * @param from current position of the game piece

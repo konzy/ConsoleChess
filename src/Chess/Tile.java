@@ -52,9 +52,9 @@ public class Tile {
      */
     public String toString(){
         if(piece != null){
-            return "[" + piece.charValue() + "]";
+            return "[" + piece.shortName() + "]";
         } else {
-            return "[ ]";
+            return "[  ]";
         }
     }
 

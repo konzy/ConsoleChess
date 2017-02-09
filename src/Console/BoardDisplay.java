@@ -15,7 +15,7 @@ public class BoardDisplay {
         clearConsole();
         Tile[][] b = board.getBoardArray();
 
-        System.out.println("      [A][B][C][D][E][F][G][H] \n");
+        System.out.println("      [A] [B] [C] [D] [E] [F] [G] [H] \n");
         for(int i = 0; i < 8; i++) { //8 represents height of board
             System.out.print("[" + (8 - i) + "]   ");
 
@@ -26,7 +26,7 @@ public class BoardDisplay {
             System.out.println("   [" + (8 - i) + "]");
         }
 
-        System.out.println("\n      [A][B][C][D][E][F][G][H]\n");
+        System.out.println("\n      [A] [B] [C] [D] [E] [F] [G] [H]\n");
     }
 
     /**

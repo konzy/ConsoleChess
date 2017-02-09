@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class ChessBoard {
-    private Tile[][] board;
+    public Tile[][] board;
 
     /**
      * Initializes the chess board of a 8x8 2d Tile array
