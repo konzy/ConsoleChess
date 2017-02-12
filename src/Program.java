@@ -15,7 +15,7 @@ public class Program {
         InputHandler handler = new InputHandler();
         Scanner scanner = new Scanner(System.in);
         ChessGame game = new ChessGame();         //Sets up chess game, initial player is white, prints board to console
-        while (!game.isFinished()){
+        while (game.getState() == ChessGame.GameState.PLAY){
             System.out.println("Enter move (eg. A2-A3):");
             String input = scanner.nextLine().trim();
 

@@ -4,14 +4,23 @@ import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
 import Console.BoardDisplay;
 
+import java.util.ArrayList;
+
 /**
  * Methods for general play of chess.
  */
 public class ChessGame implements Cloneable {
 
     private ChessBoard board;
-    private boolean isFinished;
     private PieceColor currentPlayer;
+
+
+    public enum GameState {
+        PLAY,
+        CHECKMATE,
+        STALEMATE
+    }
+
 
     /**
      * Starts up the game with initial conditions and displays the board.
@@ -19,7 +28,6 @@ public class ChessGame implements Cloneable {
     public ChessGame(){
         board = new ChessBoard();
         currentPlayer = PieceColor.White;
-        isFinished = false;
 
         BoardDisplay.clearConsole();
         BoardDisplay.printBoard(board);
@@ -51,6 +59,8 @@ public class ChessGame implements Cloneable {
         if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
             board.move(move);
             BoardDisplay.printBoard(board);
+
+            System.out.println(currentPlayer.toString() + " Moved " + move.getPiece().charValue() + " from " + from.toString() + " to " + to.toString());
             endTurn();
             return true;
         } else {
@@ -71,7 +81,15 @@ public class ChessGame implements Cloneable {
      * Returns the game status of the game.
      * @return returns the game status
      */
-    public boolean isFinished(){
-        return isFinished;
+    public GameState getState(){
+        ArrayList<Move> moves = board.getAllValidMoves(currentPlayer);
+        boolean inCheck = board.isColorInCheck(currentPlayer);
+        if (moves.size() == 0 && inCheck) {
+            return GameState.CHECKMATE;
+        } else if (moves.size() == 0 && !inCheck) {
+            return GameState.STALEMATE;
+        }
+
+        return GameState.PLAY;
     }
 }

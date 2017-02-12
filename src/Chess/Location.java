@@ -56,4 +56,9 @@ public class Location implements Cloneable {
         if (x != location.x) return false;
         return y == location.y;
     }
+
+    @Override
+    public String toString() {
+        return (char)(x + 65) + String.valueOf(8 - y);
+    }
 }
