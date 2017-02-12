@@ -1,33 +1,52 @@
 package Chess;
 
-/**
- * Moves pieces and sets firstMoveOnly and onTakeOnly
- */
-public class Move{
-    public final int x;
-    public final int y;
-    public final boolean firstMoveOnly;
-    public final boolean onTakeOnly;
+import Chess.Pieces.ChessPiece;
 
-    /**
-     * @param x coordinate for the piece
-     * @param y coordinate for the piece
-     * @param firstMoveOnly status for the piece
-     * @param onTakeOnly status for the piece
-     */
-    public Move(int x, int y, boolean firstMoveOnly, boolean onTakeOnly) {
-        this. x = x;
-        this. y = y;
-        this.firstMoveOnly = firstMoveOnly;
-        this.onTakeOnly = onTakeOnly;
+/**
+ * Created by konzy on 2/6/2017.
+ */
+public class Move implements Cloneable {
+
+    ChessPiece piece;
+    Location to;
+
+    public Move(ChessPiece piece, Location to) {
+        this.piece = piece;
+        this.to = to;
     }
 
-    /**
-     *
-     * @return a deep copy of Move
-     * @throws CloneNotSupportedException
-     */
+    public ChessPiece getPiece() {
+        return piece;
+    }
+
+    public void setPiece(Location from) {
+        this.piece = piece;
+    }
+
+    public Location getTo() {
+        return to;
+    }
+
+    public void setTo(Location to) {
+        this.to = to;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Move move = (Move) o;
+
+        if (!piece.equals(move.piece)) return false;
+        return to.equals(move.to);
+    }
+
+    @Override
     public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        Move clone = (Move) super.clone();
+        clone.piece = (ChessPiece) piece.clone();
+        clone.to = (Location) to.clone();
+        return clone;
     }
 }

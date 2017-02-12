@@ -1,7 +1,7 @@
 package Console;
 
-import Chess.Coord;
-import Chess.CoordPair;
+import Chess.Location;
+import Chess.Move;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,19 +24,19 @@ public class InputHandler {
      * @param val is the input from user
      * @return  coordinates
      */
-    private Coord parse(String val){
+    private Location parse(String val){
         int x = mapper.map(val.charAt(0));
         int y = mapper.map(Integer.parseInt(String.valueOf(val.charAt(1))));
 
-        return new Coord(x, y);
+        return new Location(x, y);
     }
     /**
-     * getFrom returns the first half of the input from the user in modified form
+     * getPiece returns the first half of the input from the user in modified form
      *
      * @param val is the input from user
      * @return  coordinates
      */
-    public Coord getFrom(String val){
+    public Location getFrom(String val){
         Matcher matcher = validMove.matcher(val);
         matcher.matches();
         String coords = matcher.group(1);
@@ -49,7 +49,7 @@ public class InputHandler {
      * @param val is the input from user
      * @return  coordinates
      */
-    public Coord getTo(String val){
+    public Location getTo(String val){
         Matcher matcher = validMove.matcher(val);
         matcher.matches();
         String coords =  matcher.group(3);
@@ -57,9 +57,6 @@ public class InputHandler {
         return parse(coords);
     }
 
-    public CoordPair getCoordPair(String val) {
-        return new CoordPair(getFrom(val), getTo(val));
-    }
     /**
      * isValid makes sure input is in valid form (eg: a2-a3)
      *

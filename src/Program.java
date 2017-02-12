@@ -1,5 +1,5 @@
 import Chess.ChessGame;
-import Chess.Coord;
+import Chess.Location;
 import Console.InputHandler;
 
 import java.util.Scanner;
@@ -23,13 +23,12 @@ public class Program {
                 System.out.println("Invalid input!");
                 System.out.println("Valid input is in form: A2-A3");
             } else {
-                Coord from = handler.getFrom(input);  //first half of input
-                Coord to = handler.getTo(input);     //second half of input
+                Location from = handler.getFrom(input);  //first half of input
+                Location to = handler.getTo(input);     //second half of input
 
-                if (game.isValidMove(from, to))
-                    game.playMove(from, to);
-                else
+                if (!game.playMove(from, to)) {
                     System.out.println("Illegal move!");
+                }
             }
         }
         System.out.println("Game has finished. Thanks for playing.");

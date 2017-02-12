@@ -1,7 +1,6 @@
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
-import Chess.Coord;
-import Chess.CoordPair;
+import Chess.Location;
 import Chess.Move;
 import Console.InputHandler;
 
@@ -26,16 +25,17 @@ public class ProgramAITest {
                 System.out.println("Invalid input!");
                 System.out.println("Valid input is in form: A2-A3");
             } else {
-                CoordPair pair = handler.getCoordPair(input);
-                if (game.isValidMove(pair.getFrom(), pair.getTo()))
-                    game.playMove(pair.getFrom(), pair.getTo());
-                else
-                    System.out.println("Illegal move!");
-            }
-            RandomAI randomAI = new RandomAI(game);
-            CoordPair aiMove = randomAI.getNextMove();
-            game.playMove(aiMove.getFrom(), aiMove.getTo());
+                Location from = handler.getFrom(input);  //first half of input
+                Location to = handler.getTo(input);     //second half of input
 
+                if (game.playMove(from, to)) {
+                    RandomAI randomAI = new RandomAI(game);
+                    Move aiMove = randomAI.getNextMove();
+                    game.playMove(aiMove.getPiece().getLocation(), aiMove.getTo());
+                } else {
+                    System.out.println("Illegal move!");
+                }
+            }
         }
         System.out.println("Game has finished. Thanks for playing.");
     }
