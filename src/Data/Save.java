@@ -7,10 +7,13 @@ import Chess.Tile;
 import java.io.*;
 
 /**
- * Created by Ryan on 1/29/2017.
+ * Save system for replaying and retaining moves.
  */
 
 public class Save {
+    /**
+     *
+     */
     public static void clearAutoSave(){
         BufferedWriter writer = null;
         try {

@@ -3,7 +3,7 @@ package Data;
 import java.io.*;
 
 /**
- * Created by Ryan on 1/29/2017.
+ * Replays all moves from the start of the game using the current autosave file as reference
  */
 public class Replay {
     public static void replay(){

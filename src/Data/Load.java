@@ -8,7 +8,8 @@ import Console.BoardDisplay;
 import java.io.*;
 
 /**
- * Created by Ryan on 1/29/2017.
+ * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
+ *  into the autosave for replay purposes.
  */
 public class Load {
     public static ChessBoard Load(String str, ChessGame game) {
