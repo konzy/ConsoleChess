@@ -38,10 +38,14 @@ public class Menu extends Application {
         Button statsBtn = new Button("Stats");
 
         //set widths of buttons to be the same
-        onePlayerBtn.setMaxWidth(100);
-        twoPlayerBtn.setMaxWidth(100);
-        statsBtn.setMaxWidth(100);
+        onePlayerBtn.setMaxWidth(200);
+        twoPlayerBtn.setMaxWidth(200);
+        statsBtn.setMaxWidth(200);
 
+        //set heights of buttons to be the same
+        onePlayerBtn.setMinHeight(50);
+        twoPlayerBtn.setMinHeight(50);
+        statsBtn.setMinHeight(50);
 
         VBox vBox = new VBox();
         vBox.setSpacing(50);
@@ -52,15 +56,14 @@ public class Menu extends Application {
         vBox.getChildren().add(onePlayerBtn);
         vBox.getChildren().add(twoPlayerBtn);
         vBox.getChildren().add(statsBtn);
-        //pane.getChildren().add(onePlayerBtn);
-        //pane.getChildren().add(twoPlayerBtn);
 
-        // borderPane.setTop(pane);
         borderPane.setCenter(vBox);
 
         Scene scene = new Scene(borderPane, 300, 300);
         stage.setTitle("Chess Game");
         stage.setScene(scene);
+        stage.setMinWidth(655);
+        stage.setMinHeight(700);
         stage.show();
 
         onePlayerBtn.setOnAction(new EventHandler<ActionEvent>(){

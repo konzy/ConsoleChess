@@ -3,6 +3,7 @@ package GUI;
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Coord;
+import Chess.Pieces.ChessPiece;
 import Chess.Tile;
 import Console.BoardDisplay;
 import javafx.application.Application;
@@ -42,7 +43,6 @@ public class GameBoard extends Application {
     int secondClickY = -1;
     Map<String,String> pieces = new HashMap<String,String>();
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -55,36 +55,33 @@ public class GameBoard extends Application {
         pieces.put("[B]",picPath + "b.png");
         pieces.put("[Q]",picPath + "q.png");
         pieces.put("[P]",picPath + "p.png");
+        pieces.put("[K]",picPath + "k.png");
 
         BorderPane borderPane = new BorderPane();
         GridPane grid = new GridPane();
-        //grid.setHgap(8);
-        //grid.setVgap(8);
+
         grid.setPadding(new Insets(0,0,25,0));
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-               // Button btn = new Button("button");
                 Rectangle rectangle = new Rectangle(80,80);
-               // rectangle.setStrokeWidth(4.0);
                 setRectangleColor(rectangle,i,j);
                 grid.add(rectangle,i,j);
 
-
                 Tile[][] b = game.board.getBoardArray();
-                String letter = b[j][i].value();
+                String letter = b[j][i].value().toLowerCase();
                 if (!letter.equals("[ ]")) {
-                    ImageView tmpView = new ImageView(pieces.get(letter));
+                    letter =  Character.toString(letter.charAt(1));
+                    if (b[j][i].getPiece().color() == ChessPiece.PieceColor.Black){
+                        letter = "black_" + letter;
+                    }
+                    ImageView tmpView = new ImageView(picPath + letter + ".png");
                     tmpView.setFitHeight(80);
                     tmpView.setFitWidth(80);
                     grid.add(tmpView, i, j);
                 }
             }
         }
-       // ImageView tmpView = new ImageView("/GUI/");
-        //tmpView.setFitHeight(80);
-        //tmpView.setFitWidth(80);
-        //grid.add(tmpView,0,0);
         HBox hBox = new HBox();
         Button backBtn = new Button("< Menu");
         backBtn.setMinHeight(25);
@@ -96,6 +93,8 @@ public class GameBoard extends Application {
         Scene scene = new Scene(borderPane, 640, 665);
         stage.setTitle("Chess Game");
         stage.setScene(scene);
+        stage.setMaxWidth(655);
+        stage.setMaxHeight(700);
         stage.show();
         //highlight square when clicked
         grid.setOnMouseClicked( e -> {
@@ -116,9 +115,15 @@ public class GameBoard extends Application {
                     firstClickY = -1;
                     if (game.isValidMove(from, to)) {
                         game.playMove(from, to);
+                        BoardDisplay.clearConsole();
                         BoardDisplay.printBoard(game.board);
                     }
-                    setBoard(stage);
+                    if (!game.isFinished()) {
+                        setBoard(stage);
+                    }else{
+                        Menu menu = new Menu();
+                        menu.start(stage);
+                    }
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
