@@ -12,14 +12,20 @@ import java.util.ArrayList;
  */
 public class Bishop extends ChessPiece {
 
+    public static final String LETTER = "B";
+
 	public Bishop(PieceColor color, Location location){
 		super(PieceType.Bishop, color, true, location);
 	}
 
-
     @Override
     public int value() {
         return 3;
+    }
+
+    @Override
+    public String getLetter() {
+        return LETTER;
     }
 
     @Override

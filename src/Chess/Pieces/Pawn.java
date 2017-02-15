@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class Pawn extends ChessPiece {
 
+    public static final String LETTER = "P";
+
 	public Pawn(PieceColor color, Location location){
 		super(PieceType.Pawn, color, false, location);
 	}
@@ -25,6 +27,11 @@ public class Pawn extends ChessPiece {
     @Override
     public int value() {
         return 1;
+    }
+
+    @Override
+    public String getLetter() {
+        return LETTER;
     }
 
     @Override

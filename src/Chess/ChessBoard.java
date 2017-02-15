@@ -19,6 +19,10 @@ public class ChessBoard implements Cloneable {
         fillBoard();
     }
 
+    public ChessBoard(ArrayList<ChessPiece> board) {
+        pieces = board;
+    }
+
     public ChessPiece getPieceAtCoord(Location location) {
         for (ChessPiece piece : pieces) {
             if (piece.getLocation().equals(location)) {
@@ -180,7 +184,7 @@ public class ChessBoard implements Cloneable {
 
             for (int x = 0; x < 8; x++){ //8 represents width of board
                 if (b[x][y] != null) {
-                    string += (b[x][y].value());
+                    string += (b[x][y].toString());
                 } else {
                     string += ("[ ]");
 

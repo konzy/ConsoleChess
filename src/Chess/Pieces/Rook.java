@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class Rook extends ChessPiece {
 
+    public static final String LETTER = "R";
+
 	public Rook(PieceColor color, Location location){
 		super(PieceType.Rook, color,true, location);
 	}
@@ -23,6 +25,11 @@ public class Rook extends ChessPiece {
     @Override
     public int value() {
         return 5;
+    }
+
+    @Override
+    public String getLetter() {
+        return LETTER;
     }
 
     @Override

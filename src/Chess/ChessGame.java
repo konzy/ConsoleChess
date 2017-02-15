@@ -3,7 +3,6 @@ package Chess;
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
 import Console.BoardDisplay;
-
 import java.util.ArrayList;
 
 /**
@@ -28,9 +27,11 @@ public class ChessGame implements Cloneable {
     public ChessGame(){
         board = new ChessBoard();
         currentPlayer = PieceColor.White;
+    }
 
-        BoardDisplay.clearConsole();
-        BoardDisplay.printBoard(board);
+    public ChessGame(ChessBoard board) {
+        this.board = board;
+        currentPlayer = PieceColor.White;
     }
 
     @Override

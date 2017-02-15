@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class Knight extends ChessPiece{
 
+    public static final String LETTER = "N";
+
 	public Knight(ChessPiece.PieceColor color, Location location){
 		super(PieceType.Knight, color, false, location);
 	}
@@ -21,6 +23,11 @@ public class Knight extends ChessPiece{
     @Override
     public int value() {
         return 3;
+    }
+
+    @Override
+    public String getLetter() {
+        return LETTER;
     }
 
     @Override

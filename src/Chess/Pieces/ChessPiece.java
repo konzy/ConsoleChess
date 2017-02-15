@@ -75,6 +75,10 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         return validMoves;
     }
 
+    public PieceColor getColor() {
+        return color;
+    }
+
     public ArrayList<Move> potentialMoves(ChessBoard board) {
         ArrayList<Move> toLocations = new ArrayList<>();
         for (MoveOffset moveOffset : moveModifiers()) {
@@ -89,6 +93,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         }
         return toLocations;
     }
+
+    public abstract String getLetter();
 
     /**
      *
@@ -112,9 +118,12 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     /**
      * Colors of pieces in Chess
      */
-    public enum PieceColor {
-        White, Black
+
+    public enum PieceColor{
+        White,
+        Black
     }
+
 
     /**
      * @return an array of Moves that are valid for the piece
@@ -141,6 +150,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     }
 
     abstract public ArrayList<Move> validMoves(ChessBoard board);
+
+
 
     public Location getLocation() {
         return location;

@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class King extends ChessPiece{
 
+    public static final String LETTER = "K";
+
 	public King(ChessPiece.PieceColor color, Location location){
 		super(PieceType.King, color,false, location);
 	}
@@ -23,6 +25,11 @@ public class King extends ChessPiece{
     @Override
     public int value() {
         return 4;
+    }
+
+    @Override
+    public String getLetter() {
+        return LETTER;
     }
 
     @Override

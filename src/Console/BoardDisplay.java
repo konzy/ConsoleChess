@@ -21,7 +21,7 @@ public class BoardDisplay {
 
             for (int x = 0; x < 8; x++){ //8 represents width of board
                 if (b[x][y] != null) {
-                    System.out.print(b[x][y].value());
+                    System.out.print(b[x][y].toString());
                 } else {
                     System.out.print("[ ]");
 
