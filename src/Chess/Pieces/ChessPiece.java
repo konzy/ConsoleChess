@@ -8,12 +8,12 @@ import Chess.Move;
  */
 
 public abstract class ChessPiece {
-    private PieceType type;
-    private PieceColor color;
-    private Move[] moves;
-    private String name;
-    private char charValue;
-    private boolean repeatableMoves;
+    public PieceType type;
+    public PieceColor color;
+    public Move[] moves;
+    public String name;
+    public String shortName;
+    public boolean repeatableMoves;
 
     /**
      * Creates an abstract chess piece object.
@@ -28,7 +28,7 @@ public abstract class ChessPiece {
         this.moves = moves;
         this.repeatableMoves = repeatableMoves;
         name = type.name();
-        charValue = type.name().trim().charAt(0);
+        shortName = type.name().trim().substring(0,2);
     }
 
     /**
@@ -63,7 +63,7 @@ public abstract class ChessPiece {
     /**
      * @return the single letter character value of the piece eg. "P" for Pawn
      */
-    public char charValue(){ return charValue; }
+    public String shortName(){ return shortName; }
 
     /**
      * @return whether the piece can continue movement until it is either blocked by another piece, can capture,
