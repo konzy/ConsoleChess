@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class ChessGame {
 
-    private ChessBoard board;
+    public ChessBoard board;
     private boolean isFinished;
     private PieceColor currentPlayer;
 
@@ -22,8 +22,7 @@ public class ChessGame {
         currentPlayer = PieceColor.White;
         isFinished = false;
 
-        BoardDisplay.clearConsole();
-        BoardDisplay.printBoard(board);
+
     }
 
     public ChessBoard getBoard(){
@@ -48,7 +47,7 @@ public class ChessGame {
 
             fromTile.empty();
             endTurn();
-            BoardDisplay.printBoard(board);
+
         } else
             System.out.println("Invalid move!");
     }

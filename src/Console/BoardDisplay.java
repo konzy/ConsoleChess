@@ -12,6 +12,7 @@ public class BoardDisplay {
      * @param board the full board (8x8) including letters representing pieces and blank spots
      */
     public static void printBoard(ChessBoard board){
+
         clearConsole();
         Tile[][] b = board.getBoardArray();
 

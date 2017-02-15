@@ -1,5 +1,6 @@
 import Chess.ChessGame;
 import Chess.Coord;
+import Console.BoardDisplay;
 import Console.InputHandler;
 import Data.Load;
 import Data.Replay;
