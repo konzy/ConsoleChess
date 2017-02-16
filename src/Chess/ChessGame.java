@@ -4,6 +4,7 @@ import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
 import Console.BoardDisplay;
 import java.util.ArrayList;
+import Chess.Timer.turnSwitch;
 
 /**
  * Methods for general play of chess.
@@ -106,6 +107,7 @@ public class ChessGame {
     private void endTurn(){
         if (currentPlayer == PieceColor.White) currentPlayer = PieceColor.Black;
         else currentPlayer = PieceColor.White;
+        turnSwitch();
     }
 
     /**
