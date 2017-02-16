@@ -19,6 +19,7 @@ public class Timer{
 
     void p1Timer(){
         p1turn = true;
+        p2turn = false;
         delay = (double) System.currentTimeMillis();
         delay += 5000;
         currentTime = (double) System.currentTimeMillis();
@@ -29,6 +30,28 @@ public class Timer{
         while(p1turn){
             if((currentTime - 1000) >= startTime){
                 p1Seconds--;
+                startTime = currentTime;
+            }
+            else{
+                currentTime = (double) System.currentTimeMillis();
+            }
+
+        }
+    }
+
+    void p2Timer(){
+        p1turn = false;
+        p2turn = true;
+        delay = (double) System.currentTimeMillis();
+        delay += 5000;
+        currentTime = (double) System.currentTimeMillis();
+        while(currentTime < delay){
+            currentTime = (double) System.currentTimeMillis();
+        }
+        startTime = (double) System.currentTimeMillis();
+        while(p2turn){
+            if((currentTime - 1000) >= startTime){
+                p2Seconds--;
                 startTime = currentTime;
             }
             else{
