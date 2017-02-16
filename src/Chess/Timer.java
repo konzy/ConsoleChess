@@ -3,61 +3,78 @@ package Chess;
 public class Timer{
     int p1Seconds = 300;
     int p2Seconds = 300;
-    Boolean p1turn, p2turn;
-    double delay, currentTime, startTime;
+    Boolean p1turn = true, p2turn = false, delaySet = true, delayFinished = false;
+    double delay, currentTime;
 
     void turnSwitch(){
         if(p1turn){
             p1turn = false;
             p2turn = true;
+            delaySet = true;
+            delayFinished = false;
         }
         else{
             p1turn = true;
             p2turn = false;
+            delaySet = true;
+            delayFinished = false;
+        }
+    }
+
+    void countDown(){
+        if(p1turn){
+            p1Timer();
+        }
+        else{
+            p2Timer();
         }
     }
 
     void p1Timer(){
-        p1turn = true;
-        p2turn = false;
-        delay = (double) System.currentTimeMillis();
-        delay += 5000;
-        currentTime = (double) System.currentTimeMillis();
-        while(currentTime < delay){
-            currentTime = (double) System.currentTimeMillis();
+        if(delaySet){
+            delay = (double) System.currentTimeMillis();
+            delay += 5000;
+            delaySet = false;
         }
-        startTime = (double) System.currentTimeMillis();
-        while(p1turn){
-            if((currentTime - 1000) >= startTime){
-                p1Seconds--;
-                startTime = currentTime;
-            }
-            else{
-                currentTime = (double) System.currentTimeMillis();
-            }
-
+        currentTime = (double) System.currentTimeMillis();
+        if(currentTime < delay && !delayFinished){
+            currentTime = (double) System.currentTimeMillis();
+            return;
+        }
+        if(!delayFinished){
+            delayFinished = true;
+        }
+        if((currentTime - 1000) >= delay){
+            p1Seconds--;
+            delay = currentTime;
         }
     }
 
-    void p2Timer(){
-        p1turn = false;
-        p2turn = true;
-        delay = (double) System.currentTimeMillis();
-        delay += 5000;
+    void p2Timer() {
+        if (delaySet) {
+            delay = (double) System.currentTimeMillis();
+            delay += 5000;
+            delaySet = false;
+        }
         currentTime = (double) System.currentTimeMillis();
-        while(currentTime < delay){
+        if (currentTime < delay && !delayFinished) {
             currentTime = (double) System.currentTimeMillis();
+            return;
         }
-        startTime = (double) System.currentTimeMillis();
-        while(p2turn){
-            if((currentTime - 1000) >= startTime){
-                p2Seconds--;
-                startTime = currentTime;
-            }
-            else{
-                currentTime = (double) System.currentTimeMillis();
-            }
+        if (!delayFinished) {
+            delayFinished = true;
+        }
+        if ((currentTime - 1000) >= delay) {
+            p2Seconds--;
+            delay = currentTime;
+        }
+    }
 
-        }
+    int getP1Time(){
+        return p1Seconds;
+    }
+
+    int getP2Time(){
+        return p2Seconds;
     }
 }
