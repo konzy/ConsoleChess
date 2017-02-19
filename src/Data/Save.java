@@ -2,9 +2,11 @@ package Data;
 
 import Chess.ChessBoard;
 import Chess.Pieces.ChessPiece;
-import Chess.Tile;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Save system for replaying and retaining moves.
@@ -15,24 +17,15 @@ public class Save {
      *
      */
 
-    public enum Tags{
-        BLACK("[B]"),
-        WHITE("[W]"),
-        BLANK("[ ]");
-        private String value;
-        Tags(String value){
-                this.value = value;
-        }
+    private static String ROOT_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\src\\Data\\";
+    private static String AUTO_SAVE_LOCATION = ROOT_SAVE_LOCATION + "AutoSave.txt";
 
-        public String getValue() {
-            return value;
-        }
-    }
+
     public static void clearAutoSave(){
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt"));
+                    FileWriter(AUTO_SAVE_LOCATION));
             writer.append("");
             writer.flush();
             writer.close();
@@ -42,21 +35,25 @@ public class Save {
     }
 
     public static void AutoSave(ChessBoard board) throws IOException {
-        BufferedWriter autoSaveFile = new BufferedWriter(
-                new FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt",
-                        true));
-        Tile[][] currentBoard = board.getBoardArray();
-        for(int i = 0; i < currentBoard.length; i++){
-            for(int x = 0; x < currentBoard[i].length; x++) {
-                autoSaveFile.append(currentBoard[i][x].toString());
-                if(!currentBoard[i][x].isEmpty()) {
-                    if (currentBoard[i][x].getPiece().color() == ChessPiece.PieceColor.Black) {
-                        autoSaveFile.append(Tags.BLACK.getValue());
-                    } else if (currentBoard[i][x].getPiece().color() == ChessPiece.PieceColor.White) {
-                        autoSaveFile.append(Tags.WHITE.getValue());
+        BufferedWriter autoSaveFile = new BufferedWriter(new FileWriter(AUTO_SAVE_LOCATION,true));
+        ArrayList<ChessPiece> pieces = board.getBoardArrayList();
+        Collections.sort(pieces);
+        Iterator<ChessPiece> iterator = pieces.iterator();
+        ChessPiece piece = null;
+        if (iterator.hasNext()) {
+            piece = iterator.next();
+        }
+
+        for(int y = 0; y < 8; y++){
+            for(int x = 0; x < 8; x++) {
+                if (piece != null && piece.getLocation().X() == x && piece.getLocation().Y() == y) {
+                    autoSaveFile.append(piece.getLetter());
+                    autoSaveFile.append(piece.getColor().toString().toLowerCase().charAt(0));
+                    if (iterator.hasNext()) {
+                        piece = iterator.next();
                     }
                 } else {
-                    autoSaveFile.append(Tags.BLANK.getValue());
+                    autoSaveFile.append("  ");
                 }
                 if(x == 7){
                     autoSaveFile.newLine();
@@ -68,16 +65,16 @@ public class Save {
         autoSaveFile.close();
     }
 
-    public static void Save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" + fromStr + ".txt");
-        File saveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" + toStr + ".txt");
+    public static void Save(String fromStr, String toStr) throws IOException {
+        File autoSaveFile = new File(ROOT_SAVE_LOCATION + fromStr + ".txt");
+        File saveFile = new File(ROOT_SAVE_LOCATION + toStr + ".txt");
         if(!saveFile.exists()){
             saveFile.createNewFile();
         }
         try {
-			/* FileInputStream to read streams */
+            /* FileInputStream to read streams */
             InputStream input = new FileInputStream(autoSaveFile);
-			/* FileOutputStream to write streams */
+            /* FileOutputStream to write streams */
             OutputStream output = new FileOutputStream(saveFile);
 
             byte[] buf = new byte[1024];

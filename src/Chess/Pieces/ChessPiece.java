@@ -45,10 +45,10 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     @Override
     public int compareTo(Object o) {
         if (o instanceof ChessPiece) {
-            if (this.location.X() == ((ChessPiece) o).location.X()) {
-                return this.location.Y() - ((ChessPiece) o).location.Y();
-            } else {
+            if (this.location.Y() == ((ChessPiece) o).location.Y()) {
                 return this.location.X() - ((ChessPiece) o).location.X();
+            } else {
+                return this.location.Y() - ((ChessPiece) o).location.Y();
             }
         }
         return 0;
