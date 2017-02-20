@@ -38,7 +38,9 @@ public class BishopTest {
 
     @After
     public void tearDown() throws Exception {
-
+        ChessBoard board = null;
+        Bishop testBishop1 = null;
+        Bishop testBishop2 = null;
     }
 
     @Test

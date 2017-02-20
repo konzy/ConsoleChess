@@ -21,7 +21,7 @@ public class KingTest {
 
     @After
     public void tearDown() throws Exception {
-
+        king = null;
     }
 
     @Test

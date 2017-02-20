@@ -20,7 +20,7 @@ public class QueenTest {
 
     @After
     public void tearDown() throws Exception {
-
+        queen = null;
     }
 
     @Test

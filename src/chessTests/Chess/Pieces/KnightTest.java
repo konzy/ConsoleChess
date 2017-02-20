@@ -20,7 +20,7 @@ public class KnightTest {
 
     @After
     public void tearDown() throws Exception {
-
+        knight = null;
     }
 
     @Test

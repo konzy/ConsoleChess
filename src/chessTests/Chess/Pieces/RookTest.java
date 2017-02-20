@@ -20,7 +20,7 @@ public class RookTest {
 
     @After
     public void tearDown() throws Exception {
-
+        rook = null;
     }
 
     @Test

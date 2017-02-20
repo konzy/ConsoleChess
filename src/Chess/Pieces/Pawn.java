@@ -36,7 +36,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     public MoveOffset[] moveModifiers() {
-        return new MoveOffset[]{}; //unused
+        return null; //unused
     }
 
     @Override

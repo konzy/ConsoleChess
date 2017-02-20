@@ -34,7 +34,6 @@ public class ChessPieceTest {
         pieces.add(pawn1);
         pieces.add(king1);
 
-
         board = new ChessBoard(pieces);
     }
 
@@ -44,28 +43,27 @@ public class ChessPieceTest {
     }
 
     @Test
-    public void name() throws Exception {
-
-    }
-
-    @Test
-    public void ordinal() throws Exception {
-
-    }
-
-    @Test
-    public void testToString() throws Exception {
-
-    }
-
-    @Test
     public void equals() throws Exception {
+        Bishop bishop = null;
+        Assert.assertEquals(testBishop1.equals(bishop), false);
 
-    }
+        bishop = new Bishop(ChessPiece.PieceColor.White, new Location(1, 1));
+        Rook rook = new Rook(ChessPiece.PieceColor.White, new Location(1, 1));
+        Assert.assertEquals(bishop.equals((ChessPiece)rook), false);
 
-    @Test
-    public void testHashCode() throws Exception {
+        Pawn pawn = new Pawn(ChessPiece.PieceColor.White, new Location(1, 1));
+        Assert.assertEquals(bishop.equals((ChessPiece)pawn), false);
 
+        Bishop blackBishop = new Bishop(ChessPiece.PieceColor.Black, new Location(1, 1));
+        Assert.assertEquals(bishop.equals(blackBishop), false);
+
+        Bishop locationBishop = new Bishop(ChessPiece.PieceColor.Black, new Location(2, 2));
+        Assert.assertEquals(bishop.equals(locationBishop), false);
+
+        Assert.assertEquals(bishop.equals(bishop), true);
+
+        Bishop bishop2 = new Bishop(ChessPiece.PieceColor.White, new Location(1, 1));
+        Assert.assertEquals(bishop.equals(bishop2), true);
     }
 
     @Test
@@ -85,11 +83,9 @@ public class ChessPieceTest {
         Assert.assertEquals(clone.getLocation().Y(), testBishop1.getLocation().Y());
         Assert.assertEquals(clone.getLocation(), testBishop1.getLocation());
 
-
         Assert.assertEquals(clone.validMoves(board), testBishop1.validMoves(board));
         Assert.assertEquals(clone.numPiecesThreateningThis(board), testBishop1.numPiecesThreateningThis(board));
         Assert.assertEquals(clone.potentialMoves(board), testBishop1.potentialMoves(board));
-        //Assert.assertArrayEquals(clone.moveModifiers(), testBishop1.moveModifiers());
 
         Assert.assertEquals(clone, testBishop1);
 
@@ -114,8 +110,6 @@ public class ChessPieceTest {
         Assert.assertEquals(pieces.get(2), pawn2);
         Assert.assertEquals(pieces.get(3), king1);
         Assert.assertEquals(pieces.get(4), king2);
-        //Assert.assertEquals(pieces.get(0), );
-        System.out.println("");
     }
 
     @Test
