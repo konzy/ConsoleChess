@@ -107,7 +107,6 @@ public class ChessGame {
     private void endTurn(){
         if (currentPlayer == PieceColor.White) currentPlayer = PieceColor.Black;
         else currentPlayer = PieceColor.White;
-        turnSwitch();
     }
 
     /**
