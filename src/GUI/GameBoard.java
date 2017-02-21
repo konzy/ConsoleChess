@@ -37,7 +37,6 @@ public class GameBoard extends Application {
     private int firstClickY = -1;
     private int secondClickX = -1;
     private int secondClickY = -1;
-    private static int canClick = 0;
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -86,7 +85,6 @@ public class GameBoard extends Application {
         stage.setMaxHeight(700);
         stage.show();
         //highlight square when clicked
-        if (canClick == 0 || canClick == 1 || canClick == -1 || canClick == 2) {
             grid.setOnMouseClicked(e -> {
                 int col = (int) Math.floor((e.getSceneX()) / 80); //subtract to adjust for stroke size
                 int row = (int) Math.floor((e.getSceneY() - 25) / 80);
@@ -127,7 +125,6 @@ public class GameBoard extends Application {
                     grid.add(rectangle, col, row);
                 }
             });
-        }
         backBtn.setOnAction(e -> {
             Menu menu = new Menu();
             try {
