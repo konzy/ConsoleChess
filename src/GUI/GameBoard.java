@@ -1,7 +1,9 @@
 package GUI;
 
+import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
+import Chess.Move;
 import Chess.Pieces.*;
 import Console.BoardDisplay;
 import javafx.application.Application;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -32,10 +35,15 @@ public class GameBoard extends Application {
     private int firstClickY = -1;
     private int secondClickX = -1;
     private int secondClickY = -1;
+    private boolean isOnePlayer = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+    }
+
+    public void setIsOnePlayer(boolean isOnePlayer) {
+        this.isOnePlayer = isOnePlayer;
     }
 
     public void setBoard (Stage stage) throws Exception {
@@ -98,8 +106,17 @@ public class GameBoard extends Application {
                     firstClickX = -1;
                     firstClickY = -1;
                     if (game.playMove(from, to)) {
-                        BoardDisplay.clearConsole();
-                        BoardDisplay.printBoard(game.getBoard());
+                        repaint();
+                        boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
+                        if (isOnePlayer && !isEndOfGame) {
+                            RandomAI randomAI = new RandomAI(game);
+                            Move aiMove = randomAI.getNextMove();
+                            game.playMove(aiMove.getPiece().getLocation(), aiMove.getTo());
+                            repaint();
+                        } else if (isEndOfGame) {
+                            JOptionPane.showMessageDialog(null, game.getState().toString());
+                            System.out.println(game.getState().toString());
+                        }
                     }
                     if (game.getState() == ChessGame.GameState.PLAY) {
                         setBoard(stage);
@@ -126,6 +143,11 @@ public class GameBoard extends Application {
                 e1.printStackTrace();
             }
         });
+    }
+
+    private void repaint() {
+        BoardDisplay.clearConsole();
+        BoardDisplay.printBoard(game.getBoard());
     }
 
     private void setRectangleColor(Rectangle rectangle, int col, int row){

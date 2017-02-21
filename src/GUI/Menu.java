@@ -61,15 +61,23 @@ public class Menu extends Application {
         stage.setMinHeight(700);
         stage.show();
 
+        twoPlayerBtn.setOnAction(e -> {
+            ChessGame game = new ChessGame();
+            GameBoard gamebrd = new GameBoard(game);
+            try {
+                gamebrd.setIsOnePlayer(false);
+                gamebrd.setBoard(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
         onePlayerBtn.setOnAction(e -> {
             ChessGame game = new ChessGame();
             GameBoard gamebrd = new GameBoard(game);
             try {
-                //Sets up chess game, initial player is white, prints board to console
-                //BoardDisplay.clearConsole();
-                // gamebrd.setBoard(game.board);
+                gamebrd.setIsOnePlayer(true);
                 gamebrd.setBoard(stage);
-                //gamebrd.setBoard(stage);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
