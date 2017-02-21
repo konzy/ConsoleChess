@@ -6,16 +6,21 @@ import Chess.Pieces.*;
 import Console.BoardDisplay;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +37,7 @@ public class GameBoard extends Application {
     private int firstClickY = -1;
     private int secondClickX = -1;
     private int secondClickY = -1;
-
+    private static int canClick = 0;
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -81,43 +86,48 @@ public class GameBoard extends Application {
         stage.setMaxHeight(700);
         stage.show();
         //highlight square when clicked
-        grid.setOnMouseClicked( e -> {
-            int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
-            int row = (int)Math.floor((e.getSceneY()-25)/ 80);
-            if (firstClickX == -1) {
-                firstClickX = col;
-                firstClickY = row;
-            }else{
-                secondClickX = col;
-                secondClickY = row;
+        if (canClick == 0 || canClick == 1 || canClick == -1 || canClick == 2) {
+            grid.setOnMouseClicked(e -> {
+                int col = (int) Math.floor((e.getSceneX()) / 80); //subtract to adjust for stroke size
+                int row = (int) Math.floor((e.getSceneY() - 25) / 80);
+                if (firstClickX == -1) {
+                    firstClickX = col;
+                    firstClickY = row;
+                } else {
+                    secondClickX = col;
+                    secondClickY = row;
 
-                try {
-                    Location from = new Location(firstClickX,firstClickY);
-                    Location to = new Location(secondClickX,secondClickY);
-                    //reset first click
-                    firstClickX = -1;
-                    firstClickY = -1;
-                    if (game.playMove(from, to)) {
-                        BoardDisplay.clearConsole();
-                        BoardDisplay.printBoard(game.getBoard());
+                    try {
+                        Location from = new Location(firstClickX, firstClickY);
+                        Location to = new Location(secondClickX, secondClickY);
+                        //reset first click
+                        firstClickX = -1;
+                        firstClickY = -1;
+                        if (game.playMove(from, to)) {
+                            BoardDisplay.clearConsole();
+                            BoardDisplay.printBoard(game.getBoard());
+                        } else {
+                            displayAlert("Alert Message", "Invalid move!");
+                        }
+                        if (game.getState() == ChessGame.GameState.PLAY) {
+                            setBoard(stage);
+                        } else {
+                            Menu menu = new Menu();
+                            menu.start(stage);
+                        }
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
                     }
-                    if (game.getState() == ChessGame.GameState.PLAY) {
-                        setBoard(stage);
-                    }else{
-                        Menu menu = new Menu();
-                        menu.start(stage);
-                    }
-                } catch (Exception e1) {
-                    e1.printStackTrace();
                 }
-            }
-            Rectangle rectangle = new Rectangle(80,80);
-            rectangle.setFill(Color.YELLOW);
-            rectangle.setOpacity(.5);
-            if (e.getSceneX() < 640 && e.getSceneY() < 665) {
-                grid.add(rectangle, col, row);
-            }
-        });
+
+                Rectangle rectangle = new Rectangle(80, 80);
+                rectangle.setFill(Color.YELLOW);
+                rectangle.setOpacity(.5);
+                if (e.getSceneX() < 640 && e.getSceneY() < 665) {
+                    grid.add(rectangle, col, row);
+                }
+            });
+        }
         backBtn.setOnAction(e -> {
             Menu menu = new Menu();
             try {
@@ -138,4 +148,32 @@ public class GameBoard extends Application {
             rectangle.setFill(Color.LIGHTGRAY);
         }
     }
+    public static void displayAlert(String title, String message) {
+        Stage window = new Stage();
+
+        //Block events to other windows
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(title);
+        window.setMinWidth(270);
+        window.setMinHeight(100);
+
+
+        Label label = new Label();
+        label.setText(message);
+        Button closeButton = new Button("Ok");
+        closeButton.setMinWidth(75);
+        closeButton.setOnAction(e -> window.close());
+
+        VBox layout = new VBox(30);
+        layout.setPadding(new Insets(25,0,25,0));
+
+        layout.getChildren().addAll(label, closeButton);
+        layout.setAlignment(Pos.CENTER);
+
+        //Display window and wait for it to be closed before returning
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
+    }
+
 }
