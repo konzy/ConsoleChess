@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -22,12 +23,13 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private char charValue;
     private boolean repeatableMoves;
     protected Location location;
+    protected String picPath = "/GUI/assets/";
 
     /**
      * Creates an abstract chess piece object.
      *
      * @param type the kind of piece this is
-     * @param color either white or black
+     * @param color either whiteImage or blackImage
      * @param repeatableMoves whether moveModifiers extend to the edge of the board
      */
     protected ChessPiece(PieceType type, PieceColor color, boolean repeatableMoves, Location location){
@@ -38,6 +40,17 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         if (type.name().equals(PieceType.Knight.name())) {
             charValue = 'N';
         }
+    }
+
+    abstract ImageView getBlackImage();
+
+    abstract ImageView getWhiteImage();
+
+    public ImageView getImage() {
+        if (color == PieceColor.Black) {
+            return getBlackImage();
+        }
+        return getWhiteImage();
     }
 
     abstract public int value();

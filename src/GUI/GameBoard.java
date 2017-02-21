@@ -66,12 +66,10 @@ public class GameBoard extends Application {
         //set pieces
         ArrayList<ChessPiece> chessPieces = game.getBoard().getBoardArrayList();
         for (ChessPiece chessPiece : chessPieces) {
-            String color = chessPiece.getColor().toString().toLowerCase();
-            String letter =  chessPiece.getLetter().toLowerCase();
-            ImageView tmpView = new ImageView(picPath + color + "_" + letter + ".png");
+            ImageView tmpView = chessPiece.getImage();
             tmpView.setFitHeight(80);
             tmpView.setFitWidth(80);
-            grid.add(tmpView, chessPiece.getLocation().X(), chessPiece.getLocation().Y());
+            grid.add(chessPiece.getImage(), chessPiece.getLocation().X(), chessPiece.getLocation().Y());
         }
 
         HBox hBox = new HBox();
