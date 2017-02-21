@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,20 @@ import java.util.ArrayList;
 public class King extends ChessPiece{
 
     public static final String LETTER = "K";
+    private final ImageView blackImage = new ImageView(picPath + "black_k" + ".png");
+    private final ImageView whiteImage = new ImageView(picPath + "white_k" + ".png");
 
-	public King(ChessPiece.PieceColor color, Location location){
+    @Override
+    ImageView getBlackImage() {
+        return blackImage;
+    }
+
+    @Override
+    ImageView getWhiteImage() {
+        return whiteImage;
+    }
+
+    public King(ChessPiece.PieceColor color, Location location){
 		super(PieceType.King, color,false, location);
 	}
 

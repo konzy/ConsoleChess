@@ -1,7 +1,9 @@
 package GUI;
 
+import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
+import Chess.Move;
 import Chess.Pieces.*;
 import Console.BoardDisplay;
 import javafx.application.Application;
@@ -37,9 +39,15 @@ public class GameBoard extends Application {
     private int firstClickY = -1;
     private int secondClickX = -1;
     private int secondClickY = -1;
+    private boolean isOnePlayer = false;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+    }
+
+    public void setIsOnePlayer(boolean isOnePlayer) {
+        this.isOnePlayer = isOnePlayer;
     }
 
     public void setBoard (Stage stage) throws Exception {
@@ -62,12 +70,10 @@ public class GameBoard extends Application {
         //set pieces
         ArrayList<ChessPiece> chessPieces = game.getBoard().getBoardArrayList();
         for (ChessPiece chessPiece : chessPieces) {
-            String color = chessPiece.getColor().toString().toLowerCase();
-            String letter =  chessPiece.getLetter().toLowerCase();
-            ImageView tmpView = new ImageView(picPath + color + "_" + letter + ".png");
+            ImageView tmpView = chessPiece.getImage();
             tmpView.setFitHeight(80);
             tmpView.setFitWidth(80);
-            grid.add(tmpView, chessPiece.getLocation().X(), chessPiece.getLocation().Y());
+            grid.add(chessPiece.getImage(), chessPiece.getLocation().X(), chessPiece.getLocation().Y());
         }
 
         HBox hBox = new HBox();
@@ -85,25 +91,33 @@ public class GameBoard extends Application {
         stage.setMaxHeight(700);
         stage.show();
         //highlight square when clicked
-            grid.setOnMouseClicked(e -> {
-                int col = (int) Math.floor((e.getSceneX()) / 80); //subtract to adjust for stroke size
-                int row = (int) Math.floor((e.getSceneY() - 25) / 80);
-                if (firstClickX == -1) {
-                    firstClickX = col;
-                    firstClickY = row;
-                } else {
-                    secondClickX = col;
-                    secondClickY = row;
+              grid.setOnMouseClicked( e -> {
+            int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
+            int row = (int)Math.floor((e.getSceneY()-25)/ 80);
+            if (firstClickX == -1) {
+                firstClickX = col;
+                firstClickY = row;
+            }else{
+                secondClickX = col;
+                secondClickY = row;
 
-                    try {
-                        Location from = new Location(firstClickX, firstClickY);
-                        Location to = new Location(secondClickX, secondClickY);
-                        //reset first click
-                        firstClickX = -1;
-                        firstClickY = -1;
-                        if (game.playMove(from, to)) {
-                            BoardDisplay.clearConsole();
-                            BoardDisplay.printBoard(game.getBoard());
+                try {
+                    Location from = new Location(firstClickX,firstClickY);
+                    Location to = new Location(secondClickX,secondClickY);
+                    //reset first click
+                    firstClickX = -1;
+                    firstClickY = -1;
+                    if (game.playMove(from, to)) {
+                        repaint();
+                        boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
+                        if (isOnePlayer && !isEndOfGame) {
+                            RandomAI randomAI = new RandomAI(game);
+                            Move aiMove = randomAI.getNextMove();
+                            game.playMove(aiMove.getPiece().getLocation(), aiMove.getTo());
+                            repaint();
+                        } else if (isEndOfGame) {
+                            JOptionPane.showMessageDialog(null, game.getState().toString());
+                            System.out.println(game.getState().toString());
                         } else {
                             displayAlert("Alert Message", "Invalid move!");
                         }
@@ -115,6 +129,7 @@ public class GameBoard extends Application {
                         }
                     } catch (Exception e1) {
                         e1.printStackTrace();
+
                     }
                 }
 
@@ -133,6 +148,11 @@ public class GameBoard extends Application {
                 e1.printStackTrace();
             }
         });
+    }
+
+    private void repaint() {
+        BoardDisplay.clearConsole();
+        BoardDisplay.printBoard(game.getBoard());
     }
 
     private void setRectangleColor(Rectangle rectangle, int col, int row){

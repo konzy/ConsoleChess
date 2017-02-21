@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,18 @@ import java.util.ArrayList;
 public class Queen extends ChessPiece{
 
 	public static final String LETTER = "Q";
+	private final ImageView blackImage = new ImageView(picPath + "black_q" + ".png");
+	private final ImageView whiteImage = new ImageView(picPath + "white_q" + ".png");
+
+	@Override
+	ImageView getBlackImage() {
+		return blackImage;
+	}
+
+	@Override
+	ImageView getWhiteImage() {
+		return whiteImage;
+	}
 
 	public Queen(ChessPiece.PieceColor color, Location location){
 		super(PieceType.Queen, color,true, location);

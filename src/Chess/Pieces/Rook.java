@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,18 @@ import java.util.ArrayList;
 public class Rook extends ChessPiece {
 
     public static final String LETTER = "R";
+    private final ImageView blackImage = new ImageView(picPath + "black_r" + ".png");
+    private final ImageView whiteImage = new ImageView(picPath + "white_r" + ".png");
+
+    @Override
+    ImageView getBlackImage() {
+        return blackImage;
+    }
+
+    @Override
+    ImageView getWhiteImage() {
+        return whiteImage;
+    }
 
 	public Rook(PieceColor color, Location location){
 		super(PieceType.Rook, color,true, location);
