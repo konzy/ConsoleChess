@@ -121,12 +121,13 @@ public class GameBoard extends Application {
                         } else {
                             displayAlert("Alert Message", "Invalid move!");
                         }
-                        if (game.getState() == ChessGame.GameState.PLAY) {
-                            setBoard(stage);
-                        } else {
-                            Menu menu = new Menu();
-                            menu.start(stage);
-                        }
+                    }
+                    if (game.getState() == ChessGame.GameState.PLAY) {
+                        setBoard(stage);
+                    } else {
+                        Menu menu = new Menu();
+                        menu.start(stage);
+                    }
                     } catch (Exception e1) {
                         e1.printStackTrace();
 

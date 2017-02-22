@@ -1,6 +1,7 @@
 package GUI;
 
 import Chess.ChessGame;
+import Chess.StatCollection;
 import Console.BoardDisplay;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -24,6 +25,9 @@ public class Menu extends Application {
     public Menu(){}
     @Override
     public void start(Stage stage) throws Exception {
+
+        StatCollection stats = new StatCollection();
+        stats.retrieveData();
 
         BorderPane borderPane = new BorderPane();
         Label welcomeLabel = new Label("Welcome to the Chess GUI!");
@@ -62,6 +66,8 @@ public class Menu extends Application {
         stage.show();
 
         twoPlayerBtn.setOnAction(e -> {
+            stats.incGames();
+            stats.storeData();
             ChessGame game = new ChessGame();
             GameBoard gamebrd = new GameBoard(game);
             try {
@@ -73,6 +79,9 @@ public class Menu extends Application {
         });
 
         onePlayerBtn.setOnAction(e -> {
+            stats.incGames();
+            stats.incCPU();
+            stats.storeData();
             ChessGame game = new ChessGame();
             GameBoard gamebrd = new GameBoard(game);
             try {
@@ -84,6 +93,7 @@ public class Menu extends Application {
         });
 
         statsBtn.setOnAction(e -> {
+            stats.retrieveData();
             StatsPage statsPg = new StatsPage();
             try {
                 statsPg.changeScene(stage);
