@@ -23,6 +23,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private boolean repeatableMoves;
     protected Location location;
 
+
     /**
      * Creates an abstract chess piece object.
      *

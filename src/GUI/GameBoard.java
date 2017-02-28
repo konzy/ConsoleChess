@@ -1,10 +1,14 @@
 package GUI;
 
+import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
 import Console.BoardDisplay;
+import Data.Load;
+import Data.Save;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -69,8 +74,14 @@ public class GameBoard extends Application {
         HBox hBox = new HBox();
         Button backBtn = new Button("< Menu");
         backBtn.setMinHeight(25);
+        Button saveBtn = new Button("Save");
+        saveBtn.setMinHeight(25);
+        Button loadBtn = new Button("Load");
+        loadBtn.setMinHeight(25);
+        Button replayBtn = new Button("Replay");
+        replayBtn.setMinHeight(25);
 
-        hBox.getChildren().add(backBtn);
+        hBox.getChildren().addAll(backBtn,saveBtn,loadBtn,replayBtn);
 
         borderPane.setTop(hBox);
         borderPane.setCenter(grid);
@@ -80,6 +91,7 @@ public class GameBoard extends Application {
         stage.setMaxWidth(655);
         stage.setMaxHeight(700);
         stage.show();
+        BoardDisplay.printBoard(game.getBoard());
         //highlight square when clicked
         grid.setOnMouseClicked( e -> {
             int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
@@ -100,6 +112,7 @@ public class GameBoard extends Application {
                     if (game.playMove(from, to)) {
                         BoardDisplay.clearConsole();
                         BoardDisplay.printBoard(game.getBoard());
+                        Save.autoSave(game.getBoard());
                     }
                     if (game.getState() == ChessGame.GameState.PLAY) {
                         setBoard(stage);
@@ -126,6 +139,100 @@ public class GameBoard extends Application {
                 e1.printStackTrace();
             }
         });
+        saveBtn.setOnAction(e -> {
+            try {
+                Save.save("AutoSave","save");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        loadBtn.setOnAction(e -> {
+            game = new ChessGame(Load.Load("save", game));
+            try {
+                setBoard(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+        replayBtn.setOnAction((ActionEvent e) -> {
+
+                //Replay.replayGUI(this,stage);
+            File loadFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt");
+            BufferedReader input = null;
+            try {
+			/* FileInputStream to read streams */
+                ArrayList<ChessPiece> pieces = new ArrayList<>();
+                input = new BufferedReader(new FileReader(loadFile));
+                String line;
+                String[] lineArray;
+                int y = 0;
+
+                while((line = input.readLine()) != null) {
+
+                    lineArray = line.split("\\]");
+                    if (y == 0) {
+                        pieces = new ArrayList<>();
+                    }
+                    for (int x = 0; x < lineArray.length; x = x + 2) {
+                        ChessPiece.PieceColor color;
+                        if (lineArray[x + 1].substring(1, 2).equals("B")) {
+                            color = ChessPiece.PieceColor.Black;
+                        } else {
+                            color = ChessPiece.PieceColor.White;
+                        }
+                        ChessPiece piece = null;
+                        Location location = new Location(x / 2, y);
+                        switch (lineArray[x].substring(1, 2)) {
+                            case Pawn.LETTER:
+                                piece = new Pawn(color, location);
+                                break;
+                            case Knight.LETTER:
+                                piece = new Knight(color, location);
+                                break;
+                            case Bishop.LETTER:
+                                piece = new Bishop(color, location);
+                                break;
+                            case Queen.LETTER:
+                                piece = new Queen(color, location);
+                                break;
+                            case King.LETTER:
+                                piece = new King(color, location);
+                                break;
+                            case Rook.LETTER:
+                                piece = new Rook(color, location);
+                                break;
+                        }
+                        if (piece != null) {
+                            pieces.add(piece);
+                        }
+                    }
+                    y = (y + 1) % 8;
+                    if(y == 0){
+                        ChessBoard chessBoard = new ChessBoard(pieces);
+                        game = new ChessGame(chessBoard);
+                        Thread.sleep(1000);
+                        System.out.println("hi");
+                        setBoard(stage);
+                        Thread.sleep(1000);
+                    }
+                }
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            } finally {
+                if (null != input) {
+                    try {
+                        input.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 
     private void setRectangleColor(Rectangle rectangle, int col, int row){
@@ -137,5 +244,9 @@ public class GameBoard extends Application {
             //set to lightgray
             rectangle.setFill(Color.LIGHTGRAY);
         }
+    }
+
+    public void setGame(ChessGame game){
+        this.game = game;
     }
 }
