@@ -12,5 +12,4 @@ public class LoadTest {
     public void load() throws Exception {
 
     }
-
 }
