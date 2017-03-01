@@ -127,7 +127,9 @@ public class GameBoard extends Application {
                             Menu menu = new Menu();
                             menu.start(stage);
                         }
-                    } catch (Exception e1) {
+                    }
+                    else{     displayAlert("Alert Message", "Invalid move!"); setBoard(stage);}
+                } catch (Exception e1) {
                         e1.printStackTrace();
 
                     }
@@ -158,11 +160,11 @@ public class GameBoard extends Application {
     private void setRectangleColor(Rectangle rectangle, int col, int row){
 
         if((col % 2 == 0) ^ (row % 2 == 0)){
-            //set to navy if col or row is even
-            rectangle.setFill(Color.NAVY);
+            //set to green if col or row is even
+            rectangle.setFill(Color.GREEN);
         }else{
-            //set to lightgray
-            rectangle.setFill(Color.LIGHTGRAY);
+            //set to tan
+            rectangle.setFill(Color.TAN);
         }
     }
     public static void displayAlert(String title, String message) {

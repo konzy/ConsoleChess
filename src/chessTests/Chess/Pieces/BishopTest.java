@@ -1,13 +1,19 @@
-package Chess.Pieces;
+package chessTests.Chess.Pieces;
 
 import Chess.ChessBoard;
 import Chess.Location;
+import Chess.Pieces.Bishop;
+import Chess.Pieces.ChessPiece;
+import Chess.Pieces.King;
+import Chess.Pieces.Pawn;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
 
 /**
  * Created by konzy on 2/15/2017.
