@@ -20,22 +20,16 @@ import java.util.ArrayList;
 public class Pawn extends ChessPiece {
 
     public static final String LETTER = "P";
-    private final ImageView blackImage = new ImageView(picPath + "black_p" + ".png");
-    private final ImageView whiteImage = new ImageView(picPath + "white_p" + ".png");
-
-    @Override
-    ImageView getBlackImage() {
-        return blackImage;
-    }
-
-    @Override
-    ImageView getWhiteImage() {
-        return whiteImage;
-    }
 
 	public Pawn(PieceColor color, Location location){
 		super(PieceType.Pawn, color, false, location);
+
 	}
+
+    @Override
+    public void setImage() {
+        setImage(color, LETTER);
+    }
 
     @Override
     public int value() {
@@ -75,7 +69,7 @@ public class Pawn extends ChessPiece {
             } else {
                 moveTo = new Location(location.X(), location.Y() + 2);
             }
-            if (board.getPieceAtCoord(moveTo) == null) {
+            if (board.getPieceAtCoord(moveTo) == null && potentialMoves.size() == 1) {
                 potentialMoves.add(new Move(this, moveTo));
             }
         }

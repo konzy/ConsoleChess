@@ -43,7 +43,9 @@ public class GameBoard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        for (ChessPiece chessPiece : game.getBoard().getBoardArrayList()) {
+            chessPiece.setImage();
+        }
     }
 
     public void setIsOnePlayer(boolean isOnePlayer) {
@@ -128,6 +130,8 @@ public class GameBoard extends Application {
                         } else if (isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
                             System.out.println(game.getState().toString());
+                        } else {
+                            displayAlert("Alert Message", "Invalid move!");
                         }
                         if (game.getState() == ChessGame.GameState.PLAY) {
                             setBoard(stage);
