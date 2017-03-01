@@ -24,8 +24,10 @@ public class PawnTest {
     private Pawn whiteCaptureRightPawn = new Pawn(ChessPiece.PieceColor.White, new Location(5, 6));
     private Pawn blackCaptureLeftPawn = new Pawn(ChessPiece.PieceColor.Black, new Location(5, 1));
 
-    private Rook whiteRookToCapture = new Rook(ChessPiece.PieceColor.White, new Location(6, 5));
-    private Rook blackRookToCapture = new Rook(ChessPiece.PieceColor.Black, new Location(6, 2));
+    private Rook whiteRookToCapture = new Rook(ChessPiece.PieceColor.White, new Location(6, 2));
+    private Rook blackRookToCapture = new Rook(ChessPiece.PieceColor.Black, new Location(6, 5));
+    private Rook whiteRookToCapture2 = new Rook(ChessPiece.PieceColor.White, new Location(4, 2));
+    private Rook blackRookToCapture2 = new Rook(ChessPiece.PieceColor.Black, new Location(4, 5));
 
     private Bishop whiteBlockingBishop = new Bishop(ChessPiece.PieceColor.White, new Location(5, 5));
     private Bishop blackBlockingBishop = new Bishop(ChessPiece.PieceColor.Black, new Location(5, 2));
@@ -44,12 +46,14 @@ public class PawnTest {
         pieces.add(blackCaptureLeftPawn);
         pieces.add(whiteRookToCapture);
         pieces.add(blackRookToCapture);
+        pieces.add(whiteRookToCapture2);
+        pieces.add(blackRookToCapture2);
 
         pieces.add(whiteBlockingBishop);
         pieces.add(blackBlockingBishop);
 
         pieces.add(new King(ChessPiece.PieceColor.Black, new Location(0, 7)));
-        pieces.add(new King(ChessPiece.PieceColor.White, new Location(7, 7)));
+        pieces.add(new King(ChessPiece.PieceColor.White, new Location(0, 0)));
         board = new ChessBoard(pieces);
     }
 
@@ -64,6 +68,8 @@ public class PawnTest {
         blackCaptureLeftPawn = null;
         whiteRookToCapture = null;
         blackRookToCapture = null;
+        whiteRookToCapture2 = null;
+        blackRookToCapture2 = null;
         whiteBlockingBishop = null;
         blackBlockingBishop = null;
         board = null;
@@ -86,14 +92,16 @@ public class PawnTest {
 
     @Test
     public void potentialMoves() throws Exception {
+
+        //need a no move too from starting position
         Assert.assertEquals(whiteSingleMovePawn.potentialMoves(board).size(), 1);
         Assert.assertEquals(blackSingleMovePawn.potentialMoves(board).size(), 1);
 
         Assert.assertEquals(whiteDoubleMovePawn.potentialMoves(board).size(), 2);
         Assert.assertEquals(blackDoubleMovePawn.potentialMoves(board).size(), 2);
 
-        Assert.assertEquals(whiteCaptureRightPawn.potentialMoves(board).size(), 1);
-        Assert.assertEquals(blackCaptureLeftPawn.potentialMoves(board).size(), 1);
+        Assert.assertEquals(whiteCaptureRightPawn.potentialMoves(board).size(), 2);
+        Assert.assertEquals(blackCaptureLeftPawn.potentialMoves(board).size(), 2);
 
         Assert.assertEquals(whiteSingleMovePawn.potentialMoves(board).get(0).getTo(), new Location(1,4));
         Assert.assertEquals(blackSingleMovePawn.potentialMoves(board).get(0).getTo(), new Location(1,3));
@@ -103,8 +111,10 @@ public class PawnTest {
         Assert.assertEquals(blackDoubleMovePawn.potentialMoves(board).get(0).getTo(), new Location(2,2));
         Assert.assertEquals(blackDoubleMovePawn.potentialMoves(board).get(1).getTo(), new Location(2,3));
 
-        Assert.assertEquals(whiteCaptureRightPawn.potentialMoves(board).get(0).getTo(), new Location(5,4));
-        Assert.assertEquals(blackCaptureLeftPawn.potentialMoves(board).get(0).getTo(), new Location(5,3));
+        Assert.assertEquals(whiteCaptureRightPawn.potentialMoves(board).get(0).getTo(), new Location(6,5));
+        Assert.assertEquals(blackCaptureLeftPawn.potentialMoves(board).get(0).getTo(), new Location(4,2));
+        Assert.assertEquals(whiteCaptureRightPawn.potentialMoves(board).get(1).getTo(), new Location(4,5));
+        Assert.assertEquals(blackCaptureLeftPawn.potentialMoves(board).get(1).getTo(), new Location(6,2));
     }
 
     @Test

@@ -16,22 +16,15 @@ import java.util.ArrayList;
 public class Knight extends ChessPiece{
 
     public static final String LETTER = "N";
-    private final ImageView blackImage = new ImageView(picPath + "black_n" + ".png");
-    private final ImageView whiteImage = new ImageView(picPath + "white_n" + ".png");
-
-    @Override
-    ImageView getBlackImage() {
-        return blackImage;
-    }
-
-    @Override
-    ImageView getWhiteImage() {
-        return whiteImage;
-    }
 
 	public Knight(ChessPiece.PieceColor color, Location location){
 		super(PieceType.Knight, color, false, location);
 	}
+
+    @Override
+    public void setImage() {
+        setImage(color, LETTER);
+    }
 
     @Override
     public int value() {

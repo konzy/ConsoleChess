@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.application.Application;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -15,15 +16,13 @@ import static Chess.ChessBoard.isInsideBoard;
  * location.
  */
 
-
-
-
 public abstract class ChessPiece implements Comparable, Cloneable {
     protected PieceColor color;
     private char charValue;
     private boolean repeatableMoves;
     protected Location location;
     protected String picPath = "/GUI/assets/";
+    protected ImageView image;
 
     /**
      * Creates an abstract chess piece object.
@@ -42,16 +41,15 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         }
     }
 
-    abstract ImageView getBlackImage();
-
-    abstract ImageView getWhiteImage();
-
     public ImageView getImage() {
-        if (color == PieceColor.Black) {
-            return getBlackImage();
-        }
-        return getWhiteImage();
+        return image;
     }
+
+    protected void setImage(PieceColor color, String letter) {
+        image = new ImageView(picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
+    }
+
+    public abstract void setImage();
 
     abstract public int value();
 

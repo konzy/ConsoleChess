@@ -43,7 +43,9 @@ public class GameBoard extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        for (ChessPiece chessPiece : game.getBoard().getBoardArrayList()) {
+            chessPiece.setImage();
+        }
     }
 
     public void setIsOnePlayer(boolean isOnePlayer) {

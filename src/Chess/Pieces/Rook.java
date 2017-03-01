@@ -18,22 +18,15 @@ import java.util.ArrayList;
 public class Rook extends ChessPiece {
 
     public static final String LETTER = "R";
-    private final ImageView blackImage = new ImageView(picPath + "black_r" + ".png");
-    private final ImageView whiteImage = new ImageView(picPath + "white_r" + ".png");
-
-    @Override
-    ImageView getBlackImage() {
-        return blackImage;
-    }
-
-    @Override
-    ImageView getWhiteImage() {
-        return whiteImage;
-    }
 
 	public Rook(PieceColor color, Location location){
 		super(PieceType.Rook, color,true, location);
 	}
+
+    @Override
+    public void setImage() {
+        setImage(color, LETTER);
+    }
 
     @Override
     public int value() {
