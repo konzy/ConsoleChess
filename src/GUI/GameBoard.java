@@ -102,7 +102,17 @@ public class GameBoard extends Application {
             }else{
                 secondClickX = col;
                 secondClickY = row;
-
+                //reset board if same tile is selected
+                if((firstClickX == secondClickX) && (firstClickY == secondClickY)){
+                    //reset first click
+                    firstClickX = -1;
+                    firstClickY = -1;
+                    try {
+                        setBoard(stage);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                }else{
                 try {
                     Location from = new Location(firstClickX,firstClickY);
                     Location to = new Location(secondClickX,secondClickY);
@@ -123,18 +133,22 @@ public class GameBoard extends Application {
                         } else {
                             displayAlert("Alert Message", "Invalid move!");
                         }
+                        if (game.getState() == ChessGame.GameState.PLAY) {
+                            setBoard(stage);
+                        } else {
+                            Menu menu = new Menu();
+                            menu.start(stage);
+                        }
                     }
-                    if (game.getState() == ChessGame.GameState.PLAY) {
+                    else{
+                        displayAlert("Alert Message", "Invalid move!");
                         setBoard(stage);
-                    } else {
-                        Menu menu = new Menu();
-                        menu.start(stage);
                     }
-                    } catch (Exception e1) {
+                } catch (Exception e1) {
                         e1.printStackTrace();
 
                     }
-                }
+                }}
 
                 Rectangle rectangle = new Rectangle(80, 80);
                 rectangle.setFill(Color.YELLOW);
@@ -161,11 +175,11 @@ public class GameBoard extends Application {
     private void setRectangleColor(Rectangle rectangle, int col, int row){
 
         if((col % 2 == 0) ^ (row % 2 == 0)){
-            //set to navy if col or row is even
-            rectangle.setFill(Color.NAVY);
+            //set to green if col or row is even
+            rectangle.setFill(Color.GREEN);
         }else{
-            //set to lightgray
-            rectangle.setFill(Color.LIGHTGRAY);
+            //set to tan
+            rectangle.setFill(Color.TAN);
         }
     }
     public static void displayAlert(String title, String message) {
