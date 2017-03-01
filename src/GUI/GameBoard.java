@@ -100,7 +100,17 @@ public class GameBoard extends Application {
             }else{
                 secondClickX = col;
                 secondClickY = row;
-
+                //reset board if same tile is selected
+                if((firstClickX == secondClickX) && (firstClickY == secondClickY)){
+                    //reset first click
+                    firstClickX = -1;
+                    firstClickY = -1;
+                    try {
+                        setBoard(stage);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                }else{
                 try {
                     Location from = new Location(firstClickX,firstClickY);
                     Location to = new Location(secondClickX,secondClickY);
@@ -118,8 +128,6 @@ public class GameBoard extends Application {
                         } else if (isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
                             System.out.println(game.getState().toString());
-                        } else {
-                            displayAlert("Alert Message", "Invalid move!");
                         }
                         if (game.getState() == ChessGame.GameState.PLAY) {
                             setBoard(stage);
@@ -128,12 +136,15 @@ public class GameBoard extends Application {
                             menu.start(stage);
                         }
                     }
-                    else{     displayAlert("Alert Message", "Invalid move!"); setBoard(stage);}
+                    else{
+                        displayAlert("Alert Message", "Invalid move!");
+                        setBoard(stage);
+                    }
                 } catch (Exception e1) {
                         e1.printStackTrace();
 
                     }
-                }
+                }}
 
                 Rectangle rectangle = new Rectangle(80, 80);
                 rectangle.setFill(Color.YELLOW);
