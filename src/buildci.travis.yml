@@ -3,3 +3,5 @@ jdk:
   - oraclejdk8
 sudo: false
 script:
+gradle check
+gradle assemble
