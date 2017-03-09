@@ -1,6 +1,7 @@
 package Data;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Pieces.ChessPiece;
 import Chess.Tile;
 
@@ -44,17 +45,20 @@ public class Save {
     /**
      * Autosaves the current save to the board
      *
-     * @param board
+     * @param game
      * @throws IOException
      */
-    public static void autoSave(ChessBoard board) throws IOException {
+    public static void autoSave(ChessGame game) throws IOException {
         BufferedWriter autoSaveFile = new BufferedWriter(
                 new FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt",
                         true));
-        Tile[][] currentBoard = board.getBoardArray();
-        for(int i = 0; i < currentBoard.length; i++){
-            for(int x = 0; x < currentBoard[i].length; x++) {
-                if(currentBoard[x][i]!= null) {
+        Tile[][] currentBoard = game.getBoard().getBoardArray();
+        autoSaveFile.append(game.getCurrentPlayer().name());
+        autoSaveFile.newLine();
+        autoSaveFile.flush();
+        for(int i = 0; i < currentBoard.length; i++) {
+            for (int x = 0; x < currentBoard[i].length; x++) {
+                if (currentBoard[x][i] != null) {
                     autoSaveFile.append(currentBoard[x][i].toString());
                     if (currentBoard[x][i].getPiece().color() == ChessPiece.PieceColor.Black) {
                         autoSaveFile.append(Tags.BLACK.getValue());
@@ -65,7 +69,7 @@ public class Save {
                     autoSaveFile.append(Tags.BLANK.getValue());
                     autoSaveFile.append(Tags.BLANK.getValue());
                 }
-                if(x == 7){
+                if (x == 7) {
                     autoSaveFile.newLine();
                 }
                 autoSaveFile.flush();

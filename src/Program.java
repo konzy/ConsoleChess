@@ -34,7 +34,7 @@ public class Program {
         BoardDisplay.printBoard(game.board);
         ProgramAITest.Turn turn = ProgramAITest.Turn.HUMAN;
         try {
-            Save.autoSave(game.getBoard());
+            Save.autoSave(game);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class Program {
             } else if(input.equals("load")){
                 System.out.println("What is the name of the save?");
                 String saveName = scanner.nextLine().trim();
-                game = new ChessGame(Load.Load(saveName, game));
+                game = Load.Load(saveName, game);
                 BoardDisplay.printBoard(game.board);
             } else if(!handler.isValid(input)){
                 System.out.println("Invalid input!");
@@ -60,7 +60,7 @@ public class Program {
                 Location to = handler.getTo(input);     //second half of input
                 if (game.playMove(from, to)){
                     try {
-                        Save.autoSave(game.getBoard());
+                        Save.autoSave(game);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

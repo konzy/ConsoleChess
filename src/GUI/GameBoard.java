@@ -48,7 +48,6 @@ public class GameBoard extends Application {
 
         BorderPane borderPane = new BorderPane();
         GridPane grid = new GridPane();
-
         grid.setPadding(new Insets(0,0,25,0));
 
         //set color of tiles
@@ -112,7 +111,7 @@ public class GameBoard extends Application {
                     if (game.playMove(from, to)) {
                         BoardDisplay.clearConsole();
                         BoardDisplay.printBoard(game.getBoard());
-                        Save.autoSave(game.getBoard());
+                        Save.autoSave(game);
                     }
                     if (game.getState() == ChessGame.GameState.PLAY) {
                         setBoard(stage);
@@ -147,7 +146,7 @@ public class GameBoard extends Application {
             }
         });
         loadBtn.setOnAction(e -> {
-            game = new ChessGame(Load.Load("save", game));
+            game = Load.Load("save", game);
             try {
                 setBoard(stage);
             } catch (Exception e1) {

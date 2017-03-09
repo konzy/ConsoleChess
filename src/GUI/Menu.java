@@ -2,6 +2,7 @@ package GUI;
 
 import Chess.ChessGame;
 import Console.BoardDisplay;
+import Data.Save;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -70,6 +71,7 @@ public class Menu extends Application {
                 // gamebrd.setBoard(game.board);
                 gamebrd.setBoard(stage);
                 //gamebrd.setBoard(stage);
+                Save.clearAutoSave();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
