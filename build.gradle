@@ -1,3 +1,5 @@
+import org.junit.Test
+
 apply plugin: "java"
 
 sourceCompatibility = 1.8
@@ -14,4 +16,9 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+}
+
+Test{
+    useTestNG()
+    include 'src/chessTests/**'
 }
