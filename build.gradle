@@ -1,5 +1,3 @@
-import org.junit.Test
-
 apply plugin: "java"
 
 sourceCompatibility = 1.8
