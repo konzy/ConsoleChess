@@ -4,19 +4,22 @@ import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
+import GUI.GameBoard;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by Ryan on 3/11/2017.
+ * Created by Ryan on 2/28/2017.
  */
-public class SaveTest {
-    ChessGame boardToSave;
+public class TestLoad {
+    ChessGame expected;
     @Before
     public void setup() throws Exception {
         ArrayList<ChessPiece> pieces = new ArrayList<>();
@@ -54,68 +57,40 @@ public class SaveTest {
         // Kings
         pieces.add(new King(ChessPiece.PieceColor.Black, new Location(4, 0)));
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
-        boardToSave = new ChessGame(new ChessBoard(pieces));
-        boardToSave.setCurrentPlayer(ChessPiece.PieceColor.Black);
+        expected = new ChessGame(new ChessBoard(pieces));
+        expected.setCurrentPlayer(ChessPiece.PieceColor.Black);
     }
 
     @Test
-    public void clearAutoSave() throws Exception {
-        String expected = "";
-        Save.clearAutoSave();
+    public void loadBoardTest() throws Exception {
+        ChessGame result = Load.Load("testfiles\\loadTestFile", new ChessGame());
+        assertEquals(expected.getBoard().toString(), result.getBoard().toString());
+    }
+
+    @Test
+    public void loadAutoSaveLoaded() throws Exception {
+        Load.Load("testfiles\\loadTestFile", new ChessGame());
         File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
                 "src\\Data\\Autosave.txt");
+        File expectedFileString = new File ("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+                "src\\Data\\testfiles\\loadTestFile.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
+        InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";
+        String expectedStr = "";
         int bytesRead;
         while((bytesRead = inputAutosave.read(new byte[1024])) > 0) {
             resultStr = resultStr + bytesRead;
         }
-        assertEquals(expected,resultStr);
-    }
-
-    @Test
-    public void autoSave() throws Exception {
-        Save.autoSave(boardToSave);
-        File expectedAutoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\testFiles\\autoSaveTestFile.txt");
-        BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
-        String expectedStr = "";
-        String line;
-        while((line = expectedAutosaveInput.readLine())!= null){
-            expectedStr = expectedStr + line + "\n";
-        }
-
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\Autosave.txt");
-        BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
-
-        String resultStr = "";
-        while((line = inputAutosave.readLine())!= null){
-            resultStr = resultStr + line + "\n";
-        }
-
-       assertEquals(expectedStr, resultStr);
-    }
-
-    @Test
-    public void save() throws Exception {
-        Save.save("AutoSave","testFiles\\saveTestFile");
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\Autosave.txt");
-        BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
-        String line;
-        String expectedStr = "";
-        while((line = inputAutosave.readLine())!= null){
-            expectedStr = expectedStr + line + "\n";
-        }
-        File expectedAutoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\testFiles\\saveTestFile.txt");
-        BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
-        String resultStr = "";
-        while((line = expectedAutosaveInput.readLine())!= null){
-            resultStr = resultStr + line + "\n";
+        while((bytesRead = expectedAutosave.read(new byte[1024])) > 0) {
+            expectedStr = expectedStr + bytesRead;
         }
         assertEquals(expectedStr, resultStr);
     }
 
+    @Test
+    public void loadTurnTest() throws Exception {
+        ChessGame result = Load.Load("testfiles\\loadTestFile", new ChessGame());
+        assertEquals(expected.getCurrentPlayer(), result.getCurrentPlayer());
+    }
 }
