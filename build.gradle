@@ -4,10 +4,11 @@ sourceCompatibility = 1.8
 version = '1.0'
 
 jar {
-    baseName = 'chess-gradle'
-    version = '0.1.0'
+    manifest {
+        attributes 'Implementation-Title': 'ConsoleChess',
+                'Implementation-Version': version
+    }
 }
-
 repositories {
     mavenCentral()
 }
