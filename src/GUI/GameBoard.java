@@ -77,6 +77,7 @@ public class GameBoard extends Application {
         //set pieces
         ArrayList<ChessPiece> chessPieces = game.getBoard().getBoardArrayList();
         for (ChessPiece chessPiece : chessPieces) {
+            chessPiece.setImage();
             ImageView tmpView = chessPiece.getImage();
             tmpView.setFitHeight(80);
             tmpView.setFitWidth(80);
@@ -143,12 +144,11 @@ public class GameBoard extends Application {
                             RandomAI randomAI = new RandomAI(game);
                             Move aiMove = randomAI.getNextMove();
                             game.playMove(aiMove.getPiece().getLocation(), aiMove.getTo());
+                            Save.autoSave(game);
                             repaint();
                         } else if (isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
                             System.out.println(game.getState().toString());
-                        } else {
-                            displayAlert("Alert Message", "Invalid move!");
                         }
                         if (game.getState() == ChessGame.GameState.PLAY) {
                             setBoard(stage);

@@ -8,13 +8,15 @@ import Chess.Pieces.*;
 import java.io.*;
 import java.util.ArrayList;
 
+import static Data.Save.BASE_SAVE_LOCATION;
+
 /**
  * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
  * into the autosave for replay purposes.
  */
 public class Load {
     public static ChessGame Load(String fileStr, ChessGame game) {
-        File loadFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" + fileStr + ".txt");
+        File loadFile = new File(BASE_SAVE_LOCATION + "src\\Data\\" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;

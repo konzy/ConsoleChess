@@ -10,12 +10,14 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 
+import static Data.Save.BASE_SAVE_LOCATION;
+
 /**
  * Replays all moves from the start of the game using the current autosave file as reference
  */
 public class Replay {
     public static void replayConsole(){
-        File loadFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt");
+        File loadFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\AutoSave.txt");
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
         ArrayList<ChessPiece> pieces = new ArrayList<>();
