@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,6 +59,23 @@ public class TestSave {
         boardToSave.setCurrentPlayer(ChessPiece.PieceColor.Black);
     }
 
+    @After
+    public void cleanup(){
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new
+                    FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\testFiles" +
+                    "\\saveTestFile.txt"));
+            writer.append("");
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @Test
     public void clearAutoSave() throws Exception {
         String expected = "";
@@ -99,6 +117,7 @@ public class TestSave {
 
     @Test
     public void save() throws Exception {
+        Save.autoSave(boardToSave);
         Save.save("AutoSave","testFiles\\saveTestFile");
         File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
                 "src\\Data\\Autosave.txt");
@@ -108,6 +127,7 @@ public class TestSave {
         while((line = inputAutosave.readLine())!= null){
             expectedStr = expectedStr + line + "\n";
         }
+
         File expectedAutoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
                 "src\\Data\\testFiles\\saveTestFile.txt");
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
@@ -117,5 +137,4 @@ public class TestSave {
         }
         assertEquals(expectedStr, resultStr);
     }
-
 }
