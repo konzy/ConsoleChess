@@ -25,6 +25,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import static Data.Save.BASE_SAVE_LOCATION;
+
 /**
  * Created by Elizabeth on 1/25/2017.
  */
@@ -110,8 +112,7 @@ public class Menu extends Application {
 
 
         loadBtn.setOnAction((ActionEvent e) -> {
-            File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                    "src\\Data\\Autosave.txt");
+            File autoSaveFile = new File(BASE_SAVE_LOCATION + "src\\Data\\Autosave.txt");
             try {
                 InputStream inputAutosave = new FileInputStream(autoSaveFile);
                 String resultStr = "";

@@ -3,6 +3,7 @@ package Data;
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Pieces.ChessPiece;
+import Chess.Tile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,7 +14,11 @@ import java.util.Iterator;
  * Save system for replaying and retaining moves.
  */
 
+
+
 public class Save {
+
+    public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\";
 
     public enum Tags{
         BLACK("[B]"),
@@ -37,7 +42,7 @@ public class Save {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(AUTO_SAVE_LOCATION));
+                    FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -54,7 +59,7 @@ public class Save {
      */
     public static void autoSave(ChessGame game) throws IOException {
         BufferedWriter autoSaveFile = new BufferedWriter(
-                new FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt",
+                new FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt",
                         true));
         Tile[][] currentBoard = game.getBoard().getBoardArray();
         autoSaveFile.append(game.getCurrentPlayer().name());
@@ -96,9 +101,9 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\" +
                 fromStr + ".txt");
-        File saveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" +
+        File saveFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\" +
                 toStr + ".txt");
 
         if(!saveFile.exists()){
