@@ -20,7 +20,7 @@ dependencies {
 test{
     systemProperties 'property': 'value'
     useTestNG()
-    include 'src/chessTests/**'
+    include 'src/chessTests/..*'
     testLogging.showStandardStreams = true
 
     // set heap size for the test JVM(s)
