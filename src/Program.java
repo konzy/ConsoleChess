@@ -1,11 +1,9 @@
-import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
-import Chess.Move;
 import Console.BoardDisplay;
 import Console.InputHandler;
 import Data.Load;
-import Data.Replay;
+import GUI.Replay;
 import Data.Save;
 
 import java.io.IOException;
