@@ -42,5 +42,5 @@ test {
 }
 
 task testData(type: Test){
-    include '**/SuiteData.*'
+    include '**/SuiteData.class'
 }
