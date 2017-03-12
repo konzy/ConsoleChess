@@ -3,6 +3,8 @@ package GUI;
 import Chess.ChessGame;
 import Chess.StatCollection;
 import Console.BoardDisplay;
+import Data.Load;
+import Data.Save;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,6 +19,11 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * Created by Elizabeth on 1/25/2017.
@@ -34,16 +41,19 @@ public class Menu extends Application {
 
         Button onePlayerBtn = new Button("One Player");
         Button twoPlayerBtn = new Button("Two Player");
+        Button loadBtn = new Button("Load");
         Button statsBtn = new Button("Stats");
 
         //set widths of buttons to be the same
         onePlayerBtn.setMaxWidth(200);
         twoPlayerBtn.setMaxWidth(200);
+        loadBtn.setMaxWidth(200);
         statsBtn.setMaxWidth(200);
 
         //set heights of buttons to be the same
         onePlayerBtn.setMinHeight(50);
         twoPlayerBtn.setMinHeight(50);
+        loadBtn.setMinHeight(50);
         statsBtn.setMinHeight(50);
 
         VBox vBox = new VBox();
@@ -54,6 +64,7 @@ public class Menu extends Application {
         vBox.getChildren().add(welcomeLabel);
         vBox.getChildren().add(onePlayerBtn);
         vBox.getChildren().add(twoPlayerBtn);
+        vBox.getChildren().add(loadBtn);
         vBox.getChildren().add(statsBtn);
 
         borderPane.setCenter(vBox);
@@ -89,6 +100,35 @@ public class Menu extends Application {
                 gamebrd.start(null);
                 gamebrd.setIsOnePlayer(true);
                 gamebrd.setBoard(stage);
+
+                //gamebrd.setBoard(stage);
+                Save.clearAutoSave();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+
+        loadBtn.setOnAction((ActionEvent e) -> {
+            File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+                    "src\\Data\\Autosave.txt");
+            try {
+                InputStream inputAutosave = new FileInputStream(autoSaveFile);
+                String resultStr = "";
+                int bytesRead;
+                while((bytesRead = inputAutosave.read(new byte[1024])) > 0) {
+                    resultStr = resultStr + bytesRead;
+                }
+
+                if(!resultStr.equals("")) {
+                    ChessGame game = new ChessGame();
+                    game = Load.Load("AutoSave", game);
+                    GameBoard gamebrd = new GameBoard(game);
+
+                    //Sets up chess game, initial player is white, prints board to console
+                    gamebrd.setBoard(stage);
+                }
+
             } catch (Exception e1) {
                 e1.printStackTrace();
             }

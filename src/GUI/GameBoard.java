@@ -1,12 +1,17 @@
 package GUI;
 
+
+import Chess.ChessBoard;
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import Chess.Pieces.*;
 import Console.BoardDisplay;
+import Data.Load;
+import Data.Save;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,11 +27,12 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 
+import java.io.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Created by Elizabeth on 1/26/2017.
+ *
  */
 public class GameBoard extends Application {
 
@@ -57,7 +63,6 @@ public class GameBoard extends Application {
 
         BorderPane borderPane = new BorderPane();
         GridPane grid = new GridPane();
-
         grid.setPadding(new Insets(0,0,25,0));
 
         //set color of tiles
@@ -81,8 +86,14 @@ public class GameBoard extends Application {
         HBox hBox = new HBox();
         Button backBtn = new Button("< Menu");
         backBtn.setMinHeight(25);
+        Button saveBtn = new Button("Save");
+        saveBtn.setMinHeight(25);
+        Button loadBtn = new Button("Load");
+        loadBtn.setMinHeight(25);
+        Button replayBtn = new Button("Replay");
+        replayBtn.setMinHeight(25);
 
-        hBox.getChildren().add(backBtn);
+        hBox.getChildren().addAll(backBtn,saveBtn,loadBtn,replayBtn);
 
         borderPane.setTop(hBox);
         borderPane.setCenter(grid);
@@ -92,6 +103,7 @@ public class GameBoard extends Application {
         stage.setMaxWidth(655);
         stage.setMaxHeight(700);
         stage.show();
+        BoardDisplay.printBoard(game.getBoard());
         //highlight square when clicked
               grid.setOnMouseClicked( e -> {
             int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
@@ -120,6 +132,11 @@ public class GameBoard extends Application {
                     firstClickX = -1;
                     firstClickY = -1;
                     if (game.playMove(from, to)) {
+
+                        BoardDisplay.clearConsole();
+                        BoardDisplay.printBoard(game.getBoard());
+                        Save.autoSave(game);
+
                         repaint();
                         boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
                         if (isOnePlayer && !isEndOfGame) {
@@ -165,6 +182,25 @@ public class GameBoard extends Application {
                 e1.printStackTrace();
             }
         });
+        saveBtn.setOnAction(e -> {
+            try {
+                Save.save("AutoSave","save");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        loadBtn.setOnAction(e -> {
+            game = Load.Load("save", game);
+            try {
+                setBoard(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+        replayBtn.setOnAction((ActionEvent e) -> {
+            Replay.replayConsole();
+        });
+
     }
 
     private void repaint() {
@@ -182,6 +218,12 @@ public class GameBoard extends Application {
             rectangle.setFill(Color.TAN);
         }
     }
+
+
+    public void setGame(ChessGame game){
+        this.game = game;
+    }
+
     public static void displayAlert(String title, String message) {
         Stage window = new Stage();
 
@@ -209,5 +251,4 @@ public class GameBoard extends Application {
         window.setScene(scene);
         window.showAndWait();
     }
-
 }
