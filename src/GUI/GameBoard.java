@@ -24,7 +24,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Created by Elizabeth on 1/26/2017.
+ *
  */
 public class GameBoard extends Application {
 
@@ -154,72 +154,41 @@ public class GameBoard extends Application {
             }
         });
         replayBtn.setOnAction((ActionEvent e) -> {
-
-                //Replay.replayGUI(this,stage);
             File loadFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt");
             BufferedReader input = null;
+            ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
+            ArrayList<ChessPiece> pieces = new ArrayList<>();
             try {
 			/* FileInputStream to read streams */
-                ArrayList<ChessPiece> pieces = new ArrayList<>();
                 input = new BufferedReader(new FileReader(loadFile));
                 String line;
                 String[] lineArray;
                 int y = 0;
-
-                while((line = input.readLine()) != null) {
-
-                    lineArray = line.split("\\]");
-                    if (y == 0) {
-                        pieces = new ArrayList<>();
-                    }
-                    for (int x = 0; x < lineArray.length; x = x + 2) {
-                        ChessPiece.PieceColor color;
-                        if (lineArray[x + 1].substring(1, 2).equals("B")) {
-                            color = ChessPiece.PieceColor.Black;
+                while ((line = input.readLine()) != null) {
+                    if(y % 9 == 0) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                        if(line.equals(ChessPiece.PieceColor.Black.name())){
+                            System.out.println( ChessPiece.PieceColor.White);
                         } else {
-                            color = ChessPiece.PieceColor.White;
+                            System.out.println( ChessPiece.PieceColor.Black);
                         }
-                        ChessPiece piece = null;
-                        Location location = new Location(x / 2, y);
-                        switch (lineArray[x].substring(1, 2)) {
-                            case Pawn.LETTER:
-                                piece = new Pawn(color, location);
-                                break;
-                            case Knight.LETTER:
-                                piece = new Knight(color, location);
-                                break;
-                            case Bishop.LETTER:
-                                piece = new Bishop(color, location);
-                                break;
-                            case Queen.LETTER:
-                                piece = new Queen(color, location);
-                                break;
-                            case King.LETTER:
-                                piece = new King(color, location);
-                                break;
-                            case Rook.LETTER:
-                                piece = new Rook(color, location);
-                                break;
+                        pieces = new ArrayList<>();
+                    } else {
+                        lineArray = line.split("\\]");
+                        for (int i = 0; i < lineArray.length; i = i + 2) {
+                            System.out.print("[" + lineArray[i].substring(1, 2) + "]");
                         }
-                        if (piece != null) {
-                            pieces.add(piece);
-                        }
+                        System.out.println("");
                     }
-                    y = (y + 1) % 8;
-                    if(y == 0){
-                        ChessBoard chessBoard = new ChessBoard(pieces);
-                        game = new ChessGame(chessBoard);
-                        Thread.sleep(1000);
-                        System.out.println("hi");
-                        setBoard(stage);
-                        Thread.sleep(1000);
-                    }
+                    y++;
                 }
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (Exception ex) {
                 ex.printStackTrace();
             } finally {
                 if (null != input) {
