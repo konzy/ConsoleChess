@@ -1,6 +1,7 @@
 package GUI;
 
 import Chess.ChessGame;
+import Chess.StatCollection;
 import Console.BoardDisplay;
 import Data.Load;
 import Data.Save;
@@ -31,6 +32,9 @@ public class Menu extends Application {
     public Menu(){}
     @Override
     public void start(Stage stage) throws Exception {
+
+        StatCollection stats = new StatCollection();
+//        stats.retrieveData();
 
         BorderPane borderPane = new BorderPane();
         Label welcomeLabel = new Label("Welcome to the Chess GUI!");
@@ -72,14 +76,31 @@ public class Menu extends Application {
         stage.setMinHeight(700);
         stage.show();
 
-        onePlayerBtn.setOnAction(e -> {
+        twoPlayerBtn.setOnAction(e -> {
+//            stats.incGames();
+//            stats.storeData();
             ChessGame game = new ChessGame();
             GameBoard gamebrd = new GameBoard(game);
             try {
-                //Sets up chess game, initial player is white, prints board to console
-                //BoardDisplay.clearConsole();
-                // gamebrd.setBoard(game.board);
+                gamebrd.start(null);
+                gamebrd.setIsOnePlayer(false);
                 gamebrd.setBoard(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        onePlayerBtn.setOnAction(e -> {
+//            stats.incGames();
+//            stats.incCPU();
+//            stats.storeData();
+            ChessGame game = new ChessGame();
+            GameBoard gamebrd = new GameBoard(game);
+            try {
+                gamebrd.start(null);
+                gamebrd.setIsOnePlayer(true);
+                gamebrd.setBoard(stage);
+
                 //gamebrd.setBoard(stage);
                 Save.clearAutoSave();
             } catch (Exception e1) {
@@ -107,12 +128,14 @@ public class Menu extends Application {
                     //Sets up chess game, initial player is white, prints board to console
                     gamebrd.setBoard(stage);
                 }
+
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
         });
 
         statsBtn.setOnAction(e -> {
+//            stats.retrieveData();
             StatsPage statsPg = new StatsPage();
             try {
                 statsPg.changeScene(stage);

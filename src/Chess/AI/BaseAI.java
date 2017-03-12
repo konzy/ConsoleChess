@@ -16,7 +16,7 @@ public abstract class BaseAI {
     protected ChessGame currentGame;
     protected ChessBoard board;
     protected Random random;
-    private static final long DEFAULT_SEED = 1234;
+    public static final long DEFAULT_SEED = 1234;
 
     BaseAI(ChessGame game) {
         this(game, DEFAULT_SEED);
@@ -32,6 +32,7 @@ public abstract class BaseAI {
         board = currentGame.getBoard();
         random = new Random(seed);
     }
+
 
     public abstract Move getNextMove();
 

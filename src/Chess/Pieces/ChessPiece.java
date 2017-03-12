@@ -4,6 +4,8 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.application.Application;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -14,20 +16,19 @@ import static Chess.ChessBoard.isInsideBoard;
  * location.
  */
 
-
-
-
 public abstract class ChessPiece implements Comparable, Cloneable {
     protected PieceColor color;
     private char charValue;
     private boolean repeatableMoves;
     protected Location location;
+    protected String picPath = "/GUI/assets/";
+    protected ImageView image;
 
     /**
      * Creates an abstract chess piece object.
      *
      * @param type the kind of piece this is
-     * @param color either white or black
+     * @param color either whiteImage or blackImage
      * @param repeatableMoves whether moveModifiers extend to the edge of the board
      */
     protected ChessPiece(PieceType type, PieceColor color, boolean repeatableMoves, Location location){
@@ -40,15 +41,25 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         }
     }
 
+    public ImageView getImage() {
+        return image;
+    }
+
+    protected void setImage(PieceColor color, String letter) {
+        image = new ImageView(picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
+    }
+
+    public abstract void setImage();
+
     abstract public int value();
 
     @Override
     public int compareTo(Object o) {
         if (o instanceof ChessPiece) {
-            if (this.location.X() == ((ChessPiece) o).location.X()) {
-                return this.location.Y() - ((ChessPiece) o).location.Y();
-            } else {
+            if (this.location.Y() == ((ChessPiece) o).location.Y()) {
                 return this.location.X() - ((ChessPiece) o).location.X();
+            } else {
+                return this.location.Y() - ((ChessPiece) o).location.Y();
             }
         }
         return 0;

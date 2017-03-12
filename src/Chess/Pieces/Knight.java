@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,11 @@ public class Knight extends ChessPiece{
 	public Knight(ChessPiece.PieceColor color, Location location){
 		super(PieceType.Knight, color, false, location);
 	}
+
+    @Override
+    public void setImage() {
+        setImage(color, LETTER);
+    }
 
     @Override
     public int value() {

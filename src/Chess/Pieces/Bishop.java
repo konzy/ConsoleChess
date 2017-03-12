@@ -4,6 +4,7 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -14,9 +15,15 @@ public class Bishop extends ChessPiece {
 
     public static final String LETTER = "B";
 
+
 	public Bishop(PieceColor color, Location location){
 		super(PieceType.Bishop, color, true, location);
 	}
+
+	@Override
+    public void setImage() {
+        setImage(color, LETTER);
+    }
 
     @Override
     public int value() {

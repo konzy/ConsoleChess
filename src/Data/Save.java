@@ -3,15 +3,18 @@ package Data;
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Pieces.ChessPiece;
-import Chess.Tile;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Save system for replaying and retaining moves.
  */
 
 public class Save {
+
     public enum Tags{
         BLACK("[B]"),
         WHITE("[W]"),
@@ -29,11 +32,12 @@ public class Save {
     /**
      * Clears out the current autosave to allow for a new game to write to the autosave file
      */
+
     public static void clearAutoSave(){
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt"));
+                    FileWriter(AUTO_SAVE_LOCATION));
             writer.append("");
             writer.flush();
             writer.close();
@@ -68,6 +72,7 @@ public class Save {
                 } else {
                     autoSaveFile.append(Tags.BLANK.getValue());
                     autoSaveFile.append(Tags.BLANK.getValue());
+
                 }
                 if (x == 7) {
                     autoSaveFile.newLine();
@@ -78,6 +83,7 @@ public class Save {
         autoSaveFile.flush();
         autoSaveFile.close();
     }
+
 
     /**
      *  Save takes the fromStr file and copies it into the toStr file
@@ -94,13 +100,14 @@ public class Save {
                 fromStr + ".txt");
         File saveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" +
                 toStr + ".txt");
+
         if(!saveFile.exists()){
             saveFile.createNewFile();
         }
         try {
-			/* FileInputStream to read streams */
+            /* FileInputStream to read streams */
             InputStream input = new FileInputStream(autoSaveFile);
-			/* FileOutputStream to write streams */
+            /* FileOutputStream to write streams */
             OutputStream output = new FileOutputStream(saveFile);
 
             byte[] buf = new byte[1024];
