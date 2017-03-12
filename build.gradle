@@ -19,5 +19,4 @@ dependencies {
 
 task testData(type: Test){
     include '**/SuiteData.*'
-    reports.junit.Xml.destination = "$buildDir/test-resulsts/DataTestSuite"
 }
