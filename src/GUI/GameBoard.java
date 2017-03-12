@@ -154,51 +154,7 @@ public class GameBoard extends Application {
             }
         });
         replayBtn.setOnAction((ActionEvent e) -> {
-            File loadFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\AutoSave.txt");
-            BufferedReader input = null;
-            ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
-            ArrayList<ChessPiece> pieces = new ArrayList<>();
-            try {
-			/* FileInputStream to read streams */
-                input = new BufferedReader(new FileReader(loadFile));
-                String line;
-                String[] lineArray;
-                int y = 0;
-                while ((line = input.readLine()) != null) {
-                    if(y % 9 == 0) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                        if(line.equals(ChessPiece.PieceColor.Black.name())){
-                            System.out.println( ChessPiece.PieceColor.White);
-                        } else {
-                            System.out.println( ChessPiece.PieceColor.Black);
-                        }
-                        pieces = new ArrayList<>();
-                    } else {
-                        lineArray = line.split("\\]");
-                        for (int i = 0; i < lineArray.length; i = i + 2) {
-                            System.out.print("[" + lineArray[i].substring(1, 2) + "]");
-                        }
-                        System.out.println("");
-                    }
-                    y++;
-                }
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } finally {
-                if (null != input) {
-                    try {
-                        input.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
+            Replay.replayConsole();
         });
 
     }

@@ -49,7 +49,7 @@ public class Menu extends Application {
         //set heights of buttons to be the same
         onePlayerBtn.setMinHeight(50);
         twoPlayerBtn.setMinHeight(50);
-        loadBtn.setMaxHeight(50);
+        loadBtn.setMinHeight(50);
         statsBtn.setMinHeight(50);
 
         VBox vBox = new VBox();
