@@ -4,84 +4,94 @@ import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
-import Console.BoardDisplay;
 
 import java.io.*;
 import java.util.ArrayList;
 
+import static Data.Save.BASE_SAVE_LOCATION;
+
 /**
  * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
- *  into the autosave for replay purposes.
+ * into the autosave for replay purposes.
  */
 public class Load {
-    public static ChessBoard Load(String str, ChessGame game) {
-        File loadFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\" + str + ".txt");
+    public static ChessGame Load(String fileStr, ChessGame game) {
+        File loadFile = new File(BASE_SAVE_LOCATION + "src\\Data\\" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         BufferedReader input = null;
+        ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
+
         try {
             /* FileInputStream to read streams */
             input = new BufferedReader(new FileReader(loadFile));
             String line;
             String[] lineArray;
             int y = 0;
-
             while ((line = input.readLine()) != null) {
-
-                lineArray = line.split("\\]");
-
-                for (int i = 0; i < lineArray.length; i = i + 2) {
-                    ChessPiece.PieceColor color;
-                    if (lineArray[i + 1].equals("Bl")) {
-                        color = ChessPiece.PieceColor.Black;
+                if(y == 0) {
+                    if(line.equals(ChessPiece.PieceColor.White.name())){
+                        currentPlayer = ChessPiece.PieceColor.White;
                     } else {
-                        color = ChessPiece.PieceColor.White;
+                        currentPlayer = ChessPiece.PieceColor.Black;
                     }
-                    ChessPiece piece = null;
-                    Location location = new Location(i / 2, y);
-                    switch (lineArray[i].substring(1,2)) {
-                        case Pawn.LETTER:
-                            piece = new Pawn(color, location);
-                            break;
-                        case Knight.LETTER:
-                            piece = new Knight(color, location);
-                            break;
-                        case Bishop.LETTER:
-                            piece = new Bishop(color, location);
-                            break;
-                        case Queen.LETTER:
-                            piece = new Queen(color, location);
-                            break;
-                        case King.LETTER:
-                            piece = new King(color, location);
-                            break;
-                        case Rook.LETTER:
-                            piece = new Rook(color, location);
-                            break;
-                    }
-                    if (piece != null) {
-                        pieces.add(piece);
+                    pieces = new ArrayList<>();
+                } else {
+                    lineArray = line.split("\\]");
+                    for (int x = 0; x < lineArray.length; x = x + 2) {
+                        ChessPiece.PieceColor color;
+                        if (lineArray[x + 1].substring(1, 2).equals("B")) {
+                            color = ChessPiece.PieceColor.Black;
+                        } else {
+                            color = ChessPiece.PieceColor.White;
+                        }
+                        ChessPiece piece = null;
+                        Location location = new Location(x / 2, y - 1);
+                        switch (lineArray[x].substring(1, 2)) {
+                            case Pawn.LETTER:
+                                piece = new Pawn(color, location);
+                                break;
+                            case Knight.LETTER:
+                                piece = new Knight(color, location);
+                                break;
+                            case Bishop.LETTER:
+                                piece = new Bishop(color, location);
+                                break;
+                            case Queen.LETTER:
+                                piece = new Queen(color, location);
+                                break;
+                            case King.LETTER:
+                                piece = new King(color, location);
+                                break;
+                            case Rook.LETTER:
+                                piece = new Rook(color, location);
+                                break;
+                        }
+                        if (piece != null) {
+                            pieces.add(piece);
+                        }
                     }
                 }
-                y = (y + 1) % 8;
+                y = (y + 1) % 9;
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if (input != null) {
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             try {
-                input.close();
+                Save.save(fileStr, "AutoSave");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        try {
-            Save.Save(str,"AutoSave");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         ChessBoard chessBoard = new ChessBoard(pieces);
-        BoardDisplay.printBoard(chessBoard);
-        return chessBoard;
-
+        game = new ChessGame(chessBoard);
+        game.setCurrentPlayer(currentPlayer);
+        return game;
     }
 }

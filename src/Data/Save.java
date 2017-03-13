@@ -1,7 +1,9 @@
 package Data;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Pieces.ChessPiece;
+import Chess.Tile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,20 +14,35 @@ import java.util.Iterator;
  * Save system for replaying and retaining moves.
  */
 
+
+
 public class Save {
+
+    public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\";
+
+    public enum Tags{
+        BLACK("[B]"),
+        WHITE("[W]"),
+        BLANK("[ ]");
+        private String value;
+        Tags(String value){
+                this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
     /**
-     *
+     * Clears out the current autosave to allow for a new game to write to the autosave file
      */
-
-    private static String ROOT_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\src\\Data\\";
-    private static String AUTO_SAVE_LOCATION = ROOT_SAVE_LOCATION + "AutoSave.txt";
-
 
     public static void clearAutoSave(){
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(AUTO_SAVE_LOCATION));
+                    FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -34,28 +51,35 @@ public class Save {
         }
     }
 
-    public static void AutoSave(ChessBoard board) throws IOException {
-        BufferedWriter autoSaveFile = new BufferedWriter(new FileWriter(AUTO_SAVE_LOCATION,true));
-        ArrayList<ChessPiece> pieces = board.getBoardArrayList();
-        Collections.sort(pieces);
-        Iterator<ChessPiece> iterator = pieces.iterator();
-        ChessPiece piece = null;
-        if (iterator.hasNext()) {
-            piece = iterator.next();
-        }
-
-        for(int y = 0; y < 8; y++){
-            for(int x = 0; x < 8; x++) {
-                if (piece != null && piece.getLocation().X() == x && piece.getLocation().Y() == y) {
-                    autoSaveFile.append(piece.getLetter());
-                    autoSaveFile.append(piece.getColor().toString().toLowerCase().charAt(0));
-                    if (iterator.hasNext()) {
-                        piece = iterator.next();
+    /**
+     * Autosaves the current save to the board
+     *
+     * @param game
+     * @throws IOException
+     */
+    public static void autoSave(ChessGame game) throws IOException {
+        BufferedWriter autoSaveFile = new BufferedWriter(
+                new FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt",
+                        true));
+        Tile[][] currentBoard = game.getBoard().getBoardArray();
+        autoSaveFile.append(game.getCurrentPlayer().name());
+        autoSaveFile.newLine();
+        autoSaveFile.flush();
+        for(int i = 0; i < currentBoard.length; i++) {
+            for (int x = 0; x < currentBoard[i].length; x++) {
+                if (currentBoard[x][i] != null) {
+                    autoSaveFile.append(currentBoard[x][i].toString());
+                    if (currentBoard[x][i].getPiece().color() == ChessPiece.PieceColor.Black) {
+                        autoSaveFile.append(Tags.BLACK.getValue());
+                    } else if (currentBoard[x][i].getPiece().color() == ChessPiece.PieceColor.White) {
+                        autoSaveFile.append(Tags.WHITE.getValue());
                     }
                 } else {
-                    autoSaveFile.append("  ");
+                    autoSaveFile.append(Tags.BLANK.getValue());
+                    autoSaveFile.append(Tags.BLANK.getValue());
+
                 }
-                if(x == 7){
+                if (x == 7) {
                     autoSaveFile.newLine();
                 }
                 autoSaveFile.flush();
@@ -65,9 +89,23 @@ public class Save {
         autoSaveFile.close();
     }
 
-    public static void Save(String fromStr, String toStr) throws IOException {
-        File autoSaveFile = new File(ROOT_SAVE_LOCATION + fromStr + ".txt");
-        File saveFile = new File(ROOT_SAVE_LOCATION + toStr + ".txt");
+
+    /**
+     *  Save takes the fromStr file and copies it into the toStr file
+     *
+     *  This is usually used for taking the auto save and writing it to a new file or taking a load file and loading
+     *  it into the auto
+     *
+     * @param fromStr
+     * @param toStr
+     * @throws IOException
+     */
+    public static void save(String fromStr,String toStr) throws IOException {
+        File autoSaveFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\" +
+                fromStr + ".txt");
+        File saveFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\" +
+                toStr + ".txt");
+
         if(!saveFile.exists()){
             saveFile.createNewFile();
         }

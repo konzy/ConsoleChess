@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class ChessGame implements Cloneable {
 
-    private ChessBoard board;
+    public ChessBoard board;
     private PieceColor currentPlayer;
 
 
@@ -51,6 +51,10 @@ public class ChessGame implements Cloneable {
 
     public PieceColor getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(PieceColor color) {
+        currentPlayer = color;
     }
 
     /**
