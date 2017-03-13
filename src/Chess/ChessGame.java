@@ -30,7 +30,11 @@ public class ChessGame implements Cloneable {
     }
 
     public ChessGame(ChessBoard board) {
-        this.board = board;
+        if (board == null) {
+            this.board = new ChessBoard(new ArrayList<>());
+        } else {
+            this.board = board;
+        }
         currentPlayer = PieceColor.White;
     }
 
@@ -55,7 +59,7 @@ public class ChessGame implements Cloneable {
      * @param to future position of the game piece
      */
     public boolean playMove(Location from, Location to){
-        ChessPiece piece = board.getPieceAtCoord(from);
+        ChessPiece piece = board.getPieceAtLocation(from);
         Move move = new Move(piece, to);
         if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
             board.move(move);

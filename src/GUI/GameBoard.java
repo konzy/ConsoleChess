@@ -130,8 +130,6 @@ public class GameBoard extends Application {
                         } else if (isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
                             System.out.println(game.getState().toString());
-                        } else {
-                            displayAlert("Alert Message", "Invalid move!");
                         }
                         if (game.getState() == ChessGame.GameState.PLAY) {
                             setBoard(stage);

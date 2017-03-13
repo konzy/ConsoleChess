@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class ChessBoard implements Cloneable {
-    private ArrayList<ChessPiece> pieces = new ArrayList<>();
+    private ArrayList<ChessPiece> pieces;
 
     /**
      * Initializes the chess board of a 8x8 2d Tile array
@@ -20,10 +20,12 @@ public class ChessBoard implements Cloneable {
     }
 
     public ChessBoard(ArrayList<ChessPiece> board) {
-        pieces = board;
+
+
+        pieces = (ArrayList<ChessPiece>) board.clone();
     }
 
-    public ChessPiece getPieceAtCoord(Location location) {
+    public ChessPiece getPieceAtLocation(Location location) {
         for (ChessPiece piece : pieces) {
             if (piece.getLocation().equals(location)) {
                 return piece;
@@ -40,12 +42,12 @@ public class ChessBoard implements Cloneable {
         return location.X() >= 0 && location.X() <= 7 && location.Y() >= 0 && location.Y() <= 7;
     }
 
-    public void removePiece(Location location) {
-        pieces.remove(getPieceAtCoord(location));
+    public boolean removePiece(Location location) {
+        return removePiece(getPieceAtLocation(location));
     }
 
-    public void removePiece(ChessPiece pieceToRemove) {
-        removePiece(pieceToRemove.getLocation());
+    public boolean removePiece(ChessPiece pieceToRemove) {
+        return pieces.remove(pieceToRemove);
     }
 
     public void move(Move move) {
@@ -123,6 +125,7 @@ public class ChessBoard implements Cloneable {
      * Populates the board with the chess pieces of a typical starting slate of a board.
      */
     private void fillBoard(){
+        pieces = new ArrayList<>();
         // Pawns
         for(int i = 0; i < 8; i++){
             pieces.add(new Pawn(ChessPiece.PieceColor.Black, new Location(i, 1)));
@@ -165,10 +168,12 @@ public class ChessBoard implements Cloneable {
         return result;
     }
 
-    public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor opponent) {
+    public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
         ArrayList<Move> potentialMoves = new ArrayList<>();
         for (ChessPiece piece : pieces) {
-            potentialMoves.addAll(piece.potentialMoves(this));
+            if (piece.color().equals(color)) {
+                potentialMoves.addAll(piece.potentialMoves(this));
+            }
         }
         return potentialMoves;
     }

@@ -43,6 +43,11 @@ public class ChessPieceTest {
     }
 
     @Test
+    public void testCompareTo() throws Exception {
+        Assert.assertEquals(king1.compareTo(new Object()), 0);
+    }
+
+    @Test
     public void equals() throws Exception {
         Bishop bishop = null;
         Assert.assertEquals(testBishop1.equals(bishop), false);
