@@ -1,6 +1,5 @@
 package Data;
 
-
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
