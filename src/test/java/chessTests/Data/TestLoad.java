@@ -5,6 +5,7 @@ import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
 import Data.Load;
+import Data.Save;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,10 +71,8 @@ public class TestLoad {
     @Test
     public void loadAutoSaveLoaded() throws Exception {
         Load.Load("testFiles\\loadTestFile", new ChessGame());
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\Autosave.txt");
-        File expectedFileString = new File ("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\testFiles\\loadTestFile.txt");
+        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
+        File expectedFileString = new File (Save.BASE_SAVE_LOCATION + "\\Data\\testFiles\\loadTestFile.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";
