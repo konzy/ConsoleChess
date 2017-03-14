@@ -1,7 +1,6 @@
 package GUI;
 
 
-import Chess.ChessBoard;
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
