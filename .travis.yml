@@ -5,7 +5,6 @@ sudo: false
 directories:
   -&TEST
 script:
-  - gradle check
   - gradle assemble
   - gradle test --stacktrace
 

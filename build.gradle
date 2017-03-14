@@ -18,6 +18,16 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-task testData(type: Test){
-    include '**/SuiteData.class'
+test {
+
+    testLogging {
+
+        events 'skipped', 'failed', 'standard_error'
+
+        exceptionFormat 'full'
+
+    }
+
+    maxHeapSize = '512m'
+
 }
