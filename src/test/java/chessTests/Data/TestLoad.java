@@ -63,17 +63,17 @@ public class TestLoad {
 
     @Test
     public void loadBoardTest() throws Exception {
-        ChessGame result = Load.Load("testfiles\\loadTestFile", new ChessGame());
+        ChessGame result = Load.Load("testFiles\\loadTestFile", new ChessGame());
         assertEquals(expected.getBoard().toString(), result.getBoard().toString());
     }
 
     @Test
     public void loadAutoSaveLoaded() throws Exception {
-        Load.Load("testfiles\\loadTestFile", new ChessGame());
+        Load.Load("testFiles\\loadTestFile", new ChessGame());
         File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
                 "src\\Data\\Autosave.txt");
         File expectedFileString = new File ("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
-                "src\\Data\\testfiles\\loadTestFile.txt");
+                "src\\Data\\testFiles\\loadTestFile.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";
@@ -90,7 +90,7 @@ public class TestLoad {
 
     @Test
     public void loadTurnTest() throws Exception {
-        ChessGame result = Load.Load("testfiles\\loadTestFile", new ChessGame());
+        ChessGame result = Load.Load("testFiles\\loadTestFile", new ChessGame());
         assertEquals(expected.getCurrentPlayer(), result.getCurrentPlayer());
     }
 }
