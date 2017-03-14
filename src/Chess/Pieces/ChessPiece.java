@@ -4,7 +4,6 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
-import javafx.application.Application;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -96,11 +95,11 @@ public abstract class ChessPiece implements Comparable, Cloneable {
             Location to = location;
             do {
                 to = new Location(to.X() + moveOffset.x, to.Y() + moveOffset.y);
-                if (isInsideBoard(to) && (board.getPieceAtCoord(to) == null || board.getPieceAtCoord(to).color() != color)) {
+                if (isInsideBoard(to) && (board.getPieceAtLocation(to) == null || board.getPieceAtLocation(to).color() != color)) {
                     toLocations.add(new Move(this, to));
                 }
                 // to continue with loop, last coord must be inside the board, blank and the current piece must be able to repeat its moves
-            } while (isInsideBoard(to) && board.getPieceAtCoord(to) == null && repeatableMoves);
+            } while (isInsideBoard(to) && board.getPieceAtLocation(to) == null && repeatableMoves);
         }
         return toLocations;
     }

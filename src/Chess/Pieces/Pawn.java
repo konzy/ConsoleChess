@@ -4,7 +4,6 @@ import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
 import Chess.MoveOffset;
-import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -57,7 +56,7 @@ public class Pawn extends ChessPiece {
         } else {
             moveTo = new Location(location.X(), location.Y() + 1);
         }
-        if (board.getPieceAtCoord(moveTo) == null) {
+        if (board.getPieceAtLocation(moveTo) == null) {
             potentialMoves.add(new Move(this, moveTo));
         }
 
@@ -69,7 +68,7 @@ public class Pawn extends ChessPiece {
             } else {
                 moveTo = new Location(location.X(), location.Y() + 2);
             }
-            if (board.getPieceAtCoord(moveTo) == null && potentialMoves.size() == 1) {
+            if (board.getPieceAtLocation(moveTo) == null && potentialMoves.size() == 1) {
                 potentialMoves.add(new Move(this, moveTo));
             }
         }
@@ -80,7 +79,7 @@ public class Pawn extends ChessPiece {
         } else {
             moveTo = new Location(location.X() - 1, location.Y() + 1);
         }
-        ChessPiece moveToPiece = board.getPieceAtCoord(moveTo);
+        ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
@@ -92,7 +91,7 @@ public class Pawn extends ChessPiece {
         } else {
             moveTo = new Location(location.X() + 1, location.Y() + 1);
         }
-        moveToPiece = board.getPieceAtCoord(moveTo);
+        moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
