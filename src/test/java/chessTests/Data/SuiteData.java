@@ -1,5 +1,7 @@
-package Data;
+package chessTests.Data;
 
+import Data.TestLoad;
+import Data.TestSave;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

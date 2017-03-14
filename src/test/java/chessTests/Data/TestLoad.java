@@ -1,10 +1,10 @@
-package Data;
+package chessTests.Data;
 
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
-import GUI.GameBoard;
+import Data.Load;
 import org.junit.Before;
 import org.junit.Test;
 

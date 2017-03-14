@@ -1,5 +1,6 @@
-package Data;
+package chessTests.Data;
 
+import Data.Save;
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;

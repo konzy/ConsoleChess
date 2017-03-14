@@ -1,5 +1,8 @@
-package Chess;
+package chessTests.Chess;
 
+import Chess.ChessBoard;
+import Chess.Location;
+import Chess.ChessGame;
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.King;
 import Chess.Pieces.Rook;

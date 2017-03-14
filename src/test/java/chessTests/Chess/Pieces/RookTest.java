@@ -1,5 +1,6 @@
 package chessTests.Chess.Pieces;
 
+
 import Chess.Location;
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.Rook;

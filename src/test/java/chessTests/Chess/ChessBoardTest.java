@@ -1,5 +1,9 @@
-package Chess;
+package chessTests.Chess;
 
+import Chess.ChessBoard;
+import Chess.Location;
+import Chess.ChessGame;
+import Chess.Move;
 import Chess.Pieces.*;
 import org.junit.After;
 import org.junit.Assert;

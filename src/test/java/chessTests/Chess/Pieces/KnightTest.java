@@ -1,5 +1,6 @@
-package Chess.Pieces;
+package chessTests.Chess.Pieces;
 
+import Chess.Pieces.*;
 import Chess.Location;
 import org.junit.After;
 import org.junit.Assert;
