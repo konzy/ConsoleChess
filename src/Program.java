@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 
 
-
+@Deprecated
 public class Program {
 
     enum State {

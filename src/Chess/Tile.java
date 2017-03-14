@@ -3,6 +3,10 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 
+/**
+ * @deprecated tile color is irrelevant to the mechanics of the game. Just use ChessPiece instead.
+ */
+@Deprecated
 public class Tile implements Cloneable {
 
     private ChessPiece piece;

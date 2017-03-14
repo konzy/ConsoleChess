@@ -159,6 +159,7 @@ public class ChessBoard implements Cloneable {
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
     }
 
+    @Deprecated
     public Tile[][] getBoardArray() {
         int len = 8;
         Tile[][] result = new Tile[len][len];
@@ -178,6 +179,7 @@ public class ChessBoard implements Cloneable {
         return potentialMoves;
     }
 
+    // TODO: 3/14/2017 change to use ArrayList instead of the 2D Tile Array
     @Override
     public String toString() {
         Tile[][] b = getBoardArray();

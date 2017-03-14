@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * The InputHandler class handles all code associated with validating and processing user input
  */
-
+@Deprecated
 public class InputHandler {
     //contains code for what a validMove should be
     private final static Pattern validMove = Pattern.compile("([a-hA-H][1-8])([-])([a-hA-H][1-8])", Pattern.CASE_INSENSITIVE);

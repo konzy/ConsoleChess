@@ -10,7 +10,7 @@ import java.util.Scanner;
  * The Program class holds the main class to run the chess game in the console.
  */
 
-
+@Deprecated
 public class ProgramAITest {
 
     enum Turn {

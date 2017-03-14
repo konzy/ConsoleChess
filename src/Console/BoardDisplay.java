@@ -7,10 +7,13 @@ import Chess.Tile;
  */
 public class BoardDisplay {
     /**
+     * @deprecated use ChessBoard 's built in toString()
      * printBoard prints th chess board to the console
      *
      * @param board the full board (8x8) including letters representing pieces and blank spots
      */
+    // TODO: 3/14/2017 change to use board's toString() function
+    @Deprecated
     public static void printBoard(ChessBoard board){
         clearConsole();
         Tile[][] b = board.getBoardArray();

@@ -4,7 +4,7 @@ package Console;
  * BoardMapper class handles translating user input to chessboard array coordinates
  */
 
-
+@Deprecated
 class BoardMapper {
 
     public BoardMapper(){

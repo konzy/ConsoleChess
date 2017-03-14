@@ -1,8 +1,10 @@
 package Chess;
 
 /**
+ * @deprecated use Location instead, firstMoveOnly and onTakeOnly not used
  * Moves pieces and sets firstMoveOnly and onTakeOnly
  */
+@Deprecated
 public class MoveOffset {
     public final int x;
     public final int y;

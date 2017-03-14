@@ -3,17 +3,18 @@ package Chess;
 /**
  * Used to store an int/int pair to map to tiles on the chessboard.
  */
+// TODO: 3/14/2017 change variables to public and remove getters for them
 public class Location implements Cloneable {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     /**
      * @param x coordinate of the piece
      * @param y coordinate of the piece
      */
     public Location(int x, int y){
-            this.x = x;
-            this.y =y;
+        this.x = x;
+        this.y = y;
     }
 
     protected Location(Location location) {
@@ -26,17 +27,21 @@ public class Location implements Cloneable {
     }
 
     /**
+     * @deprecated use the public variable
      * returns the x coordinate
      * @return
      */
+    @Deprecated
     public int X(){
         return x;
     }
 
     /**
+     * @deprecated use the public variable
      * returns the y coordinate
      * @return
      */
+    @Deprecated
     public int Y(){
         return y;
     }
