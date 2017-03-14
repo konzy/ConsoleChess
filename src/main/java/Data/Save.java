@@ -15,8 +15,7 @@ import java.util.Iterator;
  */
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "C:\\Users\\Ryan\\Documents\\GitHub\\gradleConfigbranch\\ConsoleChess" +
-            "\\src\\main\\java";
+    public static final String BASE_SAVE_LOCATION = "src\\main\\java";
 
     public enum Tags{
         BLACK("[B]"),
