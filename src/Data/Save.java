@@ -13,12 +13,9 @@ import java.util.Iterator;
 /**
  * Save system for replaying and retaining moves.
  */
-
-
-
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\";
+    public static final String BASE_SAVE_LOCATION = "C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\";
 
     public enum Tags{
         BLACK("[B]"),
