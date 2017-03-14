@@ -26,3 +26,11 @@ test {
     maxHeapSize = '512m'
 
 }
+test {
+    testLogging {
+        events 'skipped', 'failed', 'standard_error'
+        exceptionFormat 'full'
+    }
+    maxHeapSize = '512m'
+
+}

@@ -20,7 +20,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private char charValue;
     private boolean repeatableMoves;
     protected Location location;
-    protected String picPath = "../GUI/assets/";
+    protected String picPath = "/GUI/assets/";
     protected ImageView image;
 
     /**
