@@ -5,8 +5,9 @@ sudo: false
 directories:
   -&TEST
 script:
+  - gradle check
   - gradle assemble
-  - gradle test --debug
+  - gradle test
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
