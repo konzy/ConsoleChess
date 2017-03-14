@@ -6,7 +6,7 @@ directories:
   -&TEST
 script:
   - gradle assemble
-  - gradle test --stacktrace --debug -Xlint
+  - gradle test --stacktrace --debug
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
