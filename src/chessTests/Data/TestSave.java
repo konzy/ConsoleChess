@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
 
+import static Data.Save.BASE_SAVE_LOCATION;
 import static org.junit.Assert.*;
 
 /**
@@ -64,7 +65,7 @@ public class TestSave {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\src\\Data\\testFiles" +
+                    FileWriter(BASE_SAVE_LOCATION + "src\\Data\\testFiles" +
                     "\\saveTestFile.txt"));
             writer.append("");
             writer.flush();
@@ -80,7 +81,7 @@ public class TestSave {
     public void clearAutoSave() throws Exception {
         String expected = "";
         Save.clearAutoSave();
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION +
                 "src\\Data\\Autosave.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         String resultStr = "";
@@ -94,7 +95,7 @@ public class TestSave {
     @Test
     public void autoSave() throws Exception {
         Save.autoSave(boardToSave);
-        File expectedAutoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File expectedAutoSaveFile = new File(BASE_SAVE_LOCATION +
                 "src\\Data\\testFiles\\autoSaveTestFile.txt");
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String expectedStr = "";
@@ -103,7 +104,7 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION +
                 "src\\Data\\Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
 
@@ -119,7 +120,7 @@ public class TestSave {
     public void save() throws Exception {
         Save.autoSave(boardToSave);
         Save.save("AutoSave","testFiles\\saveTestFile");
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION +
                 "src\\Data\\Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
         String line;
@@ -128,7 +129,7 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-        File expectedAutoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File expectedAutoSaveFile = new File(BASE_SAVE_LOCATION +
                 "src\\Data\\testFiles\\saveTestFile.txt");
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String resultStr = "";

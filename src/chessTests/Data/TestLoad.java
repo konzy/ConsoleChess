@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import static Data.Save.BASE_SAVE_LOCATION;
 import static org.junit.Assert.*;
 
 /**
@@ -70,9 +71,9 @@ public class TestLoad {
     @Test
     public void loadAutoSaveLoaded() throws Exception {
         Load.Load("testfiles\\loadTestFile", new ChessGame());
-        File autoSaveFile = new File("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION +
                 "src\\Data\\Autosave.txt");
-        File expectedFileString = new File ("C:\\Users\\Ryan\\Documents\\GitHub\\ConsoleChess\\" +
+        File expectedFileString = new File (BASE_SAVE_LOCATION +
                 "src\\Data\\testfiles\\loadTestFile.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
