@@ -3,8 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-import Chess.MoveOffset;
-import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -37,15 +35,15 @@ public class Knight extends ChessPiece{
     }
 
     @Override
-    public MoveOffset[] moveModifiers() {
-        return new MoveOffset[]{	new MoveOffset(2, 1, false, false),
-                new MoveOffset(1, 2, false, false),
-                new MoveOffset(2, -1, false, false),
-                new MoveOffset(-1, 2, false, false),
-                new MoveOffset(-2, 1, false, false),
-                new MoveOffset(1, -2, false, false),
-                new MoveOffset(-2, -1, false, false),
-                new MoveOffset(-1, -2, false, false)};
+    public Location[] moveModifiers() {
+        return new Location[]{	new Location(2, 1),
+                new Location(1, 2),
+                new Location(2, -1),
+                new Location(-1, 2),
+                new Location(-2, 1),
+                new Location(1, -2),
+                new Location(-2, -1),
+                new Location(-1, -2)};
     }
 
     @Override

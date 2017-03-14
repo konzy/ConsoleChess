@@ -2,6 +2,8 @@ package Chess;
 
 import Chess.Pieces.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Chess Board is a class for the board that is able to set up the starting positions of the pieces for a game of chess
@@ -39,7 +41,7 @@ public class ChessBoard implements Cloneable {
     }
 
     public static boolean isInsideBoard(Location location) {
-        return location.X() >= 0 && location.X() <= 7 && location.Y() >= 0 && location.Y() <= 7;
+        return location.x >= 0 && location.x <= 7 && location.y >= 0 && location.y <= 7;
     }
 
     public boolean removePiece(Location location) {
@@ -164,7 +166,7 @@ public class ChessBoard implements Cloneable {
         int len = 8;
         Tile[][] result = new Tile[len][len];
         for (ChessPiece piece : pieces) {
-            result[piece.getLocation().X()][piece.getLocation().Y()] = new Tile(Tile.TileColor.Black, piece);
+            result[piece.getLocation().x][piece.getLocation().y] = new Tile(Tile.TileColor.Black, piece);
         }
         return result;
     }
@@ -182,7 +184,12 @@ public class ChessBoard implements Cloneable {
     // TODO: 3/14/2017 change to use ArrayList instead of the 2D Tile Array
     @Override
     public String toString() {
-        Tile[][] b = getBoardArray();
+        Collections.sort(pieces);
+        Iterator iter = pieces.iterator();
+        ChessPiece piece = null;
+        if (iter.hasNext()) {
+            piece = (ChessPiece) iter.next();
+        }
         String string = "";
 
         string += ("      [A][B][C][D][E][F][G][H] \n\n");
@@ -190,11 +197,13 @@ public class ChessBoard implements Cloneable {
             string += ("[" + (8 - y) + "]   ");
 
             for (int x = 0; x < 8; x++){ //8 represents width of board
-                if (b[x][y] != null) {
-                    string += (b[x][y].toString());
+                if (piece != null && piece.getLocation().equals(new Location(x, y))) {
+                    string += "[" + piece.getLetter() + "]";
+                    if (iter.hasNext()) {
+                        piece = (ChessPiece) iter.next();
+                    }
                 } else {
                     string += ("[ ]");
-
                 }
             }
 

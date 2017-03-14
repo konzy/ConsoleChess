@@ -63,6 +63,7 @@ public class Tile implements Cloneable {
      * checks if there is a piece on the tile, then outputs the tile appropriately, either with the piece or empty
      * @return
      */
+    @Deprecated
     public String toString(){
         if(piece != null){
             return "[" + piece.getLetter() + "]";
