@@ -3,10 +3,7 @@ apply plugin: "java"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
-FileTree tree = fileTree(dir: 'src/main/test/java/chessTests/Data') {
-    exclude '**/TestLoad.java'
-    exclude '**/TestSave.java'
-}
+
 
 jar {
     manifest {
@@ -33,4 +30,5 @@ test {
         exceptionFormat 'full'
     }
     maxHeapSize = '512m'
+    exclude 'src/test/java/chessTests/Data/**'
 }
