@@ -4,8 +4,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
 
-File autoSaveFile = file('src/main/java/Data/AutoSave.txt')
-
 jar {
     manifest {
         attributes 'Implementation-Title': 'ConsoleChess',

@@ -5,7 +5,7 @@ sudo: false
 directories:
   -&TEST
 before_script:
-  - echo $HOME
+  - $HOME = '/home/travis/build/Guardryan/ConsoleChess/'
 
 script:
   - gradle test
