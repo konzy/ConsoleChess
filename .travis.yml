@@ -4,7 +4,9 @@ jdk:
 sudo: false
 directories:
   -&TEST
-  -$HOME/src/main/Data/
+before_script:
+  - echo $HOME
+
 script:
   - gradle test
 
