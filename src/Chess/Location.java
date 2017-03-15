@@ -26,25 +26,6 @@ public class Location implements Cloneable {
         return this.x == location.x && this.y == location.y;
     }
 
-    /**
-     * @deprecated use the public variable
-     * returns the x coordinate
-     * @return
-     */
-    @Deprecated
-    public int X(){
-        return x;
-    }
-
-    /**
-     * @deprecated use the public variable
-     * returns the y coordinate
-     * @return
-     */
-    @Deprecated
-    public int Y(){
-        return y;
-    }
 
     @Override
     public Object clone() throws CloneNotSupportedException {

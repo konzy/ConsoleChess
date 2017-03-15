@@ -7,8 +7,8 @@ import Chess.Pieces.ChessPiece;
  */
 public class Move implements Cloneable {
 
-    ChessPiece piece;
-    Location to;
+    private ChessPiece piece;
+    private Location to;
 
     public Move(ChessPiece piece, Location to) {
         this.piece = piece;
@@ -19,16 +19,8 @@ public class Move implements Cloneable {
         return piece;
     }
 
-    public void setPiece(Location from) {
-        this.piece = piece;
-    }
-
     public Location getTo() {
         return to;
-    }
-
-    public void setTo(Location to) {
-        this.to = to;
     }
 
     @Override

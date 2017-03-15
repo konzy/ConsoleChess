@@ -1,6 +1,8 @@
 package Chess;
 
 import Chess.Pieces.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -22,8 +24,6 @@ public class ChessBoard implements Cloneable {
     }
 
     public ChessBoard(ArrayList<ChessPiece> board) {
-
-
         pieces = (ArrayList<ChessPiece>) board.clone();
     }
 
@@ -161,16 +161,6 @@ public class ChessBoard implements Cloneable {
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
     }
 
-    @Deprecated
-    public Tile[][] getBoardArray() {
-        int len = 8;
-        Tile[][] result = new Tile[len][len];
-        for (ChessPiece piece : pieces) {
-            result[piece.getLocation().x][piece.getLocation().y] = new Tile(Tile.TileColor.Black, piece);
-        }
-        return result;
-    }
-
     public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
         ArrayList<Move> potentialMoves = new ArrayList<>();
         for (ChessPiece piece : pieces) {
@@ -192,25 +182,25 @@ public class ChessBoard implements Cloneable {
         }
         String string = "";
 
-        string += ("      [A][B][C][D][E][F][G][H] \n\n");
         for(int y = 0; y < 8; y++) { //8 represents height of board
-            string += ("[" + (8 - y) + "]   ");
-
             for (int x = 0; x < 8; x++){ //8 represents width of board
                 if (piece != null && piece.getLocation().equals(new Location(x, y))) {
-                    string += "[" + piece.getLetter() + "]";
+                    String letter = piece.getLetter().toUpperCase();
+                    if (piece.getColor().equals(ChessPiece.PieceColor.White)) {
+                        letter = letter.toLowerCase();
+                    }
+                    string += "[" + letter + "]";
                     if (iter.hasNext()) {
                         piece = (ChessPiece) iter.next();
+                    } else {
+                        piece = null;
                     }
                 } else {
                     string += ("[ ]");
                 }
             }
-
-            string += ("   [" + (8 - y) + "]\n");
+            string += "\n";
         }
-
-        string += ("\n      [A][B][C][D][E][F][G][H]\n\n");
         return string;
     }
 }

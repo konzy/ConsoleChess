@@ -18,6 +18,7 @@ public class ChessGameTest {
     private ChessGame game;
     private ChessGame stalemate;
     private ChessGame checkMate;
+    private ChessGame initialGame = new ChessGame();
 
     @Before
     public void setUp() throws Exception {
@@ -88,4 +89,20 @@ public class ChessGameTest {
 
     }
 
+    @Test
+    public void testToString() throws Exception {
+        String startGameString =
+                "[R][N][B][Q][K][B][N][R]\n" +
+                "[P][P][P][P][P][P][P][P]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[p][p][p][p][p][p][p][p]\n" +
+                "[r][n][b][q][k][b][n][r]\n" +
+                "White\n";
+
+        Assert.assertEquals(initialGame.toString(), startGameString);
+
+    }
 }

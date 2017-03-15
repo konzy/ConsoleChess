@@ -1,14 +1,7 @@
 package Data;
 
-import Chess.ChessBoard;
 import Chess.ChessGame;
-import Chess.Pieces.ChessPiece;
-import Chess.Tile;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * Save system for replaying and retaining moves.
@@ -19,20 +12,6 @@ import java.util.Iterator;
 public class Save {
 
     public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\";
-
-    public enum Tags{
-        BLACK("[B]"),
-        WHITE("[W]"),
-        BLANK("[ ]");
-        private String value;
-        Tags(String value){
-                this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
 
     /**
      * Clears out the current autosave to allow for a new game to write to the autosave file
@@ -61,30 +40,7 @@ public class Save {
         BufferedWriter autoSaveFile = new BufferedWriter(
                 new FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt",
                         true));
-        Tile[][] currentBoard = game.getBoard().getBoardArray();
-        autoSaveFile.append(game.getCurrentPlayer().name());
-        autoSaveFile.newLine();
-        autoSaveFile.flush();
-        for(int i = 0; i < currentBoard.length; i++) {
-            for (int x = 0; x < currentBoard[i].length; x++) {
-                if (currentBoard[x][i] != null) {
-                    autoSaveFile.append(currentBoard[x][i].toString());
-                    if (currentBoard[x][i].getPiece().color() == ChessPiece.PieceColor.Black) {
-                        autoSaveFile.append(Tags.BLACK.getValue());
-                    } else if (currentBoard[x][i].getPiece().color() == ChessPiece.PieceColor.White) {
-                        autoSaveFile.append(Tags.WHITE.getValue());
-                    }
-                } else {
-                    autoSaveFile.append(Tags.BLANK.getValue());
-                    autoSaveFile.append(Tags.BLANK.getValue());
-
-                }
-                if (x == 7) {
-                    autoSaveFile.newLine();
-                }
-                autoSaveFile.flush();
-            }
-        }
+        autoSaveFile.append(game.toString());
         autoSaveFile.flush();
         autoSaveFile.close();
     }

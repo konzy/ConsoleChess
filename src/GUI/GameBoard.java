@@ -1,7 +1,6 @@
 package GUI;
 
 
-import Chess.ChessBoard;
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
@@ -81,7 +80,7 @@ public class GameBoard extends Application {
             ImageView tmpView = chessPiece.getImage();
             tmpView.setFitHeight(80);
             tmpView.setFitWidth(80);
-            grid.add(chessPiece.getImage(), chessPiece.getLocation().X(), chessPiece.getLocation().Y());
+            grid.add(chessPiece.getImage(), chessPiece.getLocation().x, chessPiece.getLocation().y);
         }
 
         HBox hBox = new HBox();
@@ -104,7 +103,7 @@ public class GameBoard extends Application {
         stage.setMaxWidth(655);
         stage.setMaxHeight(700);
         stage.show();
-        BoardDisplay.printBoard(game.getBoard());
+        System.out.println(game.getBoard());
         //highlight square when clicked
               grid.setOnMouseClicked( e -> {
             int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
@@ -135,7 +134,7 @@ public class GameBoard extends Application {
                     if (game.playMove(from, to)) {
 
                         BoardDisplay.clearConsole();
-                        BoardDisplay.printBoard(game.getBoard());
+                        System.out.println(game.getBoard());
                         Save.autoSave(game);
 
                         repaint();
@@ -205,7 +204,7 @@ public class GameBoard extends Application {
 
     private void repaint() {
         BoardDisplay.clearConsole();
-        BoardDisplay.printBoard(game.getBoard());
+        System.out.println(game.getBoard());
     }
 
     private void setRectangleColor(Rectangle rectangle, int col, int row){

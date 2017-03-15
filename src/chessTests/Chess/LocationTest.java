@@ -13,6 +13,7 @@ public class LocationTest {
     private Location location2; //same as 1
     private Location location3; //different than 1 & 2
     private Location clone; //for clone test
+
     @Before
     public void setUp() throws Exception {
         location1 = new Location(1,0);
@@ -29,38 +30,37 @@ public class LocationTest {
     }
 
     @Test
+    public void Constructor() throws Exception {
+        Location copy = new Location(location1);
+        Assert.assertEquals(copy, location1);
+
+        Location equal1 = new Location(1, 0);
+        Location equal2 = new Location(1, 0);
+        Assert.assertEquals(equal1, equal2);
+
+    }
+
+    @Test
     public void equals() throws Exception {
-        Assert.assertEquals(location1.equals(location2), true);
-        Assert.assertEquals(location1.equals(location3), false);
-    }
-
-    @Test
-    public void x() throws Exception {
-        Assert.assertEquals(location1.X(),1);
-        Assert.assertEquals(location3.X(), 0);
-    }
-
-    @Test
-    public void y() throws Exception {
-        Assert.assertEquals(location1.Y(),0);
-        Assert.assertEquals(location3.Y(), 1);
+        Assert.assertEquals(location1, location2);
+        Assert.assertNotEquals(location1, location3);
     }
 
     @Test
     public void testClone() throws Exception {
         clone = (Location)location1.clone();
-        Assert.assertNotSame(location1,clone);
+        Assert.assertNotSame(location1, clone);
 
-        Assert.assertEquals(clone.equals(location1),true);
-        Assert.assertEquals(clone.equals(location3),false);
-        Assert.assertEquals(clone.X(),location1.X());
-        Assert.assertEquals(clone.Y(),location1.Y());
+        Assert.assertEquals(clone, location1);
+        Assert.assertNotEquals(clone, location3);
+        Assert.assertEquals(clone.x, location1.x);
+        Assert.assertEquals(clone.y, location1.y);
     }
 
     @Test
     public void equals1() throws Exception {
-        Assert.assertEquals(location1.equals(location2), true);
-        Assert.assertEquals(location1.equals(location3), false);
+        Assert.assertEquals(location1, location2);
+        Assert.assertNotEquals(location1, location3);
     }
 
     @Test

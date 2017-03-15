@@ -15,6 +15,9 @@ import static Data.Save.BASE_SAVE_LOCATION;
  * into the autosave for replay purposes.
  */
 public class Load {
+
+    private static final String UPPER_CASE_REGEX = "[A-Z]";
+
     public static ChessGame Load(String fileStr, ChessGame game) {
         File loadFile = new File(BASE_SAVE_LOCATION + "src\\Data\\" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
@@ -25,28 +28,28 @@ public class Load {
             /* FileInputStream to read streams */
             input = new BufferedReader(new FileReader(loadFile));
             String line;
-            String[] lineArray;
             int y = 0;
             while ((line = input.readLine()) != null) {
-                if(y == 0) {
+                if(y == 8) {
                     if(line.equals(ChessPiece.PieceColor.White.name())){
                         currentPlayer = ChessPiece.PieceColor.White;
                     } else {
                         currentPlayer = ChessPiece.PieceColor.Black;
                     }
-                    pieces = new ArrayList<>();
                 } else {
-                    lineArray = line.split("\\]");
-                    for (int x = 0; x < lineArray.length; x = x + 2) {
+                    line = line.replace("[", "");
+                    line = line.replace("]", "");
+                    for (int x = 0; x < 8; x++) {
+                        String s = String.valueOf(line.charAt(x));
                         ChessPiece.PieceColor color;
-                        if (lineArray[x + 1].substring(1, 2).equals("B")) {
+                        if (s.matches(UPPER_CASE_REGEX)) {
                             color = ChessPiece.PieceColor.Black;
                         } else {
                             color = ChessPiece.PieceColor.White;
                         }
                         ChessPiece piece = null;
-                        Location location = new Location(x / 2, y - 1);
-                        switch (lineArray[x].substring(1, 2)) {
+                        Location location = new Location(x, y);
+                        switch (s.toUpperCase()) {
                             case Pawn.LETTER:
                                 piece = new Pawn(color, location);
                                 break;

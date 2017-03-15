@@ -84,8 +84,8 @@ public class ChessPieceTest {
         Assert.assertEquals(clone.color(), testBishop1.color());
         Assert.assertEquals(clone.getColor(), testBishop1.getColor());
 
-        Assert.assertEquals(clone.getLocation().X(), testBishop1.getLocation().X());
-        Assert.assertEquals(clone.getLocation().Y(), testBishop1.getLocation().Y());
+        Assert.assertEquals(clone.getLocation().x, testBishop1.getLocation().x);
+        Assert.assertEquals(clone.getLocation().y, testBishop1.getLocation().y);
         Assert.assertEquals(clone.getLocation(), testBishop1.getLocation());
 
         Assert.assertEquals(clone.validMoves(board), testBishop1.validMoves(board));
