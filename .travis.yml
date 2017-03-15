@@ -4,9 +4,7 @@ jdk:
 sudo: false
 directories:
   -&TEST
-before_script:
-  - $HOME = '/home/travis/build/Guardryan/ConsoleChess/'
-
+  -&MAIN
 script:
   - gradle test
 

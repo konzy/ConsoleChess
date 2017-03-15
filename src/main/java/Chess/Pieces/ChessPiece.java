@@ -45,8 +45,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     }
 
     protected void setImage(PieceColor color, String letter) {
-        String url = picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png";
-        image = new ImageView(url);
+        image = new ImageView(picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
     }
 
     public abstract void setImage();
