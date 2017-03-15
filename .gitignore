@@ -64,4 +64,3 @@ crashlytics.properties
 crashlytics-build.properties
 
 *.bat
-gradlew
