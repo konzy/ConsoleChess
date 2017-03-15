@@ -16,7 +16,7 @@ import static Data.Save.BASE_SAVE_LOCATION;
  */
 public class Load {
     public static ChessGame Load(String fileStr, ChessGame game) {
-        File loadFile = new File(BASE_SAVE_LOCATION  + fileStr + ".txt");
+        File loadFile = new File(BASE_SAVE_LOCATION + "\\Data\\" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;

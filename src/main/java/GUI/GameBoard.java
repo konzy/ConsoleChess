@@ -58,6 +58,8 @@ public class GameBoard extends Application {
     }
 
     public void setBoard (Stage stage) throws Exception {
+        String picPath = "/GUI/assets/";
+
         BorderPane borderPane = new BorderPane();
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(0,0,25,0));
