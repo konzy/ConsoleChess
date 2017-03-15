@@ -71,13 +71,9 @@ public class TestLoad {
     @Test
     public void loadAutoSaveLoaded() throws Exception {
         Load.Load("testFiles\\loadTestFile", new ChessGame());
-<<<<<<< HEAD
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
-        File expectedFileString = new File (Save.BASE_SAVE_LOCATION + "\\testFiles\\loadTestFile.txt");
-=======
         File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
         File expectedFileString = new File (Save.BASE_SAVE_LOCATION + "\\Data\\testFiles\\loadTestFile.txt");
->>>>>>> parent of c7ac2fe... ignore gradlew
+
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";

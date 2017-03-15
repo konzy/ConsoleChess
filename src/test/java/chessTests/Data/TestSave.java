@@ -65,11 +65,7 @@ public class TestSave {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-<<<<<<< HEAD
-                    FileWriter(Save.BASE_SAVE_LOCATION + "\\testFiles\\saveTestFile.txt"));
-=======
                     FileWriter(Save.BASE_SAVE_LOCATION + "\\Data\\testFiles\\saveTestFile.txt"));
->>>>>>> parent of c7ac2fe... ignore gradlew
             writer.append("");
             writer.flush();
             writer.close();
@@ -84,7 +80,7 @@ public class TestSave {
     public void clearAutoSave() throws Exception {
         String expected = "";
         Save.clearAutoSave();
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
+        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         String resultStr = "";
         int bytesRead;
@@ -97,11 +93,7 @@ public class TestSave {
     @Test
     public void autoSave() throws Exception {
         Save.autoSave(boardToSave);
-<<<<<<< HEAD
-        File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\testFiles\\autoSaveTestFile.txt");
-=======
         File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\testFiles\\autoSaveTestFile.txt");
->>>>>>> parent of c7ac2fe... ignore gradlew
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String expectedStr = "";
         String line;
@@ -109,7 +101,7 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
+        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
 
         String resultStr = "";
@@ -124,11 +116,8 @@ public class TestSave {
     public void save() throws Exception {
         Save.autoSave(boardToSave);
         Save.save("AutoSave","testFiles\\saveTestFile");
-<<<<<<< HEAD
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
-=======
+
         File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
->>>>>>> parent of c7ac2fe... ignore gradlew
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
         String line;
         String expectedStr = "";
@@ -136,11 +125,8 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-<<<<<<< HEAD
-        File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\testFiles\\saveTestFile.txt");
-=======
         File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\testFiles\\saveTestFile.txt");
->>>>>>> parent of c7ac2fe... ignore gradlew
+
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String resultStr = "";
         while((line = expectedAutosaveInput.readLine())!= null){
