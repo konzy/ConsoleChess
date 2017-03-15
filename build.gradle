@@ -3,9 +3,9 @@ apply plugin: "java"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
-FileTree tree = fileTree(dir: 'src/main')
-tree.exclude '**/TestLoad.java'
-tree.exclude '**/TestSave.java'
+FileTree tree = fileTree(dir: 'src/main/test/java')
+tree.exclude '**/**/TestLoad.java'
+tree.exclude '**/**/TestSave.java'
 
 jar {
     manifest {
