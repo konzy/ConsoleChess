@@ -29,5 +29,8 @@ test {
         exceptionFormat 'full'
     }
     maxHeapSize = '512m'
-
+    exclude {
+        TestLoad.java
+        TestSave.java
+    }
 }
