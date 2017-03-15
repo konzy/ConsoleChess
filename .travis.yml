@@ -5,6 +5,8 @@ sudo: false
 directories:
   -&TEST
   -&MAIN
+install:
+  - gradle wpi
 
 before_script:
   - cd /home/travis/build/Guardryan/ConsoleChess/
