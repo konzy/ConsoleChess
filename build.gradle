@@ -3,9 +3,10 @@ apply plugin: "java"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
-FileTree tree = fileTree(dir: 'src/main/test/java')
-tree.exclude '**/**/TestLoad.java'
-tree.exclude '**/**/TestSave.java'
+FileTree tree = fileTree(dir: 'src/main/test/java/chessTests/Data') {
+    exclude '**/TestLoad.java'
+    exclude '**/TestSave.java'
+}
 
 jar {
     manifest {
