@@ -15,7 +15,7 @@ import java.util.Iterator;
  */
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "src\\main\\java";
+    public static final String BASE_SAVE_LOCATION = "src\\main\\java\\resources\\files";
 
     public enum Tags{
         BLACK("[B]"),
@@ -40,7 +40,7 @@ public class Save {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(BASE_SAVE_LOCATION + "\\Data\\AutoSave.txt"));
+                    FileWriter(BASE_SAVE_LOCATION + "\\AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -57,7 +57,7 @@ public class Save {
      */
     public static void autoSave(ChessGame game) throws IOException {
         BufferedWriter autoSaveFile = new BufferedWriter(
-                new FileWriter(BASE_SAVE_LOCATION + "\\Data\\AutoSave.txt",
+                new FileWriter(BASE_SAVE_LOCATION + "\\AutoSave.txt",
                         true));
         Tile[][] currentBoard = game.getBoard().getBoardArray();
         autoSaveFile.append(game.getCurrentPlayer().name());
@@ -99,9 +99,9 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File(BASE_SAVE_LOCATION + "\\Data\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION  +
                 fromStr + ".txt");
-        File saveFile = new File(BASE_SAVE_LOCATION + "\\Data\\" +
+        File saveFile = new File(BASE_SAVE_LOCATION  +
                 toStr + ".txt");
 
         if(!saveFile.exists()){
