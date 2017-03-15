@@ -5,6 +5,9 @@ sudo: false
 directories:
   -&TEST
   -&MAIN
+
+before_script:
+  - cd /home/travis/build/Guardryan/ConsoleChess/
 script:
   - gradle test
 
