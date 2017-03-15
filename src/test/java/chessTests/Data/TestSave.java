@@ -65,7 +65,7 @@ public class TestSave {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(Save.BASE_SAVE_LOCATION + "\\Data\\files.testFiles\\saveTestFile.txt"));
+                    FileWriter(Save.BASE_SAVE_LOCATION + "\\testFiles\\saveTestFile.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -80,7 +80,7 @@ public class TestSave {
     public void clearAutoSave() throws Exception {
         String expected = "";
         Save.clearAutoSave();
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
+        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         String resultStr = "";
         int bytesRead;
@@ -93,7 +93,7 @@ public class TestSave {
     @Test
     public void autoSave() throws Exception {
         Save.autoSave(boardToSave);
-        File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\files.testFiles\\autoSaveTestFile.txt");
+        File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\testFiles\\autoSaveTestFile.txt");
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String expectedStr = "";
         String line;
@@ -101,7 +101,7 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
+        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
 
         String resultStr = "";
@@ -115,8 +115,8 @@ public class TestSave {
     @Test
     public void save() throws Exception {
         Save.autoSave(boardToSave);
-        Save.save("AutoSave","files.testFiles\\saveTestFile");
-        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\Autosave.txt");
+        Save.save("AutoSave","testFiles\\saveTestFile");
+        File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
         String line;
         String expectedStr = "";
@@ -124,7 +124,7 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-        File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Data\\files.testFiles\\saveTestFile.txt");
+        File expectedAutoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\testFiles\\saveTestFile.txt");
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String resultStr = "";
         while((line = expectedAutosaveInput.readLine())!= null){

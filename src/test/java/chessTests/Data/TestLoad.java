@@ -70,7 +70,7 @@ public class TestLoad {
 
     @Test
     public void loadAutoSaveLoaded() throws Exception {
-        Load.Load("files\\testFiles\\loadTestFile", new ChessGame());
+        Load.Load("testFiles\\loadTestFile", new ChessGame());
         File autoSaveFile = new File(Save.BASE_SAVE_LOCATION + "\\Autosave.txt");
         File expectedFileString = new File (Save.BASE_SAVE_LOCATION + "\\testFiles\\loadTestFile.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
