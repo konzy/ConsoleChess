@@ -20,7 +20,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private char charValue;
     private boolean repeatableMoves;
     protected Location location;
-    protected String picPath = "GUI/assets/";
+    protected String picPath = "\\GUI\\assets\\";
     protected ImageView image;
 
     /**
@@ -45,7 +45,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     }
 
     protected void setImage(PieceColor color, String letter) {
-        image = new ImageView(picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
+        String url = picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png";
+        image = new ImageView(url);
     }
 
     public abstract void setImage();
