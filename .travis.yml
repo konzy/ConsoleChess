@@ -4,8 +4,8 @@ jdk:
 sudo: false
 directories:
   -&TEST
+  -$HOME/src/main/Data/
 script:
-  - gradle assemble
   - gradle test
 
 before_cache:
