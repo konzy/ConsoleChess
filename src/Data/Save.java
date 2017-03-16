@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\";
+    public static final String BASE_SAVE_LOCATION = "D:\\College\\Software Maintenance and Testing\\ConsoleChess\\";
 
     public enum Tags{
         BLACK("[B]"),
