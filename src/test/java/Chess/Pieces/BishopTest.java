@@ -13,8 +13,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
-
 /**
  * Created by konzy on 2/15/2017.
  */

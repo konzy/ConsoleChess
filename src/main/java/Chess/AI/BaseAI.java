@@ -1,10 +1,6 @@
 package Chess.AI;
 
 import Chess.*;
-import Chess.Pieces.ChessPiece;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 /**

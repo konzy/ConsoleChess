@@ -56,12 +56,6 @@ public class MoveTest {
     }
 
     @Test
-    public void setTo() throws Exception {
-        move.setTo(testLocation2);
-        Assert.assertEquals(move.getTo(),testLocation2);
-    }
-
-    @Test
     public void equals() throws Exception {
         Assert.assertEquals(move.equals(move2),true);
         Assert.assertEquals(move.equals(move3),false);

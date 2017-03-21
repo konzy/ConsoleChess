@@ -2,27 +2,21 @@ package GUI;
 
 import Chess.ChessGame;
 import Chess.StatCollection;
-import Console.BoardDisplay;
 import Data.Load;
 import Data.Save;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 
 import javafx.scene.layout.*;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import static Data.Save.BASE_SAVE_LOCATION;

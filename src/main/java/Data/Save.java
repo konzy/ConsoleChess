@@ -11,7 +11,7 @@ import java.io.*;
 
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "D:\\College\\Software Maintenance and Testing\\ConsoleChess\\";
+    public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\src\\main\\java\\Data\\";
 
     /**
      * Clears out the current autosave to allow for a new game to write to the autosave file
@@ -21,7 +21,7 @@ public class Save {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt"));
+                    FileWriter(BASE_SAVE_LOCATION + "AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -38,7 +38,7 @@ public class Save {
      */
     public static void autoSave(ChessGame game) throws IOException {
         BufferedWriter autoSaveFile = new BufferedWriter(
-                new FileWriter(BASE_SAVE_LOCATION + "src\\Data\\AutoSave.txt",
+                new FileWriter(BASE_SAVE_LOCATION + "AutoSave.txt",
                         true));
         autoSaveFile.append(game.toString());
         autoSaveFile.flush();
@@ -57,9 +57,9 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\" +
+        File autoSaveFile = new File(BASE_SAVE_LOCATION +
                 fromStr + ".txt");
-        File saveFile = new File(BASE_SAVE_LOCATION + "\\src\\Data\\" +
+        File saveFile = new File(BASE_SAVE_LOCATION +
                 toStr + ".txt");
 
         if(!saveFile.exists()){

@@ -4,8 +4,6 @@ import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
-import GUI.GameBoard;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
