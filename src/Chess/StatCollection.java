@@ -139,7 +139,12 @@ public class StatCollection{
     }
 
     public double getWinPercent(){
-        return 100 * ((double) getWin() / ((double) getWin() + (double) getLoss()));
+        if(this.getWin() + this.getLoss() <= 0){
+            return 100;
+        }
+        else {
+            return 100 * ((double) this.getWin() / ((double) this.getWin() + (double) this.getLoss()));
+        }
     }
 
     public void resetStats(){
@@ -160,17 +165,28 @@ public class StatCollection{
     public void storeData(){
         Path path = Paths.get("./chessStats.txt");
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            writer.write(whiteMoves);
-            writer.write(blackMoves);
-            writer.write(win);
-            writer.write(loss);
-            writer.write(whiteTime);
-            writer.write(blackTime);
-            writer.write(whiteCaptures);
-            writer.write(blackCaptures);
-            writer.write(games);
-            writer.write(cpuGames);
-            writer.write(movesUndone);
+            writer.write(String.valueOf(whiteMoves));
+            writer.write('\n');
+            writer.write(String.valueOf(blackMoves));
+            writer.write('\n');
+            writer.write(String.valueOf(win));
+            writer.write('\n');
+            writer.write(String.valueOf(loss));
+            writer.write('\n');
+            writer.write(String.valueOf(whiteTime));
+            writer.write('\n');
+            writer.write(String.valueOf(blackTime));
+            writer.write('\n');
+            writer.write(String.valueOf(whiteCaptures));
+            writer.write('\n');
+            writer.write(String.valueOf(blackCaptures));
+            writer.write('\n');
+            writer.write(String.valueOf(games));
+            writer.write('\n');
+            writer.write(String.valueOf(cpuGames));
+            writer.write('\n');
+            writer.write(String.valueOf(movesUndone));
+            writer.write('\n');
             writer.write("The above numbers are whiteMoves, blackMoves, win, loss, whiteTime, blackTime, whiteCaptures, blackCaptures, games, cpuGames, movesUndone");
         }
         catch(IOException e){

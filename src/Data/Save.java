@@ -11,7 +11,7 @@ import java.io.*;
 
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\";
+    public static final String BASE_SAVE_LOCATION = "D:\\College\\Software Maintenance and Testing\\ConsoleChess\\";
 
     /**
      * Clears out the current autosave to allow for a new game to write to the autosave file
