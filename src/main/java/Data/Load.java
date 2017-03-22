@@ -8,6 +8,9 @@ import Chess.Pieces.*;
 import java.io.*;
 import java.util.ArrayList;
 
+
+import static Data.Save.FILE_LOCATOR;
+
 /**
  * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
  * into the autosave for replay purposes.
@@ -36,6 +39,7 @@ public class Load {
                         currentPlayer = ChessPiece.PieceColor.Black;
                     }
                     pieces = new ArrayList<>();
+
                 } else {
                     lineArray = line.split("\\]");
                     for (int x = 0; x < lineArray.length; x = x + 2) {
@@ -48,6 +52,7 @@ public class Load {
                         ChessPiece piece = null;
                         Location location = new Location(x / 2, y - 1);
                         switch (lineArray[x].substring(1, 2)) {
+
                             case Pawn.LETTER:
                                 piece = new Pawn(color, location);
                                 break;

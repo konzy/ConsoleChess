@@ -34,10 +34,26 @@ public class ChessBoard implements Cloneable {
         return null;
     }
 
+
+
+    /**
+     * @deprecated use the single isInsideBoard
+     * Checks both locations to make sure they are
+     * @param from
+     * @param to
+     * @return
+     */
+    @Deprecated
     public static boolean isInsideBoard(Location from, Location to) {
         return isInsideBoard(from) && isInsideBoard(to);
     }
 
+
+    /**
+     * Checks if a location is inside the dimensions of the board
+     * @param location
+     * @return
+     */
     public static boolean isInsideBoard(Location location) {
         return location.X() >= 0 && location.X() <= 7 && location.Y() >= 0 && location.Y() <= 7;
     }
@@ -46,10 +62,23 @@ public class ChessBoard implements Cloneable {
         return removePiece(getPieceAtLocation(location));
     }
 
+
+
+    /**
+     * Removes a piece form the game board given the ChessPiece
+     * @param pieceToRemove
+     * @return if piece was removed
+     */
     public boolean removePiece(ChessPiece pieceToRemove) {
         return pieces.remove(pieceToRemove);
     }
 
+
+
+    /**
+     * Executes a move on the board given a piece and a target location
+     * @param move
+     */
     public void move(Move move) {
         ChessPiece piece = move.getPiece();
         Location to = move.getTo();
@@ -59,10 +88,23 @@ public class ChessBoard implements Cloneable {
         pieces.add(piece);
     }
 
+
+    /**
+     * Checks whether the color is is check
+     * @param color
+     * @return
+     */
     public boolean isColorInCheck(ChessPiece.PieceColor color) {
         return getKingPiece(color).numPiecesThreateningThis(this) > 0;
     }
 
+
+    /**
+     * Gets all the moves that are both possible, in a logistic sense, and legal in a rules sense,
+     * where it does not allow your king to be in check after the move.
+     * @param color
+     * @return
+     */
     public ArrayList<Move> getAllValidMoves(ChessPiece.PieceColor color) {
         ArrayList<Move> moves = new ArrayList<>();
 
@@ -91,7 +133,7 @@ public class ChessBoard implements Cloneable {
     }
 
     /**
-     * Returns the array of tiles that consists of the board.
+     * Returns the ArrayList of the pieces on the board.
      */
     public ArrayList<ChessPiece> getBoardArrayList(){
         return pieces;
@@ -178,6 +220,10 @@ public class ChessBoard implements Cloneable {
         return potentialMoves;
     }
 
+    /**
+     * A human readable representation of the board
+     * @return
+     */
     @Override
     public String toString() {
         Tile[][] b = getBoardArray();

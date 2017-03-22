@@ -3,6 +3,7 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
+
 import Chess.MoveOffset;
 import javafx.scene.image.ImageView;
 
@@ -138,8 +139,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     /**
      * @return an array of Moves that are valid for the piece
      */
-    abstract public MoveOffset[] moveModifiers();
 
+    abstract public MoveOffset[] moveModifiers();
 
     public void setLocation(Location location) {
         this.location = location;

@@ -10,7 +10,6 @@ import java.io.*;
  * Save system for replaying and retaining moves.
  */
 public class Save {
-
     public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public enum Tags{
@@ -28,10 +27,11 @@ public class Save {
         }
     }
 
+
     /**
      * Clears out the current autosave to allow for a new game to write to the autosave file
      */
-
+// TODO: 3/22/2017 check if autosave file exists before clearing
     public static void clearAutoSave(){
         BufferedWriter writer;
         try {
@@ -81,6 +81,7 @@ public class Save {
                 autoSaveFile.flush();
             }
         }
+
         autoSaveFile.flush();
         autoSaveFile.close();
     }

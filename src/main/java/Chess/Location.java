@@ -41,6 +41,7 @@ public class Location implements Cloneable {
         return y;
     }
 
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
