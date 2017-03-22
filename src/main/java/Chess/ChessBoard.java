@@ -1,10 +1,7 @@
 package Chess;
 
 import Chess.Pieces.*;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * Chess Board is a class for the board that is able to set up the starting positions of the pieces for a game of chess
@@ -45,6 +42,7 @@ public class ChessBoard implements Cloneable {
         return null;
     }
 
+
     /**
      * @deprecated use the single isInsideBoard
      * Checks both locations to make sure they are
@@ -56,6 +54,7 @@ public class ChessBoard implements Cloneable {
     public static boolean isInsideBoard(Location from, Location to) {
         return isInsideBoard(from) && isInsideBoard(to);
     }
+
 
     /**
      * Checks if a location is inside the dimensions of the board
@@ -75,6 +74,7 @@ public class ChessBoard implements Cloneable {
         return removePiece(getPieceAtLocation(location));
     }
 
+
     /**
      * Removes a piece form the game board given the ChessPiece
      * @param pieceToRemove
@@ -83,6 +83,7 @@ public class ChessBoard implements Cloneable {
     public boolean removePiece(ChessPiece pieceToRemove) {
         return pieces.remove(pieceToRemove);
     }
+
 
     /**
      * Executes a move on the board given a piece and a target location
@@ -97,6 +98,7 @@ public class ChessBoard implements Cloneable {
         pieces.add(piece);
     }
 
+
     /**
      * Checks whether the color is is check
      * @param color
@@ -105,6 +107,7 @@ public class ChessBoard implements Cloneable {
     public boolean isColorInCheck(ChessPiece.PieceColor color) {
         return getKingPiece(color).numPiecesThreateningThis(this) > 0;
     }
+
 
     /**
      * Gets all the moves that are both possible, in a logistic sense, and legal in a rules sense,
@@ -140,6 +143,7 @@ public class ChessBoard implements Cloneable {
     }
 
     /**
+
      * Returns the ArrayList of the pieces on the board.
      */
     public ArrayList<ChessPiece> getBoardArrayList(){
@@ -217,6 +221,7 @@ public class ChessBoard implements Cloneable {
         }
         return potentialMoves;
     }
+
 
     /**
      * A human readable representation of the board

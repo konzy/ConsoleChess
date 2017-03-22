@@ -40,6 +40,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
+
     public Location[] moveModifiers() {
         return null; //unused
     }
@@ -51,6 +52,7 @@ public class Pawn extends ChessPiece {
 
         //one space move forward
         if (color == PieceColor.White) {
+
             moveTo = new Location(location.x, location.y - 1);
         } else {
             moveTo = new Location(location.x, location.y + 1);
@@ -60,6 +62,7 @@ public class Pawn extends ChessPiece {
         }
 
         //two space move forward
+
         if ((color == PieceColor.White && location.y == 6) ||
                 (color == PieceColor.Black && location.y == 1)) {
             if (color == PieceColor.White) {
@@ -74,6 +77,7 @@ public class Pawn extends ChessPiece {
 
         //capture to right
         if (color == PieceColor.White) {
+
             moveTo = new Location(location.x + 1, location.y - 1);
         } else {
             moveTo = new Location(location.x - 1, location.y + 1);

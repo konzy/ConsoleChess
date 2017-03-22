@@ -7,10 +7,7 @@ import java.io.*;
  * Save system for replaying and retaining moves.
  */
 
-
-
-public class Save {
-
+    public static final FileLocator FILE_LOCATOR = new FileLocator();
     public static final String BASE_SAVE_LOCATION = "C:\\Users\\konzy\\IdeaProjects\\ConsoleChess\\src\\main\\java\\Data\\";
 
     /**
@@ -21,7 +18,9 @@ public class Save {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(BASE_SAVE_LOCATION + "AutoSave.txt"));
+                    FileWriter(FILE_LOCATOR.baseFileLocation.substring(0,
+                    FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt"));
+                    //FileWriter(BASE_SAVE_LOCATION + "AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -57,10 +56,15 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File(BASE_SAVE_LOCATION +
-                fromStr + ".txt");
-        File saveFile = new File(BASE_SAVE_LOCATION +
-                toStr + ".txt");
+        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/" + fromStr + ".txt");
+        File saveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/" + toStr + ".txt");
+
+        //File autoSaveFile = new File(BASE_SAVE_LOCATION +
+                //fromStr + ".txt");
+        //File saveFile = new File(BASE_SAVE_LOCATION +
+                //toStr + ".txt");
 
         if(!saveFile.exists()){
             saveFile.createNewFile();

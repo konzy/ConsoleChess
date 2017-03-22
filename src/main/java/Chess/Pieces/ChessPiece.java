@@ -3,6 +3,7 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
+
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private char charValue;
     private boolean repeatableMoves;
     protected Location location;
-    protected String picPath = "/resources/";
+    protected String picPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toString();
+
     protected ImageView image;
 
     /**
@@ -44,7 +46,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     }
 
     protected void setImage(PieceColor color, String letter) {
-        image = new ImageView(picPath + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
+        image = new ImageView(picPath.substring(0, picPath.length() - 14) + "/resources/main/" + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
     }
 
     public abstract void setImage();
@@ -54,6 +56,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     @Override
     public int compareTo(Object o) {
         if (o instanceof ChessPiece) {
+
             if (this.location.y == ((ChessPiece) o).location.y) {
                 return this.location.x - ((ChessPiece) o).location.x;
             } else {
@@ -137,8 +140,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     /**
      * @return an array of Moves that are valid for the piece
      */
-    abstract public Location[] moveModifiers();
 
+    abstract public Location[] moveModifiers();
 
     public void setLocation(Location location) {
         this.location = location;

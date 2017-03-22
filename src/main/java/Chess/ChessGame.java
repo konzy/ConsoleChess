@@ -65,6 +65,7 @@ public class ChessGame implements Cloneable {
         Move move = new Move(piece, to);
         if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
             board.move(move);
+
             System.out.println(board);
             System.out.println(currentPlayer.toString() + " Moved " + move.getPiece().charValue() + " from " + from.toString() + " to " + to.toString());
             endTurn();
@@ -98,7 +99,7 @@ public class ChessGame implements Cloneable {
 
         return GameState.PLAY;
     }
-
+  
     @Override
     public String toString() {
         return board + "" + currentPlayer + "\n";

@@ -34,6 +34,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
+
     public Location[] moveModifiers() {
         return	new Location[]{	new Location(1, 1), new Location(1, -1),
                 new Location(-1, 1), new Location(-1, -1)};

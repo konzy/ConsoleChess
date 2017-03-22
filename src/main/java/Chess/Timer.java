@@ -6,6 +6,7 @@ public class Timer{
     Boolean p1turn = true, p2turn = false, delaySet = true, delayFinished = false;
     double delay, currentTime;
 
+
     public void turnSwitch(){
         if(p1turn){
             p1turn = false;
@@ -21,6 +22,7 @@ public class Timer{
         }
     }
 
+
     public void countDown(){
         if(p1turn){
             p1Timer();
@@ -34,7 +36,6 @@ public class Timer{
         if(delaySet){
             delay = (double) System.currentTimeMillis();
             delay += 5000;
-            delay = 0;
             delaySet = false;
         }
         currentTime = (double) System.currentTimeMillis();
@@ -55,7 +56,6 @@ public class Timer{
         if (delaySet) {
             delay = (double) System.currentTimeMillis();
             delay += 5000;
-            delay = 0;
             delaySet = false;
         }
         currentTime = (double) System.currentTimeMillis();
@@ -71,6 +71,7 @@ public class Timer{
             delay = currentTime;
         }
     }
+
 
     public int getP1Time(){
         return p1Seconds;

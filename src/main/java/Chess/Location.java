@@ -3,7 +3,7 @@ package Chess;
 /**
  * Used to store an int/int pair to map to tiles on the chessboard.
  */
-// TODO: 3/14/2017 change variables to public and remove getters for them
+
 public class Location implements Cloneable {
     public int x;
     public int y;
@@ -25,7 +25,6 @@ public class Location implements Cloneable {
     public boolean equals(Location location) {
         return this.x == location.x && this.y == location.y;
     }
-
 
     @Override
     public Object clone() throws CloneNotSupportedException {

@@ -139,6 +139,7 @@ public class StatCollection{
     }
 
     public double getWinPercent(){
+
         if(this.getWin() + this.getLoss() <= 0){
             return 100;
         }
@@ -165,6 +166,7 @@ public class StatCollection{
     public void storeData(){
         Path path = Paths.get("./chessStats.txt");
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+
             writer.write(String.valueOf(whiteMoves));
             writer.write('\n');
             writer.write(String.valueOf(blackMoves));
