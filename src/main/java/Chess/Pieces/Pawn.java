@@ -3,8 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-import Chess.MoveOffset;
-
 import java.util.ArrayList;
 
 // TODO: 2/11/2017 castling
@@ -15,15 +13,13 @@ import java.util.ArrayList;
  * A Pawn is a piece that can only move one space toward the opponentOf's side of the board, except for its first move, it can move two spaces.
  * A Pawn can only capture on the diagonal tiles toward the opponentOf's side of the board, and can capture a pawn moving two spaces as if it had only moved one space, called "en passant".
  */
-
 public class Pawn extends ChessPiece {
 
     public static final String LETTER = "P";
 
-	public Pawn(PieceColor color, Location location){
-		super(PieceType.Pawn, color, false, location);
-
-	}
+    public Pawn(PieceColor color, Location location){
+        super(PieceType.Pawn, color, false, location);
+    }
 
     @Override
     public void setImage() {
@@ -41,7 +37,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public MoveOffset[] moveModifiers() {
+    public Location[] moveModifiers() {
         return null; //unused
     }
 
@@ -52,21 +48,22 @@ public class Pawn extends ChessPiece {
 
         //one space move forward
         if (color == PieceColor.White) {
-            moveTo = new Location(location.X(), location.Y() - 1);
+            moveTo = new Location(location.x, location.y - 1);
         } else {
-            moveTo = new Location(location.X(), location.Y() + 1);
+            moveTo = new Location(location.x, location.y + 1);
         }
+
         if (board.getPieceAtLocation(moveTo) == null) {
             potentialMoves.add(new Move(this, moveTo));
         }
 
         //two space move forward
-        if ((color == PieceColor.White && location.Y() == 6) ||
-                (color == PieceColor.Black && location.Y() == 1)) {
+        if ((color == PieceColor.White && location.y == 6) ||
+                (color == PieceColor.Black && location.y == 1)) {
             if (color == PieceColor.White) {
-                moveTo = new Location(location.X(), location.Y() - 2);
+                moveTo = new Location(location.x, location.y - 2);
             } else {
-                moveTo = new Location(location.X(), location.Y() + 2);
+                moveTo = new Location(location.x, location.y + 2);
             }
             if (board.getPieceAtLocation(moveTo) == null && potentialMoves.size() == 1) {
                 potentialMoves.add(new Move(this, moveTo));
@@ -75,9 +72,10 @@ public class Pawn extends ChessPiece {
 
         //capture to right
         if (color == PieceColor.White) {
-            moveTo = new Location(location.X() + 1, location.Y() - 1);
+
+            moveTo = new Location(location.x + 1, location.y - 1);
         } else {
-            moveTo = new Location(location.X() - 1, location.Y() + 1);
+            moveTo = new Location(location.x - 1, location.y + 1);
         }
         ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
@@ -87,9 +85,9 @@ public class Pawn extends ChessPiece {
 
         //capture to left
         if (color == PieceColor.White) {
-            moveTo = new Location(location.X() - 1, location.Y() - 1);
+            moveTo = new Location(location.x - 1, location.y - 1);
         } else {
-            moveTo = new Location(location.X() + 1, location.Y() + 1);
+            moveTo = new Location(location.x + 1, location.y + 1);
         }
         moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {

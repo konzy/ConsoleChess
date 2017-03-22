@@ -20,7 +20,7 @@ public class Replay {
 
     public static void replayConsole(){
         File loadFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "\\resources\\AutoSave.txt");
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "\\resources\\main\\AutoSave.txt");
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
         ArrayList<ChessPiece> pieces = new ArrayList<>();

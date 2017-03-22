@@ -1,9 +1,5 @@
 package Chess;
 
-import Chess.ChessBoard;
-import Chess.Location;
-import Chess.ChessGame;
-import Chess.Move;
 import Chess.Pieces.*;
 import org.junit.After;
 import org.junit.Assert;
@@ -22,7 +18,7 @@ public class ChessBoardTest {
     private Location bishopOneLocation = new Location(3,3);
     private Location bishopTwoLocation = new Location(3,1);
 
-    ChessGame initialGame = new ChessGame();
+    private ChessGame initialGame = new ChessGame();
 
     private ChessPiece blackKingPiece = new King(ChessPiece.PieceColor.Black, new Location(5, 5));
     private ChessPiece whiteKingPiece = new King(ChessPiece.PieceColor.White, new Location(7, 7));
@@ -41,9 +37,7 @@ public class ChessBoardTest {
         pieces.add(blackKingPiece);
         pieces.add(whiteKingPiece);
         pieces.add(testBishop2);
-
         board = new ChessBoard(pieces);
-
     }
     @After
     public void tearDown() throws Exception {
@@ -86,7 +80,7 @@ public class ChessBoardTest {
         ChessBoard clone = (ChessBoard) board.clone();
 
         board.move(new Move(testBishop1,
-                new Location(testBishop1.getLocation().X() + 1, testBishop1.getLocation().Y() + 1)));
+                new Location(testBishop1.getLocation().x + 1, testBishop1.getLocation().y + 1)));
 
         Assert.assertNotEquals(clone, board);
     }
@@ -134,32 +128,20 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void getBoardArray() throws Exception {
-        Assert.assertNotNull(initialGame.getBoard().getBoardArray());
-    }
-
-    @Test
     public void getPotentialMoves() throws Exception {
         Assert.assertEquals(initialGame.getBoard().getPotentialMoves(ChessPiece.PieceColor.White).size(), 20);
     }
 
     @Test
     public void testToString() throws Exception {
-        String startBoardString =
-                "      [A][B][C][D][E][F][G][H] \n" +
-                "\n" +
-                "[8]   [R][N][B][Q][K][B][N][R]   [8]\n" +
-                "[7]   [P][P][P][P][P][P][P][P]   [7]\n" +
-                "[6]   [ ][ ][ ][ ][ ][ ][ ][ ]   [6]\n" +
-                "[5]   [ ][ ][ ][ ][ ][ ][ ][ ]   [5]\n" +
-                "[4]   [ ][ ][ ][ ][ ][ ][ ][ ]   [4]\n" +
-                "[3]   [ ][ ][ ][ ][ ][ ][ ][ ]   [3]\n" +
-                "[2]   [P][P][P][P][P][P][P][P]   [2]\n" +
-                "[1]   [R][N][B][Q][K][B][N][R]   [1]\n" +
-                "\n" +
-                "      [A][B][C][D][E][F][G][H]" +
-                "\n" +
-                "\n";
+        String startBoardString = "[R][N][B][Q][K][B][N][R]\n" +
+                "[P][P][P][P][P][P][P][P]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[p][p][p][p][p][p][p][p]\n" +
+                "[r][n][b][q][k][b][n][r]\n";
 
         Assert.assertEquals(initialGame.getBoard().toString(), startBoardString);
     }

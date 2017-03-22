@@ -4,9 +4,6 @@ import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
-import Data.FileLocator;
-import Data.Load;
-import Data.Save;
 import org.junit.Before;
 import org.junit.Test;
 

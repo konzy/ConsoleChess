@@ -79,7 +79,7 @@ public class GameBoard extends Application {
             ImageView tmpView = chessPiece.getImage();
             tmpView.setFitHeight(80);
             tmpView.setFitWidth(80);
-            grid.add(chessPiece.getImage(), chessPiece.getLocation().X(), chessPiece.getLocation().Y());
+            grid.add(chessPiece.getImage(), chessPiece.getLocation().x, chessPiece.getLocation().y);
         }
 
         HBox hBox = new HBox();

@@ -3,9 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-import Chess.MoveOffset;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 
 /**
@@ -20,8 +17,8 @@ public class King extends ChessPiece{
     public static final String LETTER = "K";
 
     public King(ChessPiece.PieceColor color, Location location){
-		super(PieceType.King, color,false, location);
-	}
+        super(PieceType.King, color,false, location);
+    }
 
     @Override
     public void setImage() {
@@ -39,11 +36,11 @@ public class King extends ChessPiece{
     }
 
     @Override
-    public MoveOffset[] moveModifiers() {
-        return new MoveOffset[]{	new MoveOffset(1, 0, false, false), new MoveOffset(0, 1, false, false),
-                new MoveOffset(-1, 0, false, false), new MoveOffset(0, -1, false, false),
-                new MoveOffset(1, 1, false, false), new MoveOffset(1, -1, false, false),
-                new MoveOffset(-1, 1, false, false), new MoveOffset(-1, -1, false, false)};
+    public Location[] moveModifiers() {
+        return new Location[]{	new Location(1, 0), new Location(0, 1),
+                new Location(-1, 0), new Location(0, -1),
+                new Location(1, 1), new Location(1, -1),
+                new Location(-1, 1), new Location(-1, -1)};
     }
 
     @Override
