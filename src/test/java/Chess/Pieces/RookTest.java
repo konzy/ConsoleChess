@@ -1,18 +1,20 @@
-package chessTests.Chess.Pieces;
+package Chess.Pieces;
 
-import Chess.Pieces.*;
+
 import Chess.Location;
+import Chess.Pieces.ChessPiece;
+import Chess.Pieces.Rook;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Created by konzy on 2/16/2017.
+ * Created by konzy on 2/17/2017.
  */
-public class KnightTest {
+public class RookTest {
 
-    private Knight knight = new Knight(ChessPiece.PieceColor.Black, new Location(1,1));
+    private Rook rook = new Rook(ChessPiece.PieceColor.Black, new Location(4,4));
 
     @Before
     public void setUp() throws Exception {
@@ -21,17 +23,17 @@ public class KnightTest {
 
     @After
     public void tearDown() throws Exception {
-        knight = null;
+        rook = null;
     }
 
     @Test
     public void value() throws Exception {
-        Assert.assertEquals(knight.value(), 3);
+        Assert.assertEquals(rook.value(), 5);
     }
 
     @Test
     public void getLetter() throws Exception {
-        Assert.assertEquals(knight.getLetter(), "N");
+        Assert.assertEquals(rook.getLetter(), "R");
     }
 
     @Test
@@ -43,4 +45,5 @@ public class KnightTest {
     public void validMoves() throws Exception {
 
     }
+
 }

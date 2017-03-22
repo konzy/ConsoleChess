@@ -1,4 +1,4 @@
-package chessTests.Data;
+package Data;
 
 import Chess.ChessBoard;
 import Chess.ChessGame;

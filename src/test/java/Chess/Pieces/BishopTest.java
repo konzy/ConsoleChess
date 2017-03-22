@@ -1,4 +1,4 @@
-package chessTests.Chess.Pieces;
+package Chess.Pieces;
 
 import Chess.ChessBoard;
 import Chess.Location;

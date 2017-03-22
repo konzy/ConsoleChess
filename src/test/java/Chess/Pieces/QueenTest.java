@@ -1,9 +1,7 @@
-package chessTests.Chess.Pieces;
+package Chess.Pieces;
 
-
+import Chess.Pieces.*;
 import Chess.Location;
-import Chess.Pieces.ChessPiece;
-import Chess.Pieces.Rook;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +10,9 @@ import org.junit.Test;
 /**
  * Created by konzy on 2/17/2017.
  */
-public class RookTest {
+public class QueenTest {
 
-    private Rook rook = new Rook(ChessPiece.PieceColor.Black, new Location(4,4));
+    private Queen queen = new Queen(ChessPiece.PieceColor.Black, new Location(1,1));
 
     @Before
     public void setUp() throws Exception {
@@ -23,17 +21,17 @@ public class RookTest {
 
     @After
     public void tearDown() throws Exception {
-        rook = null;
+        queen = null;
     }
 
     @Test
     public void value() throws Exception {
-        Assert.assertEquals(rook.value(), 5);
+        Assert.assertEquals(queen.value(), 9);
     }
 
     @Test
     public void getLetter() throws Exception {
-        Assert.assertEquals(rook.getLetter(), "R");
+        Assert.assertEquals(queen.getLetter(), "Q");
     }
 
     @Test

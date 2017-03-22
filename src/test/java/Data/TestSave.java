@@ -1,4 +1,4 @@
-package chessTests.Data;
+package Data;
 
 import Data.FileLocator;
 import Data.Save;

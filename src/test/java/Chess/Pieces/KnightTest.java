@@ -1,4 +1,4 @@
-package chessTests.Chess.Pieces;
+package Chess.Pieces;
 
 import Chess.Pieces.*;
 import Chess.Location;
@@ -8,11 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Created by konzy on 2/17/2017.
+ * Created by konzy on 2/16/2017.
  */
-public class QueenTest {
+public class KnightTest {
 
-    private Queen queen = new Queen(ChessPiece.PieceColor.Black, new Location(1,1));
+    private Knight knight = new Knight(ChessPiece.PieceColor.Black, new Location(1,1));
 
     @Before
     public void setUp() throws Exception {
@@ -21,17 +21,17 @@ public class QueenTest {
 
     @After
     public void tearDown() throws Exception {
-        queen = null;
+        knight = null;
     }
 
     @Test
     public void value() throws Exception {
-        Assert.assertEquals(queen.value(), 9);
+        Assert.assertEquals(knight.value(), 3);
     }
 
     @Test
     public void getLetter() throws Exception {
-        Assert.assertEquals(queen.getLetter(), "Q");
+        Assert.assertEquals(knight.getLetter(), "N");
     }
 
     @Test
@@ -43,5 +43,4 @@ public class QueenTest {
     public void validMoves() throws Exception {
 
     }
-
 }
