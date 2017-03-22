@@ -21,12 +21,21 @@ public class ChessBoard implements Cloneable {
         fillBoard();
     }
 
+    /**
+     * Takes an array of ChessPieces to create any valid game
+     * @param board
+     */
     public ChessBoard(ArrayList<ChessPiece> board) {
 
 
         pieces = (ArrayList<ChessPiece>) board.clone();
     }
 
+    /**
+     * * Goes through the board and returns the piece at the specified location
+     * @param location
+     * @return
+     */
     public ChessPiece getPieceAtLocation(Location location) {
         for (ChessPiece piece : pieces) {
             if (piece.getLocation().equals(location)) {
