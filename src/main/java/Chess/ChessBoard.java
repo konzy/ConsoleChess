@@ -2,6 +2,8 @@ package Chess;
 
 import Chess.Pieces.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Chess Board is a class for the board that is able to set up the starting positions of the pieces for a game of chess
