@@ -3,7 +3,7 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-
+import Chess.MoveOffset;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private boolean repeatableMoves;
     protected Location location;
     protected String picPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toString();
-
     protected ImageView image;
 
     /**
@@ -56,11 +55,10 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     @Override
     public int compareTo(Object o) {
         if (o instanceof ChessPiece) {
-
-            if (this.location.y == ((ChessPiece) o).location.y) {
-                return this.location.x - ((ChessPiece) o).location.x;
+            if (this.location.Y() == ((ChessPiece) o).location.Y()) {
+                return this.location.X() - ((ChessPiece) o).location.X();
             } else {
-                return this.location.y - ((ChessPiece) o).location.y;
+                return this.location.Y() - ((ChessPiece) o).location.Y();
             }
         }
         return 0;
@@ -93,10 +91,10 @@ public abstract class ChessPiece implements Comparable, Cloneable {
 
     public ArrayList<Move> potentialMoves(ChessBoard board) {
         ArrayList<Move> toLocations = new ArrayList<>();
-        for (Location moveOffset : moveModifiers()) {
+        for (MoveOffset moveOffset : moveModifiers()) {
             Location to = location;
             do {
-                to = new Location(to.x + moveOffset.x, to.y + moveOffset.y);
+                to = new Location(to.X() + moveOffset.x, to.Y() + moveOffset.y);
                 if (isInsideBoard(to) && (board.getPieceAtLocation(to) == null || board.getPieceAtLocation(to).color() != color)) {
                     toLocations.add(new Move(this, to));
                 }
@@ -140,8 +138,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     /**
      * @return an array of Moves that are valid for the piece
      */
+    abstract public MoveOffset[] moveModifiers();
 
-    abstract public Location[] moveModifiers();
 
     public void setLocation(Location location) {
         this.location = location;

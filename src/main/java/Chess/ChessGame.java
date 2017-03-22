@@ -2,6 +2,7 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
+import Console.BoardDisplay;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,7 @@ public class ChessGame implements Cloneable {
         CHECKMATE,
         STALEMATE
     }
+
 
     /**
      * Starts up the game with initial conditions and displays the board.
@@ -65,8 +67,8 @@ public class ChessGame implements Cloneable {
         Move move = new Move(piece, to);
         if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
             board.move(move);
+            BoardDisplay.printBoard(board);
 
-            System.out.println(board);
             System.out.println(currentPlayer.toString() + " Moved " + move.getPiece().charValue() + " from " + from.toString() + " to " + to.toString());
             endTurn();
             return true;
@@ -98,10 +100,5 @@ public class ChessGame implements Cloneable {
         }
 
         return GameState.PLAY;
-    }
-  
-    @Override
-    public String toString() {
-        return board + "" + currentPlayer + "\n";
     }
 }

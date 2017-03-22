@@ -3,6 +3,7 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
+import Chess.MoveOffset;
 
 import java.util.ArrayList;
 
@@ -40,8 +41,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-
-    public Location[] moveModifiers() {
+    public MoveOffset[] moveModifiers() {
         return null; //unused
     }
 
@@ -52,23 +52,21 @@ public class Pawn extends ChessPiece {
 
         //one space move forward
         if (color == PieceColor.White) {
-
-            moveTo = new Location(location.x, location.y - 1);
+            moveTo = new Location(location.X(), location.Y() - 1);
         } else {
-            moveTo = new Location(location.x, location.y + 1);
+            moveTo = new Location(location.X(), location.Y() + 1);
         }
         if (board.getPieceAtLocation(moveTo) == null) {
             potentialMoves.add(new Move(this, moveTo));
         }
 
         //two space move forward
-
-        if ((color == PieceColor.White && location.y == 6) ||
-                (color == PieceColor.Black && location.y == 1)) {
+        if ((color == PieceColor.White && location.Y() == 6) ||
+                (color == PieceColor.Black && location.Y() == 1)) {
             if (color == PieceColor.White) {
-                moveTo = new Location(location.x, location.y - 2);
+                moveTo = new Location(location.X(), location.Y() - 2);
             } else {
-                moveTo = new Location(location.x, location.y + 2);
+                moveTo = new Location(location.X(), location.Y() + 2);
             }
             if (board.getPieceAtLocation(moveTo) == null && potentialMoves.size() == 1) {
                 potentialMoves.add(new Move(this, moveTo));
@@ -77,10 +75,9 @@ public class Pawn extends ChessPiece {
 
         //capture to right
         if (color == PieceColor.White) {
-
-            moveTo = new Location(location.x + 1, location.y - 1);
+            moveTo = new Location(location.X() + 1, location.Y() - 1);
         } else {
-            moveTo = new Location(location.x - 1, location.y + 1);
+            moveTo = new Location(location.X() - 1, location.Y() + 1);
         }
         ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
@@ -90,9 +87,9 @@ public class Pawn extends ChessPiece {
 
         //capture to left
         if (color == PieceColor.White) {
-            moveTo = new Location(location.x - 1, location.y - 1);
+            moveTo = new Location(location.X() - 1, location.Y() - 1);
         } else {
-            moveTo = new Location(location.x + 1, location.y + 1);
+            moveTo = new Location(location.X() + 1, location.Y() + 1);
         }
         moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {

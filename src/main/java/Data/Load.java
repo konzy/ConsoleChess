@@ -8,17 +8,16 @@ import Chess.Pieces.*;
 import java.io.*;
 import java.util.ArrayList;
 
-import static Data.Save.BASE_SAVE_LOCATION;
 /**
  * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
  * into the autosave for replay purposes.
  */
 public class Load {
-
-    private static final String UPPER_CASE_REGEX = "[A-Z]";
+    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public static ChessGame Load(String fileStr, ChessGame game) {
-        File loadFile = new File(BASE_SAVE_LOCATION + fileStr + ".txt");
+        File loadFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) +"/resources/main/" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
@@ -27,31 +26,28 @@ public class Load {
             /* FileInputStream to read streams */
             input = new BufferedReader(new FileReader(loadFile));
             String line;
-
+            String[] lineArray;
             int y = 0;
             while ((line = input.readLine()) != null) {
-                if(y == 8) {
+                if(y == 0) {
                     if(line.equals(ChessPiece.PieceColor.White.name())){
                         currentPlayer = ChessPiece.PieceColor.White;
                     } else {
                         currentPlayer = ChessPiece.PieceColor.Black;
                     }
-
+                    pieces = new ArrayList<>();
                 } else {
-                    line = line.replace("[", "");
-                    line = line.replace("]", "");
-                    for (int x = 0; x < 8; x++) {
-                        String s = String.valueOf(line.charAt(x));
+                    lineArray = line.split("\\]");
+                    for (int x = 0; x < lineArray.length; x = x + 2) {
                         ChessPiece.PieceColor color;
-                        if (s.matches(UPPER_CASE_REGEX)) {
+                        if (lineArray[x + 1].substring(1, 2).equals("B")) {
                             color = ChessPiece.PieceColor.Black;
                         } else {
                             color = ChessPiece.PieceColor.White;
                         }
                         ChessPiece piece = null;
-
-                        Location location = new Location(x, y);
-                        switch (s.toUpperCase()) {
+                        Location location = new Location(x / 2, y - 1);
+                        switch (lineArray[x].substring(1, 2)) {
                             case Pawn.LETTER:
                                 piece = new Pawn(color, location);
                                 break;

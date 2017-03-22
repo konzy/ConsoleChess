@@ -6,8 +6,7 @@ public class Timer{
     Boolean p1turn = true, p2turn = false, delaySet = true, delayFinished = false;
     double delay, currentTime;
 
-
-    public void turnSwitch(){
+    void turnSwitch(){
         if(p1turn){
             p1turn = false;
             p2turn = true;
@@ -22,8 +21,7 @@ public class Timer{
         }
     }
 
-
-    public void countDown(){
+    void countDown(){
         if(p1turn){
             p1Timer();
         }
@@ -72,21 +70,11 @@ public class Timer{
         }
     }
 
-
-    public int getP1Time(){
+    int getP1Time(){
         return p1Seconds;
     }
 
-    public int getP2Time(){
+    int getP2Time(){
         return p2Seconds;
-    }
-
-    public int getCurrentTurn() {
-        if(p1turn){
-            return 0;
-        }
-        else{
-            return 1;
-        }
     }
 }
