@@ -7,6 +7,7 @@ public class Timer{
     double delay, currentTime;
 
 
+
     public void turnSwitch(){
         if(p1turn){
             p1turn = false;
@@ -72,21 +73,11 @@ public class Timer{
         }
     }
 
-
     public int getP1Time(){
         return p1Seconds;
     }
 
-    public int getP2Time(){
+    int getP2Time(){
         return p2Seconds;
-    }
-
-    public int getCurrentTurn() {
-        if(p1turn){
-            return 0;
-        }
-        else{
-            return 1;
-        }
     }
 }

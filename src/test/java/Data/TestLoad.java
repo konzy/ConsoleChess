@@ -4,6 +4,9 @@ import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.*;
+import Data.FileLocator;
+import Data.Load;
+import Data.Save;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import static Data.Save.BASE_SAVE_LOCATION;
 import static org.junit.Assert.*;
 
 /**
@@ -20,6 +22,7 @@ import static org.junit.Assert.*;
  */
 public class TestLoad {
     ChessGame expected;
+    public static final FileLocator FILE_LOCATOR = new FileLocator();
     @Before
     public void setup() throws Exception {
         ArrayList<ChessPiece> pieces = new ArrayList<>();
@@ -63,17 +66,18 @@ public class TestLoad {
 
     @Test
     public void loadBoardTest() throws Exception {
-        ChessGame result = Load.Load("testfiles\\loadTestFile", new ChessGame());
+        ChessGame result = Load.Load("testFiles/loadTestFile", new ChessGame());
         assertEquals(expected.getBoard().toString(), result.getBoard().toString());
     }
 
     @Test
     public void loadAutoSaveLoaded() throws Exception {
-        Load.Load("testfiles\\loadTestFile", new ChessGame());
-        File autoSaveFile = new File(BASE_SAVE_LOCATION +
-                "src\\Data\\Autosave.txt");
-        File expectedFileString = new File (BASE_SAVE_LOCATION +
-                "src\\Data\\testfiles\\loadTestFile.txt");
+        Load.Load("testFiles/loadTestFile", new ChessGame());
+        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt");
+        File expectedFileString = new File (FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/testFiles/loadTestFile.txt");
+
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";
@@ -90,7 +94,7 @@ public class TestLoad {
 
     @Test
     public void loadTurnTest() throws Exception {
-        ChessGame result = Load.Load("testfiles\\loadTestFile", new ChessGame());
+        ChessGame result = Load.Load("testFiles/loadTestFile", new ChessGame());
         assertEquals(expected.getCurrentPlayer(), result.getCurrentPlayer());
     }
 }

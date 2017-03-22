@@ -2,8 +2,6 @@ package Chess;
 
 import Chess.Pieces.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * Chess Board is a class for the board that is able to set up the starting positions of the pieces for a game of chess
@@ -15,26 +13,18 @@ public class ChessBoard implements Cloneable {
     private ArrayList<ChessPiece> pieces;
 
     /**
-     * Creates the starting piece location for a typical game of chess
+     * Initializes the chess board of a 8x8 2d Tile array
      */
     public ChessBoard(){
         fillBoard();
     }
 
+    public ChessBoard(ArrayList<ChessPiece> board) {
 
-    /**
-     * Takes an array of ChessPieces to create any valid game
-     * @param pieces
-     */
-    public ChessBoard(ArrayList<ChessPiece> pieces) {
-        this.pieces = (ArrayList<ChessPiece>) pieces.clone();
+
+        pieces = (ArrayList<ChessPiece>) board.clone();
     }
 
-    /**
-     * Goes through the board and returns the piece at the specified location
-     * @param location
-     * @return
-     */
     public ChessPiece getPieceAtLocation(Location location) {
         for (ChessPiece piece : pieces) {
             if (piece.getLocation().equals(location)) {
@@ -43,6 +33,7 @@ public class ChessBoard implements Cloneable {
         }
         return null;
     }
+
 
 
     /**
@@ -64,17 +55,13 @@ public class ChessBoard implements Cloneable {
      * @return
      */
     public static boolean isInsideBoard(Location location) {
-        return location.x >= 0 && location.x <= 7 && location.y >= 0 && location.y <= 7;
+        return location.X() >= 0 && location.X() <= 7 && location.Y() >= 0 && location.Y() <= 7;
     }
 
-    /**
-     * Removes a piece from the game board given a Location
-     * @param location
-     * @return if piece was removed
-     */
     public boolean removePiece(Location location) {
         return removePiece(getPieceAtLocation(location));
     }
+
 
 
     /**
@@ -85,6 +72,7 @@ public class ChessBoard implements Cloneable {
     public boolean removePiece(ChessPiece pieceToRemove) {
         return pieces.remove(pieceToRemove);
     }
+
 
 
     /**
@@ -145,7 +133,6 @@ public class ChessBoard implements Cloneable {
     }
 
     /**
-
      * Returns the ArrayList of the pieces on the board.
      */
     public ArrayList<ChessPiece> getBoardArrayList(){
@@ -214,6 +201,15 @@ public class ChessBoard implements Cloneable {
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
     }
 
+    public Tile[][] getBoardArray() {
+        int len = 8;
+        Tile[][] result = new Tile[len][len];
+        for (ChessPiece piece : pieces) {
+            result[piece.getLocation().X()][piece.getLocation().Y()] = new Tile(Tile.TileColor.Black, piece);
+        }
+        return result;
+    }
+
     public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
         ArrayList<Move> potentialMoves = new ArrayList<>();
         for (ChessPiece piece : pieces) {
@@ -224,40 +220,32 @@ public class ChessBoard implements Cloneable {
         return potentialMoves;
     }
 
-
     /**
      * A human readable representation of the board
      * @return
      */
     @Override
     public String toString() {
-        Collections.sort(pieces);
-        Iterator iter = pieces.iterator();
-        ChessPiece piece = null;
-        if (iter.hasNext()) {
-            piece = (ChessPiece) iter.next();
-        }
+        Tile[][] b = getBoardArray();
         String string = "";
 
+        string += ("      [A][B][C][D][E][F][G][H] \n\n");
         for(int y = 0; y < 8; y++) { //8 represents height of board
+            string += ("[" + (8 - y) + "]   ");
+
             for (int x = 0; x < 8; x++){ //8 represents width of board
-                if (piece != null && piece.getLocation().equals(new Location(x, y))) {
-                    String letter = piece.getLetter().toUpperCase();
-                    if (piece.getColor().equals(ChessPiece.PieceColor.White)) {
-                        letter = letter.toLowerCase();
-                    }
-                    string += "[" + letter + "]";
-                    if (iter.hasNext()) {
-                        piece = (ChessPiece) iter.next();
-                    } else {
-                        piece = null;
-                    }
+                if (b[x][y] != null) {
+                    string += (b[x][y].toString());
                 } else {
                     string += ("[ ]");
+
                 }
             }
-            string += "\n";
+
+            string += ("   [" + (8 - y) + "]\n");
         }
+
+        string += ("\n      [A][B][C][D][E][F][G][H]\n\n");
         return string;
     }
 }
