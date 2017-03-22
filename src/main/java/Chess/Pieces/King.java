@@ -3,7 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-
 import java.util.ArrayList;
 
 /**
@@ -18,8 +17,8 @@ public class King extends ChessPiece{
     public static final String LETTER = "K";
 
     public King(ChessPiece.PieceColor color, Location location){
-		super(PieceType.King, color,false, location);
-	}
+        super(PieceType.King, color,false, location);
+    }
 
     @Override
     public void setImage() {

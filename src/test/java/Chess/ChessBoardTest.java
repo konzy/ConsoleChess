@@ -37,9 +37,7 @@ public class ChessBoardTest {
         pieces.add(blackKingPiece);
         pieces.add(whiteKingPiece);
         pieces.add(testBishop2);
-
         board = new ChessBoard(pieces);
-
     }
     @After
     public void tearDown() throws Exception {
@@ -136,15 +134,14 @@ public class ChessBoardTest {
 
     @Test
     public void testToString() throws Exception {
-        String startBoardString =
-            "[R][N][B][Q][K][B][N][R]\n" +
-            "[P][P][P][P][P][P][P][P]\n" +
-            "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-            "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-            "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-            "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-            "[p][p][p][p][p][p][p][p]\n" +
-            "[r][n][b][q][k][b][n][r]\n";
+        String startBoardString = "[R][N][B][Q][K][B][N][R]\n" +
+                "[P][P][P][P][P][P][P][P]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
+                "[p][p][p][p][p][p][p][p]\n" +
+                "[r][n][b][q][k][b][n][r]\n";
 
         Assert.assertEquals(initialGame.getBoard().toString(), startBoardString);
     }

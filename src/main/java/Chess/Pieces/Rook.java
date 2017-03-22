@@ -3,7 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-
 import java.util.ArrayList;
 
 /**
@@ -14,12 +13,11 @@ import java.util.ArrayList;
  * a King side castle and O-O-O for a Queen side castle.
  */
 public class Rook extends ChessPiece {
-
     public static final String LETTER = "R";
 
-	public Rook(PieceColor color, Location location){
-		super(PieceType.Rook, color,true, location);
-	}
+    public Rook(PieceColor color, Location location){
+        super(PieceType.Rook, color,true, location);
+    }
 
     @Override
     public void setImage() {

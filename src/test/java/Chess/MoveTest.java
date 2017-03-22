@@ -19,6 +19,7 @@ public class MoveTest {
     private Move move2;
     private Move move3;
     private Move clone;
+
     @Before
     public void setUp() throws Exception {
         testPiece1 = new Bishop(ChessPiece.PieceColor.White, new Location(1,1));
@@ -29,7 +30,6 @@ public class MoveTest {
         move2 = new Move(testPiece1,testLocation1);
         move3 = new Move(testPiece2,testLocation2);
         //testLocation2 = new Location(2,);
-
     }
 
     @After
@@ -42,6 +42,7 @@ public class MoveTest {
         Move move2 = null;
         Move move3 = null;
         Move clone = null;
+
     }
 
     @Test

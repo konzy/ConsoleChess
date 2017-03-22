@@ -1,17 +1,17 @@
-package chessTests.Chess;
+package Chess;
 
-import Chess.Timer;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
+
  * Created by Jakob on 3/14/2017.
+
  */
 public class TimerTest {
     private Timer timer = new Timer();
-
 
     @Before
     public void setUp() throws Exception{
@@ -28,11 +28,11 @@ public class TimerTest {
         Assert.assertEquals(timer.getP1Time(), 300);
     }
 
-    @Test
-    public void p1Timer() throws Exception{
-        timer.countDown();
-        Assert.assertNotEquals(timer.getP1Time(), 300);
-    }
+//    @Test
+//    public void p1Timer() throws Exception{
+//        timer.countDown();
+//        Assert.assertNotEquals(timer.getP1Time(), 300);
+//    }
 
     @Test
     public void getP2Time() throws Exception{
@@ -52,10 +52,11 @@ public class TimerTest {
         Assert.assertEquals(timer.getCurrentTurn(), 1);
     }
 
-    @Test
-    public void p2Timer() throws Exception{
-        timer.turnSwitch();
-        timer.countDown();
-        Assert.assertNotEquals(timer.getP2Time(), 300);
-    }
+//    @Test
+//    public void p2Timer() throws Exception{
+//        timer.turnSwitch();
+//        timer.countDown();
+//        Assert.assertNotEquals(timer.getP2Time(), 300);
+//    }
+
 }

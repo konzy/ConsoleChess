@@ -3,7 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-
 import java.util.ArrayList;
 
 /**
@@ -33,12 +32,12 @@ public class Queen extends ChessPiece{
 	}
 
 	@Override
-    public Location[] moveModifiers() {
-	    return new Location[]{	new Location(1, 0), new Location(0, 1),
-            new Location(-1, 0), new Location(0, -1),
-            new Location(1, 1), new Location(1, -1),
-            new Location(-1, 1), new Location(-1, -1)};
-    }
+	public Location[] moveModifiers() {
+		return new Location[]{	new Location(1, 0), new Location(0, 1),
+				new Location(-1, 0), new Location(0, -1),
+				new Location(1, 1), new Location(1, -1),
+				new Location(-1, 1), new Location(-1, -1)};
+	}
 
 	@Override
 	public ArrayList<Move> validMoves(ChessBoard board) {

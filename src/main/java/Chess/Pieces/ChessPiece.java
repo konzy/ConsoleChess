@@ -3,11 +3,8 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-
 import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
-
 import static Chess.ChessBoard.isInsideBoard;
 
 /**
@@ -46,7 +43,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     }
 
     protected void setImage(PieceColor color, String letter) {
-        image = new ImageView(picPath + "/resources/main/" + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
+        image = new ImageView(picPath.substring(0, picPath.length() - 14) + "/resources/main/" + color.name().toLowerCase() + "_" + letter.toLowerCase() + ".png");
     }
 
     public abstract void setImage();

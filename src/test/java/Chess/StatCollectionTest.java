@@ -1,6 +1,5 @@
-package chessTests.Chess;
+package Chess;
 
-import Chess.StatCollection;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -201,12 +200,12 @@ public class StatCollectionTest {
         Assert.assertEquals(stats.getBlackCaptures(),0);
     }
 
-    @Test
-    public void storeRetrieveStats() throws Exception{
-        stats.incWhiteTime(123);
-        stats.storeData();
-        stats.resetStats();
-        stats.retrieveData();
-        Assert.assertEquals(stats.getWhiteTime(),123);
-    }
+//    @Test
+//    public void storeRetrieveStats() throws Exception{
+//        stats.incWhiteTime(123);
+//        stats.storeData();
+//        stats.resetStats();
+//        stats.retrieveData();
+//        Assert.assertEquals(stats.getWhiteTime(),123);
+//    }
 }

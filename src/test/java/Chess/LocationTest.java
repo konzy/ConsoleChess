@@ -31,6 +31,7 @@ public class LocationTest {
 
     @Test
     public void Constructor() throws Exception {
+
         Location copy = new Location(location1);
         Assert.assertEquals(copy, location1);
 

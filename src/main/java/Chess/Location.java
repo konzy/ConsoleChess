@@ -35,9 +35,7 @@ public class Location implements Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Location location = (Location) o;
-
         if (x != location.x) return false;
         return y == location.y;
     }

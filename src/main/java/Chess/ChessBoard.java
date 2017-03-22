@@ -21,17 +21,18 @@ public class ChessBoard implements Cloneable {
         fillBoard();
     }
 
-
     /**
      * Takes an array of ChessPieces to create any valid game
-     * @param pieces
+     * @param board
      */
-    public ChessBoard(ArrayList<ChessPiece> pieces) {
-        this.pieces = (ArrayList<ChessPiece>) pieces.clone();
+    public ChessBoard(ArrayList<ChessPiece> board) {
+
+
+        pieces = (ArrayList<ChessPiece>) board.clone();
     }
 
     /**
-     * Goes through the board and returns the piece at the specified location
+     * * Goes through the board and returns the piece at the specified location
      * @param location
      * @return
      */
@@ -43,6 +44,7 @@ public class ChessBoard implements Cloneable {
         }
         return null;
     }
+
 
 
     /**
@@ -67,14 +69,10 @@ public class ChessBoard implements Cloneable {
         return location.x >= 0 && location.x <= 7 && location.y >= 0 && location.y <= 7;
     }
 
-    /**
-     * Removes a piece from the game board given a Location
-     * @param location
-     * @return if piece was removed
-     */
     public boolean removePiece(Location location) {
         return removePiece(getPieceAtLocation(location));
     }
+
 
 
     /**
@@ -85,6 +83,7 @@ public class ChessBoard implements Cloneable {
     public boolean removePiece(ChessPiece pieceToRemove) {
         return pieces.remove(pieceToRemove);
     }
+
 
 
     /**
@@ -145,7 +144,6 @@ public class ChessBoard implements Cloneable {
     }
 
     /**
-
      * Returns the ArrayList of the pieces on the board.
      */
     public ArrayList<ChessPiece> getBoardArrayList(){
@@ -214,6 +212,15 @@ public class ChessBoard implements Cloneable {
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
     }
 
+    public Tile[][] getBoardArray() {
+        int len = 8;
+        Tile[][] result = new Tile[len][len];
+        for (ChessPiece piece : pieces) {
+            result[piece.getLocation().x][piece.getLocation().y] = new Tile(Tile.TileColor.Black, piece);
+        }
+        return result;
+    }
+
     public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
         ArrayList<Move> potentialMoves = new ArrayList<>();
         for (ChessPiece piece : pieces) {
@@ -225,11 +232,17 @@ public class ChessBoard implements Cloneable {
     }
 
 
+
     /**
+
      * A human readable representation of the board
+
      * @return
+
      */
+
     @Override
+
     public String toString() {
         Collections.sort(pieces);
         Iterator iter = pieces.iterator();

@@ -3,7 +3,6 @@ package Chess.Pieces;
 import Chess.ChessBoard;
 import Chess.Location;
 import Chess.Move;
-
 import java.util.ArrayList;
 
 /**
@@ -14,11 +13,11 @@ public class Bishop extends ChessPiece {
     public static final String LETTER = "B";
 
 
-	public Bishop(PieceColor color, Location location){
-		super(PieceType.Bishop, color, true, location);
-	}
+    public Bishop(PieceColor color, Location location){
+        super(PieceType.Bishop, color, true, location);
+    }
 
-	@Override
+    @Override
     public void setImage() {
         setImage(color, LETTER);
     }
@@ -34,7 +33,6 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-
     public Location[] moveModifiers() {
         return	new Location[]{	new Location(1, 1), new Location(1, -1),
                 new Location(-1, 1), new Location(-1, -1)};
