@@ -3,6 +3,7 @@ package GUI;
 import Chess.ChessGame;
 import Chess.StatCollection;
 import Console.BoardDisplay;
+import Data.FileLocator;
 import Data.Load;
 import Data.Save;
 import javafx.application.Application;
@@ -25,12 +26,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import static Data.Save.BASE_SAVE_LOCATION;
 
 /**
  * Created by Elizabeth on 1/25/2017.
  */
 public class Menu extends Application {
+    public static final FileLocator FILE_LOCATOR = new FileLocator();
+
     public Menu(){}
     @Override
     public void start(Stage stage) throws Exception {
@@ -113,7 +115,8 @@ public class Menu extends Application {
 
         loadBtn.setOnAction((ActionEvent e) -> {
 
-            File autoSaveFile = new File(BASE_SAVE_LOCATION + "src\\Data\\Autosave.txt");
+            File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                    FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt");
             try {
                 InputStream inputAutosave = new FileInputStream(autoSaveFile);
                 String resultStr = "";

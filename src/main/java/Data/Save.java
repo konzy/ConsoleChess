@@ -1,21 +1,17 @@
 package Data;
 
-import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Pieces.ChessPiece;
 import Chess.Tile;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * Save system for replaying and retaining moves.
  */
 public class Save {
 
-    public static final String BASE_SAVE_LOCATION = "src\\main\\java";
+    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public enum Tags{
         BLACK("[B]"),
@@ -40,7 +36,8 @@ public class Save {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(BASE_SAVE_LOCATION + "\\Data\\AutoSave.txt"));
+                    FileWriter(FILE_LOCATOR.baseFileLocation.substring(0,
+                    FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -57,7 +54,8 @@ public class Save {
      */
     public static void autoSave(ChessGame game) throws IOException {
         BufferedWriter autoSaveFile = new BufferedWriter(
-                new FileWriter(BASE_SAVE_LOCATION + "\\Data\\AutoSave.txt",
+                new FileWriter(FILE_LOCATOR.baseFileLocation.substring(0,
+                        FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt",
                         true));
         Tile[][] currentBoard = game.getBoard().getBoardArray();
         autoSaveFile.append(game.getCurrentPlayer().name());
@@ -99,10 +97,10 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File(BASE_SAVE_LOCATION + "\\Data\\" +
-                fromStr + ".txt");
-        File saveFile = new File(BASE_SAVE_LOCATION + "\\Data\\" +
-                toStr + ".txt");
+        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/" + fromStr + ".txt");
+        File saveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
+                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/" + toStr + ".txt");
 
         if(!saveFile.exists()){
             saveFile.createNewFile();
