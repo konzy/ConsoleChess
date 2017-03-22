@@ -30,4 +30,7 @@ test {
         exceptionFormat 'full'
     }
     maxHeapSize = '512m'
+    include 'src/test/java/chessTests/Chess/**'
+    //exclude file io tests for travis
+    exclude 'src/test/java/chessTests/Data/**'
 }
