@@ -4,10 +4,11 @@ jdk:
 sudo: false
 directories:
   -&TEST
+  -&MAIN
+
 script:
-  - gradle check
-  - gradle assemble
-  - gradle test --debug
+  - cd /home/travis/build/Guardryan/ConsoleChess/
+  - gradle test
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
