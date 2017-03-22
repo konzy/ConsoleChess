@@ -12,11 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 
-
 /**
  * Created by konzy on 2/15/2017.
  */
-
 public class BishopTest {
 
     private ChessBoard board;
