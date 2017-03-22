@@ -2,7 +2,6 @@ package GUI;
 
 import Chess.ChessGame;
 import Chess.StatCollection;
-import Console.BoardDisplay;
 import Data.FileLocator;
 import Data.Load;
 import Data.Save;
@@ -14,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+
 import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 
@@ -26,6 +26,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+
+import static Data.Save.BASE_SAVE_LOCATION;
 
 /**
  * Created by Elizabeth on 1/25/2017.
