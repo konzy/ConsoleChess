@@ -16,11 +16,9 @@ import static Data.Save.FILE_LOCATOR;
  * into the autosave for replay purposes.
  */
 public class Load {
-    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public static ChessGame Load(String fileStr, ChessGame game) {
-        File loadFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) +"/resources/main/" + fileStr + ".txt");
+        File loadFile = new File(FILE_LOCATOR.toString() +"/resources/main/" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;

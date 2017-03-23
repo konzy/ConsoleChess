@@ -19,13 +19,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import static Data.FileConstants.FILE_LOCATOR;
 
 
 /**
  * Created by Elizabeth on 1/25/2017.
  */
 public class Menu extends Application {
-    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public Menu(){}
     @Override
@@ -109,8 +109,7 @@ public class Menu extends Application {
 
         loadBtn.setOnAction((ActionEvent e) -> {
 
-            File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                    FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt");
+            File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt");
             try {
                 InputStream inputAutosave = new FileInputStream(autoSaveFile);
                 String resultStr = "";

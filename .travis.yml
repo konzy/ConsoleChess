@@ -7,7 +7,6 @@ directories:
   -&MAIN
 
 script:
-  - cd /home/travis/build/Guardryan/ConsoleChess/
   - gradle test
 
 before_cache:

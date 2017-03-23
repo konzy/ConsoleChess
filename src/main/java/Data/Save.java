@@ -6,11 +6,12 @@ import Chess.Tile;
 
 import java.io.*;
 
+import static Data.FileConstants.FILE_LOCATOR;
+
 /**
  * Save system for replaying and retaining moves.
  */
 public class Save {
-    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public enum Tags{
         BLACK("[B]"),
@@ -36,8 +37,7 @@ public class Save {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(FILE_LOCATOR.baseFileLocation.substring(0,
-                    FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt"));
+                    FileWriter(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt"));
             writer.append("");
             writer.flush();
             writer.close();
