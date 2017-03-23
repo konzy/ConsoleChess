@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-import static Data.Save.FILE_LOCATOR;
+import static Data.FileConstants.FILE_LOCATOR;
 
 /**
  * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
