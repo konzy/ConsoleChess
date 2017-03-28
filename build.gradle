@@ -24,10 +24,8 @@ dependencies {
 }
 
 test {
-    testLogging {
-        events "standardOut", "started", "passed", "skipped", "failed"
-        exceptionFormat 'full'
-    }
+    testLogging.showStandardStreams = true
+    testLogging.exceptionFormat = 'full'
     maxHeapSize = '512m'
     include 'src/test/java/chessTests/Chess/**'
     //exclude file io tests for travis
