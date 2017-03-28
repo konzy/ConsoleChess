@@ -163,31 +163,45 @@ public class StatCollection{
         storeData();
     }
 
+    public void clearStats(){
+        whiteMoves = 0;
+        blackMoves = 0;
+        win = 0;
+        loss = 0;
+        whiteTime = 0;
+        blackTime = 0;
+        whiteCaptures = 0;
+        blackCaptures = 0;
+        games = 0;
+        cpuGames = 0;
+        movesUndone = 0;
+    }
+
     public void storeData(){
         Path path = Paths.get("./chessStats.txt");
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
             writer.write(String.valueOf(whiteMoves));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(blackMoves));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(win));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(loss));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(whiteTime));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(blackTime));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(whiteCaptures));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(blackCaptures));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(games));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(cpuGames));
-            writer.write('\n');
+            writer.newLine();
             writer.write(String.valueOf(movesUndone));
-            writer.write('\n');
+            writer.newLine();
             writer.write("The above numbers are whiteMoves, blackMoves, win, loss, whiteTime, blackTime, whiteCaptures, blackCaptures, games, cpuGames, movesUndone");
         }
         catch(IOException e){

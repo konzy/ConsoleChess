@@ -200,12 +200,21 @@ public class StatCollectionTest {
         Assert.assertEquals(stats.getBlackCaptures(),0);
     }
 
-//    @Test
-//    public void storeRetrieveStats() throws Exception{
-//        stats.incWhiteTime(123);
-//        stats.storeData();
-//        stats.resetStats();
-//        stats.retrieveData();
-//        Assert.assertEquals(stats.getWhiteTime(),123);
-//    }
+    @Test
+    public void storeRetrieveStats() throws Exception{
+        stats.incWhiteTime(123);
+        stats.storeData();
+        stats.clearStats();
+        stats.retrieveData();
+        Assert.assertEquals(stats.getWhiteTime(),123);
+    }
+
+    @Test
+    public void clearStats() throws Exception{
+        stats.incWhiteTime(17258175);
+        stats.storeData();
+        stats.resetStats();
+        stats.retrieveData();
+        Assert.assertEquals(stats.getWhiteTime(), 0);
+    }
 }
