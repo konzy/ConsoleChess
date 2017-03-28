@@ -10,4 +10,8 @@ public class FileLocator {
         baseFileLocation = baseFileLocation.substring(0, baseFileLocation.length() - 14);
     }
 
+    @Override
+    public String toString() {
+        return  baseFileLocation;
+    }
 }
