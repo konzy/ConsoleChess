@@ -12,6 +12,6 @@ public class FileLocator {
 
     @Override
     public String toString() {
-        return  baseFileLocation;
+        return baseFileLocation;
     }
 }

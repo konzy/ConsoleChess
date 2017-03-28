@@ -97,10 +97,8 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/" + fromStr + ".txt");
-        File saveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/" + toStr + ".txt");
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + fromStr + ".txt");
+        File saveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + toStr + ".txt");
 
         if(!saveFile.exists()){
             saveFile.createNewFile();
