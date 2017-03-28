@@ -16,7 +16,6 @@ repositories {
     maven {
         name = "GradleRIO"
         url = "http://dev.imjac.in/maven"
-
     }
 }
 
@@ -26,7 +25,7 @@ dependencies {
 
 test {
     testLogging {
-        events 'passed','started','skipped', 'failed', 'standard_error'
+        events "standardOut", "started", "passed", "skipped", "failed"
         exceptionFormat 'full'
     }
     maxHeapSize = '512m'
