@@ -2,7 +2,6 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
-import Console.BoardDisplay;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +11,7 @@ public class ChessGame implements Cloneable {
 
     public ChessBoard board;
     private PieceColor currentPlayer;
+
 
 
     public enum GameState {
@@ -39,9 +39,14 @@ public class ChessGame implements Cloneable {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        ChessGame clone = (ChessGame)super.clone();
-        clone.board = (ChessBoard)board.clone();
+    public Object clone() {
+        ChessGame clone = null;
+        try {
+            clone = (ChessGame)super.clone();
+            clone.board = (ChessBoard)board.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         return clone;
     }
 

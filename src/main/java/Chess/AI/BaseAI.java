@@ -1,10 +1,7 @@
 package Chess.AI;
 
 import Chess.*;
-import Chess.Pieces.ChessPiece;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -12,7 +9,7 @@ import java.util.Random;
  */
 
 public abstract class BaseAI {
-    protected ChessGame projectedGame;
+    protected ChessGame clonedGame;
     protected ChessGame currentGame;
     protected ChessBoard board;
     protected Random random;
@@ -23,11 +20,7 @@ public abstract class BaseAI {
     }
 
     BaseAI(ChessGame game, long seed) {
-        try {
-            projectedGame = (ChessGame) game.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        clonedGame = (ChessGame) game.clone();
         currentGame = game;
         board = currentGame.getBoard();
         random = new Random(seed);
