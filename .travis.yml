@@ -9,6 +9,11 @@ directories:
 script:
   - gradle test
 
+after_success:
+  - gradle jacocoFullReport
+  - pip install --user codecov
+  - codecov
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/

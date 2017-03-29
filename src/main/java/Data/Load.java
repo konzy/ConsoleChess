@@ -8,9 +8,6 @@ import Chess.Pieces.*;
 import java.io.*;
 import java.util.ArrayList;
 
-
-import static Data.Save.FILE_LOCATOR;
-
 /**
  * Loads files from a static txt file, starting on the turn where the players left off on and puts the current moves
  * into the autosave for replay purposes.
