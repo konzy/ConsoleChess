@@ -1,6 +1,7 @@
 package GUI;
 
 
+import Chess.AI.MCTSearchAI;
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
@@ -136,9 +137,9 @@ public class GameBoard extends Application {
                         repaint();
                         boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
                         if (isOnePlayer && !isEndOfGame) {
-                            RandomAI randomAI = new RandomAI(game);
-                            Move aiMove = randomAI.getNextMove();
-                            game.playMove(aiMove.getPiece().getLocation(), aiMove.getTo());
+                            MCTSearchAI mctSearchAI = new MCTSearchAI(game);
+                            Move aiMove = mctSearchAI.getNextMove();
+                            game.playMove(aiMove);
                             Save.autoSave(game);
                             repaint();
                         } else if (isEndOfGame) {

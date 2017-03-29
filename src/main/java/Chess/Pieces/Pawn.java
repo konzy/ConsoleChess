@@ -21,6 +21,11 @@ public class Pawn extends ChessPiece {
         super(PieceType.Pawn, color, false, location);
     }
 
+    public boolean readyToPromote() {
+        return color == PieceColor.Black && location.y == 7 ||
+                color == PieceColor.White && location.y == 0;
+    }
+
     @Override
     public void setImage() {
         setImage(color, LETTER);
