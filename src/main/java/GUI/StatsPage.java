@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -31,11 +32,28 @@ public class StatsPage extends Application {
 
         vBox.getChildren().add(welcomeLabel);
 
-        borderPane.setTop(vBox);
+        HBox hBox = new HBox();
+        Button backBtn = new Button("< Menu");
+        backBtn.setMinHeight(25);
+        hBox.getChildren().addAll(backBtn);
+
+        borderPane.setTop(hBox);
+        borderPane.setCenter(vBox);
+
         Scene scene = new Scene(borderPane, 300, 300);
         stage.setTitle("Chess Game");
         stage.setScene(scene);
         stage.show();
+
+        backBtn.setOnAction(e -> {
+            Menu menu = new Menu();
+            try {
+                menu.start(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
     }
+
 }
 
