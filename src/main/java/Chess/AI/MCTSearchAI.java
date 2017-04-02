@@ -30,7 +30,6 @@ public class MCTSearchAI extends BaseAI {
 
         for (int i = 0; i < 1000; i++) {
             expand();
-            System.out.println(i);
         }
         return getNextBestMove();
     }
@@ -44,7 +43,6 @@ public class MCTSearchAI extends BaseAI {
         MCTNode childNode = new MCTNode(childGame, bestNode, randomMove);
         bestNode.addChild(childNode);
 
-
         ChessGame.GameState state = randomDepthChargeState(childNode);
         bestNode.incrementDepthCharge(state, randomMove);
 
@@ -52,10 +50,7 @@ public class MCTSearchAI extends BaseAI {
 
 
     private Move selection(MCTNode node) {
-
-        Move move = node.validMoves.get(Math.abs(random.nextInt()) % node.getRemainingMoves());
-
-        return move;
+        return node.validMoves.get(Math.abs(random.nextInt()) % node.getRemainingMoves());
     }
 
     private Move getNextBestMove() {
