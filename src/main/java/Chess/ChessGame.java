@@ -134,7 +134,7 @@ public class ChessGame implements Cloneable {
         ArrayList<ChessPiece> result = new ArrayList<>();
         for (Move move : board.getAllValidMoves(color)) {
             ChessPiece piece = board.getPieceAtLocation(move.getTo());
-            if (piece.getColor() != color) {
+            if (piece != null && piece.getColor() != color) {
                 result.add(piece);
             }
         }
@@ -146,20 +146,14 @@ public class ChessGame implements Cloneable {
         double opponentScore = 0.0;
 
         for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(currentPlayer)) {
-            currentPlayerScore += chessPiece.value();
+            currentPlayerScore += chessPiece.value() + chessPiece.getLocation().getValue();
         }
 
         for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(ChessPiece.opponentOf(currentPlayer))) {
-            opponentScore += chessPiece.value();
+            opponentScore += chessPiece.value() + chessPiece.getLocation().getValue();
         }
 
-        for (ChessPiece chessPiece : getPiecesWeThreaten(currentPlayer)) {
-            currentPlayerScore += chessPiece.value() * 0.1;
-        }
-
-        for (ChessPiece chessPiece : getPiecesWeThreaten(ChessPiece.opponentOf(currentPlayer))) {
-            opponentScore += chessPiece.value() * 0.1;
-        }
+        System.out.println(currentPlayerScore - opponentScore);
 
         return currentPlayerScore - opponentScore;
     }

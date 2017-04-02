@@ -2,6 +2,7 @@ package GUI;
 
 
 import Chess.AI.MCTSearchAI;
+import Chess.AI.MiniMaxAI;
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
@@ -137,8 +138,8 @@ public class GameBoard extends Application {
                         repaint();
                         boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
                         if (isOnePlayer && !isEndOfGame) {
-                            MCTSearchAI mctSearchAI = new MCTSearchAI(game);
-                            Move aiMove = mctSearchAI.getNextMove();
+                            MiniMaxAI miniMaxAI = new MiniMaxAI(game);
+                            Move aiMove = miniMaxAI.getNextMove();
                             game.playMove(aiMove);
                             Save.autoSave(game);
                             repaint();
