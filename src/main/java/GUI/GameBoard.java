@@ -1,12 +1,13 @@
 package GUI;
 
 
+import Chess.AI.MCTSearchAI;
+import Chess.AI.MiniMaxAI;
 import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import Chess.Pieces.*;
-import Console.BoardDisplay;
 import Data.Load;
 import Data.Save;
 import javafx.application.Application;
@@ -102,7 +103,7 @@ public class GameBoard extends Application {
         stage.setMaxWidth(655);
         stage.setMaxHeight(700);
         stage.show();
-        BoardDisplay.printBoard(game.getBoard());
+        System.out.println(game.getBoard().toString());
         //highlight square when clicked
               grid.setOnMouseClicked( e -> {
             int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
@@ -131,17 +132,15 @@ public class GameBoard extends Application {
                     firstClickX = -1;
                     firstClickY = -1;
                     if (game.playMove(from, to)) {
-
-                        BoardDisplay.clearConsole();
-                        BoardDisplay.printBoard(game.getBoard());
+                        System.out.println(game.getBoard().toString());
                         Save.autoSave(game);
 
                         repaint();
                         boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
                         if (isOnePlayer && !isEndOfGame) {
-                            RandomAI randomAI = new RandomAI(game);
-                            Move aiMove = randomAI.getNextMove();
-                            game.playMove(aiMove.getPiece().getLocation(), aiMove.getTo());
+                            MiniMaxAI miniMaxAI = new MiniMaxAI(game);
+                            Move aiMove = miniMaxAI.getNextMove();
+                            game.playMove(aiMove);
                             Save.autoSave(game);
                             repaint();
                         } else if (isEndOfGame) {
@@ -202,8 +201,7 @@ public class GameBoard extends Application {
     }
 
     private void repaint() {
-        BoardDisplay.clearConsole();
-        BoardDisplay.printBoard(game.getBoard());
+        System.out.println(game.getBoard());
     }
 
     private void setRectangleColor(Rectangle rectangle, int col, int row){

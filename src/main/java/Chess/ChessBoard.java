@@ -45,7 +45,11 @@ public class ChessBoard implements Cloneable {
         return null;
     }
 
-
+    public void promote(ChessPiece piece) {
+        pieces.remove(piece);
+        Queen queen = new Queen(piece.getColor(), piece.getLocation());
+        pieces.add(queen);
+    }
 
     /**
      * @deprecated use the single isInsideBoard

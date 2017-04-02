@@ -22,8 +22,12 @@ public class RandomAI extends BaseAI {
         ArrayList<Move> moves = currentGame.getBoard().getAllValidMoves(currentGame.getCurrentPlayer());
         if (moves.size() == 0) {
             System.out.println("The AI has no moves to do, why wasn't this caught before?");
+            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+                System.out.println(ste);
+            }
             return null;
         }
-        return moves.get(Math.abs(random.nextInt()) % moves.size());
+        Move temp = moves.get(Math.abs(random.nextInt()) % moves.size());
+        return temp;
     }
 }
