@@ -13,11 +13,9 @@ jar {
                 'Implementation-Version': version
     }
 }
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
 
+repositories {
+    mavenCentral()
     maven {
         name = "GradleRIO"
         url = "http://dev.imjac.in/maven"
