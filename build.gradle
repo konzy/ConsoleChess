@@ -14,7 +14,10 @@ jar {
     }
 }
 repositories {
+    mavenLocal()
     mavenCentral()
+    jcenter()
+
     maven {
         name = "GradleRIO"
         url = "http://dev.imjac.in/maven"
