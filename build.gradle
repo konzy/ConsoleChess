@@ -21,11 +21,11 @@ repositories {
     }
 }
 
-subprojects {
-    dependencies {
-        testCompile 'junit:junit:4.12'
-    }
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
 
+subprojects {
     test.useTestNG()
 }
 
