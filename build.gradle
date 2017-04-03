@@ -37,20 +37,20 @@ test {
     exclude 'src/test/java/Data/**'
 }
 
-task codeCoverageReport(type: JacocoReport) {
-    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-    subprojects.each {
-        sourceSets it.sourceSets.main
-    }
-
-    reports {
-        xml.enabled true
-        xml.destination "/reports/jacoco/report.xml"
-        html.enabled false
-        csv.enabled false
-    }
-}
+//task codeCoverageReport(type: JacocoReport) {
+//    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+//
+//    subprojects.each {
+//        sourceSets it.sourceSets.main
+//    }
+//
+//    reports {
+//        xml.enabled true
+//        xml.destination "/reports/jacoco/report.xml"
+//        html.enabled false
+//        csv.enabled false
+//    }
+//}
 
 jacocoTestReport {
     reports {
