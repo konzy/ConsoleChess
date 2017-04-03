@@ -8,6 +8,7 @@ directories:
 
 script:
   - gradle test
+  - gradle codeCoverageReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
