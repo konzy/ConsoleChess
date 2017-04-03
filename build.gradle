@@ -1,4 +1,5 @@
 apply plugin: "java"
+apply plugin: "maven"
 apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
@@ -34,6 +35,21 @@ test {
     include 'src/test/java/Chess/**'
     //exclude file io tests for travis
     exclude 'src/test/java/Data/**'
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
 }
 
 jacocoTestReport {
