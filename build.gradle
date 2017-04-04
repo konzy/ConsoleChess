@@ -6,7 +6,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
 
-
 jar {
     manifest {
         attributes 'Implementation-Title': 'ConsoleChess',
@@ -42,6 +41,10 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         html.enabled = true
-        xml.destination "${buildDir}"
     }
+}
+
+task applicationCodeCoverageReport(type:JacocoReport){
+    executionData run
+    sourceSets sourceSets.main
 }
