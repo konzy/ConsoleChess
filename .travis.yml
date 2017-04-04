@@ -5,8 +5,7 @@ sudo: false
 directories:
   -&TEST
   -&MAIN
-before_install:
-  - pip install --user codecov
+
 script:
   - gradle test jacocoTestReport
 
@@ -19,5 +18,4 @@ cache:
     - $HOME/.gradle/wrapper/
 
 after_success:
-  - gradle jacocoTestReport coveralls
   - bash <(curl -s https://codecov.io/bash)
