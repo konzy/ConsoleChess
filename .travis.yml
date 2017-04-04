@@ -7,7 +7,7 @@ directories:
   -&MAIN
 
 script:
-  - gradle test jacocoTestReport
+  - gradle test
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -18,5 +18,5 @@ cache:
     - $HOME/.gradle/wrapper/
 
 after_success:
-  - ./gradlew jacocoTestReport coveralls
+  - gradle jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
