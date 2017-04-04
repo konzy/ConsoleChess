@@ -10,7 +10,7 @@ before_install:
 script:
   - gradle test
   - gradle jacocoTestReport
-  - gradle applicationCodeCoverageReport
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/

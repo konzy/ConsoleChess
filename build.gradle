@@ -43,8 +43,3 @@ jacocoTestReport {
         html.enabled = true
     }
 }
-
-task applicationCodeCoverageReport(type:JacocoReport){
-    executionData run
-    sourceSets sourceSets.main
-}
