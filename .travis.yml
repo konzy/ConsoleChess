@@ -8,9 +8,8 @@ directories:
 before_install:
   - pip install --user codecov
 script:
-  - gradle test
-  - gradle jacocoTestReport
-
+  - gradle test jacocoTestReport
+  
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
