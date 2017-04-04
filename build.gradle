@@ -36,7 +36,7 @@ test {
     include 'src/test/java/Chess/**'
     //exclude file io tests for travis
     exclude 'src/test/java/Data/**'
-    
+
     doLast {
         def coverageFiles = fileTree("${buildDir}/jacoco").include('*.exec')
         coverageFiles.each { file ->
@@ -52,11 +52,11 @@ jacoco{
 }
 
 jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled true
-        html.destination "${buildDir}/jacocoHtml"
-    }
+        reports {
+            xml.enabled true
+            html.enabled true
+            html.destination "${buildDir}/jacocoHtml"
+     }
     }
 
 jacocoTestReport.dependsOn test
