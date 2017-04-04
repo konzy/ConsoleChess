@@ -1,4 +1,0 @@
-test:
-    post:
-        - gradle jacocoTestReport;fi
-        - bash <(curl -s https://codecov.io/bash)
