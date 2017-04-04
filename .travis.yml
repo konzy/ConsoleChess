@@ -8,7 +8,7 @@ directories:
   -&MAIN
 
 script:
-  - gradle test
+  - gradle test jacocoTestReport
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
