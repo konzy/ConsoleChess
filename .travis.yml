@@ -9,7 +9,7 @@ before_install:
   - pip install --user codecov
 script:
   - gradle test jacocoTestReport
-  
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -19,4 +19,5 @@ cache:
     - $HOME/.gradle/wrapper/
 
 after_success:
+  - gradle jacocoTestReport coveralls
   - bash <(curl -s https://codecov.io/bash)
