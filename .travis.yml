@@ -13,7 +13,8 @@ before_install:
 
 
 script:
-  - gradle test jacocoTestReport
+  - gradle test 
+  - gradle jacocoTestReport
 
 after_script:
   - gradle jacocoTestReport
