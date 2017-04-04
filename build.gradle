@@ -38,6 +38,9 @@ test {
     exclude 'src/test/java/Data/**'
 
     jacoco {
+        include 'src/test/java/Chess/**'
+        //exclude file io tests for travis
+        exclude 'src/test/java/Data/**'
         append = false
         destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
     }
@@ -52,8 +55,27 @@ jacocoTestReport {
             xml.enabled true
             html.enabled true
             html.destination "${buildDir}/jacocoHtml"
-     }
-    }
+        }
+        test {
+            testLogging {
+                events "standardOut", "started", "passed", "skipped", "failed"
+                exceptionFormat "full"
+            }
+            testLogging.showStandardStreams = true;
+            maxHeapSize = '512m'
+            include 'src/test/java/Chess/**'
+            //exclude file io tests for travis
+            exclude 'src/test/java/Data/**'
+
+            jacoco {
+                include 'src/test/java/Chess/**'
+                //exclude file io tests for travis
+                exclude 'src/test/java/Data/**'
+                append = false
+                destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+            }
+        }
+}
 
 jacocoTestReport.dependsOn test
 check.dependsOn jacocoTestReport
