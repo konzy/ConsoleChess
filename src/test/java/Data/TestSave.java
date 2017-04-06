@@ -142,4 +142,9 @@ public class TestSave {
         }
         assertEquals(expectedStr, resultStr);
     }
+
+    @Test
+    public void dummyTest() throws Exception{
+        assertTrue(true);
+    }
 }
