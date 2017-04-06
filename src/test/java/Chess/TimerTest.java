@@ -63,6 +63,6 @@ public class TimerTest {
 
     @Test
     public void dummyTest() throws Exception{
-        assertTrue(true);
+        assertTrue(false);
     }
 }
