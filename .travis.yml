@@ -3,18 +3,12 @@ jdk:
   - oraclejdk8
 sudo: false
 
-directories:
-  -&TEST
-  -&MAIN
-
-#before_install:
-#  - pip install --user codecov
 
 
 
 script:
-  - gradle -i clean
-  - gradle assemble test jacocoTestReport
+  - gradle test
+
 
 #after_script:
 #  - gradle jacocoTestReport
