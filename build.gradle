@@ -35,6 +35,7 @@ test {
     include 'src/test/java/Chess/**'
     //exclude file io tests for travis
     exclude 'src/test/java/Data/**'
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport{
