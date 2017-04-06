@@ -38,11 +38,9 @@ test {
     finalizedBy jacocoTestReport
 }
 
-jacocoTestReport{
-    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+jacocoTestReport{ 
     reports {
         xml.enabled true
         csv.enabled false
-        html.destination "${buildDir}/reports/jacoco/html"
     }
 }
