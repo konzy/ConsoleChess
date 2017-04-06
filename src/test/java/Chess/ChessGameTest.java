@@ -49,6 +49,11 @@ public class ChessGameTest {
     }
 
     @Test
+    public void failure() throws Exception {
+        Assert.assertEquals(1, 2);
+    }
+
+    @Test
     public void getCurrentPlayer() throws Exception {
         Assert.assertEquals(game.getCurrentPlayer(), ChessPiece.PieceColor.White);
         game.playMove(new Location(0, 6), new Location(0, 5));
