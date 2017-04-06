@@ -13,7 +13,6 @@ directories:
 
 
 script:
-  - gradle -C rebuild
   - gradle clean
   - gradle test jacocoTestReport
 
