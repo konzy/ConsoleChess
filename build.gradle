@@ -27,20 +27,20 @@ dependencies {
 
 test {
     testLogging {
-        events "standardOut", "started", "passed", "skipped", "failed"
-        exceptionFormat "full"
+        events 'standardOut', 'started', 'passed', 'skipped', 'failed'
+        exceptionFormat 'full'
     }
     testLogging.showStandardStreams = true;
     maxHeapSize = '512m'
-    include '**/test/java/Chess/**'
+    include 'src/test/java/Chess/**'
     //exclude file io tests for travis
-    exclude '**/test/java/Data/**'
-    finalizedBy jacocoTestReport
+    exclude 'src/test/java/Data/**'
+//    finalizedBy jacocoTestReport
 }
 
-jacocoTestReport{
-    reports {
-        xml.enabled true
-        csv.enabled false
-    }
-}
+//jacocoTestReport{
+//    reports {
+//        xml.enabled true
+//        csv.enabled false
+//    }
+//}

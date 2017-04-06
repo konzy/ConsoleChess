@@ -7,6 +7,7 @@ sudo: false
 
 
 script:
+  - cd /home/travis/build/Guardryan/ConsoleChess/
   - gradle test
 
 
