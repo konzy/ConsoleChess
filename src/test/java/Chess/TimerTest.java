@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 /**
 
  * Created by Jakob on 3/14/2017.
@@ -59,4 +61,8 @@ public class TimerTest {
 //        Assert.assertNotEquals(timer.getP2Time(), 300);
 //    }
 
+    @Test
+    public void dummyTest() throws Exception{
+        assertTrue(true);
+    }
 }
