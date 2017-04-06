@@ -38,7 +38,7 @@ test {
     finalizedBy jacocoTestReport
 }
 
-jacocoTestReport{ 
+jacocoTestReport{
     reports {
         xml.enabled true
         csv.enabled false
