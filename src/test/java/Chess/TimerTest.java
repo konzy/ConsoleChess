@@ -60,9 +60,5 @@ public class TimerTest {
 //        timer.countDown();
 //        Assert.assertNotEquals(timer.getP2Time(), 300);
 //    }
-
-    @Test
-    public void dummyTest() throws Exception{
-        assertTrue(false);
-    }
+    
 }
