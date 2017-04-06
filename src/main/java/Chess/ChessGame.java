@@ -11,8 +11,13 @@ import java.util.ArrayList;
  */
 public class ChessGame implements Cloneable {
 
-    public ChessBoard board;
+    private ChessBoard board;
     private PieceColor currentPlayer;
+
+    public Move getPreviousMove() {
+        return previousMove;
+    }
+
     private Move previousMove = null;
 
 
@@ -39,6 +44,32 @@ public class ChessGame implements Cloneable {
             this.board = board;
         }
         currentPlayer = PieceColor.White;
+    }
+
+    public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
+        ArrayList<Move> potentialMoves = new ArrayList<>();
+        for (ChessPiece piece : board.getBoardArrayList()) {
+            if (piece.color().equals(color)) {
+                potentialMoves.addAll(piece.potentialMoves(this));
+            }
+        }
+        return potentialMoves;
+    }
+
+    /**
+     * Gets all the moves that are both possible, in a logistic sense, and legal in a rules sense,
+     * where it does not allow your king to be in check after the move.
+     * @param color
+     * @return
+     */
+    public ArrayList<Move> getAllValidMoves(ChessPiece.PieceColor color) {
+        ArrayList<Move> moves = new ArrayList<>();
+
+        for (ChessPiece chessPiece : getBoard().getAllPiecesLocationForColor(color)) {
+            moves.addAll(chessPiece.validMoves(this));
+        }
+
+        return moves;
     }
 
     @Override
@@ -72,15 +103,18 @@ public class ChessGame implements Cloneable {
      * @param from current position of the game piece
      * @param to future position of the game piece
      */
-    public boolean playMove(Location from, Location to){
+    public boolean playMove(Location from, Location to) {
         ChessPiece piece = board.getPieceAtLocation(from);
         Move move = new Move(piece, to);
-        if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
+        if (from != null && piece != null && to != null && getAllValidMoves(currentPlayer).contains(move)) {
+
+            enPassantCheck(move);
+            castlingCheck(move);
+            previousMove = (Move) move.clone();
             board.move(move);
-            enPassantCheck();
-            castlingCheck();
             promotionCheck();
-            previousMove = move;
+
+
             endTurn();
             return true;
         } else {
@@ -90,16 +124,31 @@ public class ChessGame implements Cloneable {
     }
 
     // TODO: 4/6/2017 en passant
-    private void enPassantCheck() {
-        if (previousMove != null && previousMove.getPiece() instanceof Pawn &&
-                Math.abs(previousMove.getPiece().getLocation())) {
+    private void enPassantCheck(Move move) {
+        if (currentPlayer == PieceColor.White &&
+                previousMove != null &&
+                previousMove.getPiece() instanceof Pawn &&
+                !previousMove.getPiece().hasMoved() &&
+                Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                move.getPiece().getLocation().y == 3) {
 
+            Location loc = new Location(move.getTo().x, move.getPiece().getLocation().y);
+            board.removePiece(loc);
+        } else if (currentPlayer == PieceColor.Black &&
+                previousMove != null &&
+                previousMove.getPiece() instanceof Pawn &&
+                !previousMove.getPiece().hasMoved() &&
+                Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                move.getPiece().getLocation().y == 4) {
+
+            Location loc = new Location(move.getTo().x, move.getPiece().getLocation().y);
+            board.removePiece(loc);
         }
 
     }
 
     // TODO: 4/6/2017 castling
-    private void castlingCheck() {
+    private void castlingCheck(Move move) {
 
     }
 
@@ -134,8 +183,8 @@ public class ChessGame implements Cloneable {
      * @return returns the game status
      */
     public GameState getState(){
-        ArrayList<Move> moves = board.getAllValidMoves(currentPlayer);
-        boolean inCheck = board.isColorInCheck(currentPlayer);
+        ArrayList<Move> moves = getAllValidMoves(currentPlayer);
+        boolean inCheck = isColorInCheck(currentPlayer);
         if (moves.size() == 0 && inCheck) {
             return GameState.CHECKMATE;
         } else if (moves.size() == 0 && !inCheck) {
@@ -145,9 +194,18 @@ public class ChessGame implements Cloneable {
         return GameState.PLAY;
     }
 
+    /**
+     * Checks whether the color is is check
+     * @param color
+     * @return
+     */
+    public boolean isColorInCheck(ChessPiece.PieceColor color) {
+        return getBoard().getKingPiece(color).numPiecesThreateningThis(this) > 0;
+    }
+
     public ArrayList<ChessPiece> getPiecesWeThreaten(ChessPiece.PieceColor color) {
         ArrayList<ChessPiece> result = new ArrayList<>();
-        for (Move move : board.getAllValidMoves(color)) {
+        for (Move move : getAllValidMoves(color)) {
             ChessPiece piece = board.getPieceAtLocation(move.getTo());
             if (piece != null && piece.getColor() != color) {
                 result.add(piece);

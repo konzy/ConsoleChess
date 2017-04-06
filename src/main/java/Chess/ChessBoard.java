@@ -47,7 +47,7 @@ public class ChessBoard implements Cloneable {
 
     public void promote(ChessPiece piece) {
         pieces.remove(piece);
-        Queen queen = new Queen(piece.getColor(), piece.getLocation());
+        Queen queen = new Queen(piece.getColor(), piece.getLocation(), true);
         pieces.add(queen);
     }
 
@@ -103,46 +103,25 @@ public class ChessBoard implements Cloneable {
         pieces.add(piece);
     }
 
-
-    /**
-     * Checks whether the color is is check
-     * @param color
-     * @return
-     */
-    public boolean isColorInCheck(ChessPiece.PieceColor color) {
-        return getKingPiece(color).numPiecesThreateningThis(this) > 0;
-    }
-
-
-    /**
-     * Gets all the moves that are both possible, in a logistic sense, and legal in a rules sense,
-     * where it does not allow your king to be in check after the move.
-     * @param color
-     * @return
-     */
-    public ArrayList<Move> getAllValidMoves(ChessPiece.PieceColor color) {
-        ArrayList<Move> moves = new ArrayList<>();
-
-        for (ChessPiece chessPiece : getAllPiecesLocationForColor(color)) {
-            moves.addAll(chessPiece.validMoves(this));
-        }
-
-        return moves;
-    }
-
     /**
      *
      * @return A deep copy of ChessBoard
      * @throws CloneNotSupportedException
      */
-    public Object clone() throws CloneNotSupportedException {
+    public Object clone() {
 
-        ChessBoard clone = (ChessBoard)super.clone();
-        ArrayList<ChessPiece> clonedPieces = new ArrayList<>();
-        for (ChessPiece piece : pieces) {
-            clonedPieces.add((ChessPiece)piece.clone());
+        ChessBoard clone = null;
+        try {
+            clone = (ChessBoard)super.clone();
+            ArrayList<ChessPiece> clonedPieces = new ArrayList<>();
+            for (ChessPiece piece : pieces) {
+                clonedPieces.add((ChessPiece)piece.clone());
+            }
+            clone.pieces = clonedPieces;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
-        clone.pieces = clonedPieces;
+
         return clone;
 
     }
@@ -224,18 +203,6 @@ public class ChessBoard implements Cloneable {
         }
         return result;
     }
-
-    public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
-        ArrayList<Move> potentialMoves = new ArrayList<>();
-        for (ChessPiece piece : pieces) {
-            if (piece.color().equals(color)) {
-                potentialMoves.addAll(piece.potentialMoves(this));
-            }
-        }
-        return potentialMoves;
-    }
-
-
 
     /**
 

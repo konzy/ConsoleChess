@@ -1,6 +1,7 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
@@ -16,8 +17,12 @@ public class King extends ChessPiece{
 
     public static final String LETTER = "K";
 
+    public King(ChessPiece.PieceColor color, Location location, boolean hasMoved){
+        super(PieceType.King, color,false, location, hasMoved);
+    }
+
     public King(ChessPiece.PieceColor color, Location location){
-        super(PieceType.King, color,false, location);
+        super(PieceType.King, color,false, location, false);
     }
 
     @Override
@@ -44,7 +49,7 @@ public class King extends ChessPiece{
     }
 
     @Override
-    public ArrayList<Move> validMoves(ChessBoard board) {
-        return validatedMoves(board, potentialMoves(board), color);
+    public ArrayList<Move> validMoves(ChessGame game) {
+        return validatedMoves(game, potentialMoves(game), color);
     }
 }

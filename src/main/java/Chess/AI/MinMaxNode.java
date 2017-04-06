@@ -44,7 +44,7 @@ public class MinMaxNode {
     public void createTree() {
         //Tree creation
         if (currentIterations < maxIterations) {
-            ArrayList<Move> moves = game.getBoard().getAllValidMoves(game.getCurrentPlayer());
+            ArrayList<Move> moves = game.getAllValidMoves(game.getCurrentPlayer());
 
             for (Move move : moves) {
                 ChessGame tempGame = (ChessGame)game.clone();

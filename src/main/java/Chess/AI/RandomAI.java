@@ -19,7 +19,7 @@ public class RandomAI extends BaseAI {
 
     @Override
     public Move getNextMove() {
-        ArrayList<Move> moves = currentGame.getBoard().getAllValidMoves(currentGame.getCurrentPlayer());
+        ArrayList<Move> moves = currentGame.getAllValidMoves(currentGame.getCurrentPlayer());
         if (moves.size() == 0) {
             System.out.println("The AI has no moves to do, why wasn't this caught before?");
             for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {

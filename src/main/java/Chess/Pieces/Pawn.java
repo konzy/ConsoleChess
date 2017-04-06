@@ -1,6 +1,7 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
@@ -17,8 +18,12 @@ public class Pawn extends ChessPiece {
 
     public static final String LETTER = "P";
 
+    public Pawn(PieceColor color, Location location, boolean hasMoved){
+        super(PieceType.Pawn, color, false, location, hasMoved);
+    }
+
     public Pawn(PieceColor color, Location location){
-        super(PieceType.Pawn, color, false, location);
+        super(PieceType.Pawn, color, false, location, false);
     }
 
     public boolean readyToPromote() {
@@ -47,19 +52,20 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public ArrayList<Move> potentialMoves(ChessBoard board) {
+    public ArrayList<Move> potentialMoves(ChessGame game) {
+        ChessBoard board = game.getBoard();
+        Move previousMove = game.getPreviousMove();
         ArrayList<Move> potentialMoves = new ArrayList<>();
         Location moveTo;
 
         //one space move forward
         if (color == PieceColor.White) {
-            moveTo = new Location(location.x, location.y - 1);
-        } else {
-            moveTo = new Location(location.x, location.y + 1);
-        }
+            potentialMoves.add(new Move(this, new Location(location.x, location.y - 1)));
 
-        if (board.getPieceAtLocation(moveTo) == null) {
-            potentialMoves.add(new Move(this, moveTo));
+
+
+        } else {
+            potentialMoves.add(new Move(this, new Location(location.x, location.y + 1)));
         }
 
         //two space move forward
@@ -77,8 +83,8 @@ public class Pawn extends ChessPiece {
 
         //capture to right
         if (color == PieceColor.White) {
-
             moveTo = new Location(location.x + 1, location.y - 1);
+
         } else {
             moveTo = new Location(location.x - 1, location.y + 1);
         }
@@ -86,6 +92,7 @@ public class Pawn extends ChessPiece {
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
+
         moveToPiece = null;
 
         //capture to left
@@ -98,11 +105,36 @@ public class Pawn extends ChessPiece {
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
+
+        //white en passant
+        if (color == PieceColor.White) {
+            if (previousMove != null &&
+                    previousMove.getPiece() instanceof Pawn &&
+                    !previousMove.getPiece().hasMoved() &&
+                    Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                    getLocation().y == 3) {
+                potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y - 1)));
+            }
+        }
+
+        //black en passant
+        if (color == PieceColor.Black) {
+            if (previousMove != null &&
+                    previousMove.getPiece() instanceof Pawn &&
+                    !previousMove.getPiece().hasMoved() &&
+                    Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                    getLocation().y == 4) {
+                potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y + 1)));
+            }
+        }
+
+
+
         return potentialMoves;
     }
 
     @Override
-    public ArrayList<Move> validMoves(ChessBoard board) {
-        return validatedMoves(board, potentialMoves(board), color);
+    public ArrayList<Move> validMoves(ChessGame game) {
+        return validatedMoves(game, potentialMoves(game), color);
     }
 }

@@ -136,7 +136,7 @@ public class GameBoard extends Application {
                         Save.autoSave(game);
 
                         repaint();
-                        boolean isEndOfGame = game.getBoard().getAllValidMoves(game.getCurrentPlayer()).size() == 0;
+                        boolean isEndOfGame = game.getAllValidMoves(game.getCurrentPlayer()).size() == 0;
                         if (isOnePlayer && !isEndOfGame) {
                             MiniMaxAI miniMaxAI = new MiniMaxAI(game);
                             Move aiMove = miniMaxAI.getNextMove();

@@ -104,7 +104,7 @@ public class MCTSearchAI extends BaseAI {
             this.currentGame = (ChessGame) currentGame.clone();
             this.parent = parent;
             this.previousMove = previousMove;
-            this.validMoves = currentGame.getBoard().getAllValidMoves(currentGame.getCurrentPlayer());
+            this.validMoves = currentGame.getAllValidMoves(currentGame.getCurrentPlayer());
         }
 
         public int getRemainingMoves() {
