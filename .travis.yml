@@ -13,9 +13,7 @@ directories:
 
 
 script:
-  - gradle clean
-  - gradle test
-  - gradle -i clean jacocoTestReport
+  - gradle -i clean test jacocoTestReport
 
 #after_script:
 #  - gradle jacocoTestReport
