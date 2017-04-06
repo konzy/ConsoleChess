@@ -32,10 +32,10 @@ test {
     }
     testLogging.showStandardStreams = true;
     maxHeapSize = '512m'
-    include 'test/Chess/**'
-    //exclude file io tests for travis
-    exclude 'test/Data/**'
-//    finalizedBy jacocoTestReport
+//    include 'test/Chess/**'
+//    //exclude file io tests for travis
+//    exclude 'test/Data/**'
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport{
