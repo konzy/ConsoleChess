@@ -13,6 +13,7 @@ public class ChessGame implements Cloneable {
 
     public ChessBoard board;
     private PieceColor currentPlayer;
+    private Move previousMove = null;
 
 
 
@@ -76,9 +77,10 @@ public class ChessGame implements Cloneable {
         Move move = new Move(piece, to);
         if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
             board.move(move);
-            //System.out.println(board);
-            //System.out.println(currentPlayer.toString() + " Moved " + move.getPiece().charValue() + " from " + from.toString() + " to " + to.toString());
+            enPassantCheck();
+            castlingCheck();
             promotionCheck();
+            previousMove = move;
             endTurn();
             return true;
         } else {
@@ -87,7 +89,21 @@ public class ChessGame implements Cloneable {
         }
     }
 
-    public void promotionCheck() {
+    // TODO: 4/6/2017 en passant
+    private void enPassantCheck() {
+        if (previousMove != null && previousMove.getPiece() instanceof Pawn &&
+                Math.abs(previousMove.getPiece().getLocation())) {
+
+        }
+
+    }
+
+    // TODO: 4/6/2017 castling
+    private void castlingCheck() {
+
+    }
+
+    private void promotionCheck() {
         ArrayList<ChessPiece> currentPieces = getBoard().getAllPiecesLocationForColor(currentPlayer);
 
         for (ChessPiece currentPiece : currentPieces) {
@@ -101,7 +117,6 @@ public class ChessGame implements Cloneable {
         if (move == null || move.getPiece() == null || move.getPiece().getLocation() == null || move.getTo() == null) {
             System.out.println("something is fucked up");
         }
-
 
         return playMove(move.getPiece().getLocation(), move.getTo());
     }
