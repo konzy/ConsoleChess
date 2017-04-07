@@ -60,5 +60,5 @@ public class TimerTest {
 //        timer.countDown();
 //        Assert.assertNotEquals(timer.getP2Time(), 300);
 //    }
-    
+
 }

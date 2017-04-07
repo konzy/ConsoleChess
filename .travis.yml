@@ -3,9 +3,6 @@ jdk:
   - oraclejdk8
 sudo: false
 
-
-
-
 script:
   - cd /home/travis/build/Guardryan/ConsoleChess/
   - gradle test
