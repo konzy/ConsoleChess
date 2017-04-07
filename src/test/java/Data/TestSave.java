@@ -1,7 +1,5 @@
 package Data;
 
-import Data.FileLocator;
-import Data.Save;
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
@@ -9,14 +7,10 @@ import Chess.Pieces.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.*;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
 import static Data.FileConstants.FILE_LOCATOR;
->>>>>>> 3275db2eed92bb9b68b072e010b8ad128a74dc38
 import static org.junit.Assert.*;
 
 /**
@@ -24,10 +18,6 @@ import static org.junit.Assert.*;
  */
 public class TestSave {
     ChessGame boardToSave;
-<<<<<<< HEAD
-    public static final FileLocator FILE_LOCATOR = new FileLocator();
-=======
->>>>>>> 3275db2eed92bb9b68b072e010b8ad128a74dc38
     @Before
     public void setup() throws Exception {
         ArrayList<ChessPiece> pieces = new ArrayList<>();

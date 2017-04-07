@@ -12,9 +12,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-
 import static Data.FileConstants.FILE_LOCATOR;
-
 import static org.junit.Assert.*;
 
 /**
@@ -22,7 +20,6 @@ import static org.junit.Assert.*;
  */
 public class TestLoad {
     ChessGame expected;
-    public static final FileLocator FILE_LOCATOR = new FileLocator();
     @Before
     public void setup() throws Exception {
         ArrayList<ChessPiece> pieces = new ArrayList<>();
