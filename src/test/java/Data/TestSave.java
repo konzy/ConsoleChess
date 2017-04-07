@@ -13,6 +13,10 @@ import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+import static Data.FileConstants.FILE_LOCATOR;
+>>>>>>> 3275db2eed92bb9b68b072e010b8ad128a74dc38
 import static org.junit.Assert.*;
 
 /**
@@ -20,7 +24,10 @@ import static org.junit.Assert.*;
  */
 public class TestSave {
     ChessGame boardToSave;
+<<<<<<< HEAD
     public static final FileLocator FILE_LOCATOR = new FileLocator();
+=======
+>>>>>>> 3275db2eed92bb9b68b072e010b8ad128a74dc38
     @Before
     public void setup() throws Exception {
         ArrayList<ChessPiece> pieces = new ArrayList<>();
@@ -67,8 +74,7 @@ public class TestSave {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new
-                    FileWriter(FILE_LOCATOR.baseFileLocation.substring(0,
-                    FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/testFiles/saveTestFile.txt"));
+                    FileWriter(FILE_LOCATOR.toString() + "/resources/main/testFiles/saveTestFile.txt"));
             writer.append("");
             writer.flush();
             writer.close();
@@ -83,8 +89,7 @@ public class TestSave {
     public void clearAutoSave() throws Exception {
         String expected = "";
         Save.clearAutoSave();
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/Autosave.txt");
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/Autosave.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         String resultStr = "";
         int bytesRead;
@@ -97,17 +102,14 @@ public class TestSave {
     @Test
     public void autoSave() throws Exception {
         Save.autoSave(boardToSave);
-        File expectedAutoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/testFiles/autoSaveTestFile.txt");
+        File expectedAutoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/testFiles/autoSaveTestFile.txt");
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String expectedStr = "";
         String line;
         while((line = expectedAutosaveInput.readLine())!= null){
             expectedStr = expectedStr + line + "\n";
         }
-
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/Autosave.txt");
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
 
         String resultStr = "";
@@ -122,9 +124,7 @@ public class TestSave {
     public void save() throws Exception {
         Save.autoSave(boardToSave);
         Save.save("AutoSave","testFiles/saveTestFile");
-
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/Autosave.txt");
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
         String line;
         String expectedStr = "";
@@ -132,8 +132,7 @@ public class TestSave {
             expectedStr = expectedStr + line + "\n";
         }
 
-        File expectedAutoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/testFiles/saveTestFile.txt");
+        File expectedAutoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/testFiles/saveTestFile.txt");
 
         BufferedReader expectedAutosaveInput = new BufferedReader (new FileReader(expectedAutoSaveFile));
         String resultStr = "";

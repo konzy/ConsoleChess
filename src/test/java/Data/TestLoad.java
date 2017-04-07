@@ -12,6 +12,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+
+import static Data.FileConstants.FILE_LOCATOR;
+
 import static org.junit.Assert.*;
 
 /**
@@ -70,11 +73,8 @@ public class TestLoad {
     @Test
     public void loadAutoSaveLoaded() throws Exception {
         Load.Load("testFiles/loadTestFile", new ChessGame());
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/AutoSave.txt");
-        File expectedFileString = new File (FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "/resources/main/testFiles/loadTestFile.txt");
-
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt");
+        File expectedFileString = new File (FILE_LOCATOR.toString() + "/resources/main/testFiles/loadTestFile.txt");
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";

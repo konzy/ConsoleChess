@@ -11,16 +11,15 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 
+import static Data.FileConstants.FILE_LOCATOR;
 
 /**
  * Replays all moves from the start of the game using the current autosave file as reference
  */
 public class Replay {
-    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public static void replayConsole(){
-        File loadFile = new File(FILE_LOCATOR.baseFileLocation.substring(0,
-                FILE_LOCATOR.baseFileLocation.length() - 14) + "\\resources\\main\\AutoSave.txt");
+        File loadFile = new File(FILE_LOCATOR.toString() + "\\resources\\main\\AutoSave.txt");
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
         ArrayList<ChessPiece> pieces = new ArrayList<>();

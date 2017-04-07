@@ -4,12 +4,7 @@ jdk:
 sudo: false
 
 script:
-  - cd /home/travis/build/Guardryan/ConsoleChess/
   - gradle test
-
-
-#after_script:
-#  - gradle jacocoTestReport
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
