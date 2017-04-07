@@ -79,14 +79,14 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     public static ArrayList<Move> validatedMoves(ChessGame game, ArrayList<Move> potentialMoves, PieceColor color) {
         ArrayList<Move> validMoves = new ArrayList<>();
         for (Move move : potentialMoves) {
-            ChessGame clonedGame = (ChessGame) game.clone();
-            Move clonedMove = (Move) move.clone();
-            if (clonedGame != null) {
-                clonedGame.getBoard().move(clonedMove);
-                if (!clonedGame.isColorInCheck(color)) {
-                    validMoves.add(move);
+                ChessGame clonedGame = (ChessGame) game.clone();
+                Move clonedMove = (Move) move.clone();
+                if (clonedGame != null) {
+                    clonedGame.getBoard().move(clonedMove);
+                    if (!clonedGame.isColorInCheck(color)) {
+                        validMoves.add(move);
+                    }
                 }
-            }
         }
         return validMoves;
     }

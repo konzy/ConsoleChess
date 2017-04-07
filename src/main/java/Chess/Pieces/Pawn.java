@@ -6,13 +6,11 @@ import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
 
-// TODO: 2/11/2017 castling
-// TODO: 2/11/2017 en passant
-// TODO: 2/11/2017 pawn promotion - must be done during potentialMoves will require Move, to take a (Piece, Piece) instead of (Piece, Location)
-
 /**
- * A Pawn is a piece that can only move one space toward the opponentOf's side of the board, except for its first move, it can move two spaces.
- * A Pawn can only capture on the diagonal tiles toward the opponentOf's side of the board, and can capture a pawn moving two spaces as if it had only moved one space, called "en passant".
+ * A Pawn is a piece that can only move one space toward the opponent's side of the board, except for its first move,
+ * it can move two spaces.
+ * A Pawn can only capture on the diagonal tiles toward the opponent's side of the board, and can capture a pawn moving
+ * two spaces as if it had only moved one space, called "en passant".
  */
 public class Pawn extends ChessPiece {
 
@@ -60,12 +58,13 @@ public class Pawn extends ChessPiece {
 
         //one space move forward
         if (color == PieceColor.White) {
-            potentialMoves.add(new Move(this, new Location(location.x, location.y - 1)));
-
-
-
+            moveTo = new Location(location.x, location.y - 1);
         } else {
-            potentialMoves.add(new Move(this, new Location(location.x, location.y + 1)));
+            moveTo = new Location(location.x, location.y + 1);
+        }
+        ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
+        if (moveToPiece == null) {
+            potentialMoves.add(new Move(this, moveTo));
         }
 
         //two space move forward
@@ -88,12 +87,10 @@ public class Pawn extends ChessPiece {
         } else {
             moveTo = new Location(location.x - 1, location.y + 1);
         }
-        ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
+        moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
-
-        moveToPiece = null;
 
         //capture to left
         if (color == PieceColor.White) {
@@ -127,8 +124,6 @@ public class Pawn extends ChessPiece {
                 potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y + 1)));
             }
         }
-
-
 
         return potentialMoves;
     }

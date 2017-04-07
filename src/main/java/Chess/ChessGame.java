@@ -2,6 +2,7 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
+import Chess.Pieces.King;
 import Chess.Pieces.Pawn;
 
 import java.util.ArrayList;
@@ -114,7 +115,6 @@ public class ChessGame implements Cloneable {
             board.move(move);
             promotionCheck();
 
-
             endTurn();
             return true;
         } else {
@@ -149,7 +149,20 @@ public class ChessGame implements Cloneable {
 
     // TODO: 4/6/2017 castling
     private void castlingCheck(Move move) {
+        if (King.canCastleKingSide(move.getPiece(), this) &&
+                move.getTo().equals(new Location(6, move.getPiece().getLocation().y))) {
 
+            ChessPiece rook = board.getPieceAtLocation(new Location(7, move.getPiece().getLocation().y));
+
+            board.move(new Move(rook, new Location(5, rook.getLocation().y)));
+
+        } else if (King.canCastleQueenSide(move.getPiece(), this) &&
+                move.getTo().equals(new Location(2, move.getPiece().getLocation().y))) {
+
+            ChessPiece rook = board.getPieceAtLocation(new Location(0, move.getPiece().getLocation().y));
+
+            board.move(new Move(rook, new Location(3, rook.getLocation().y)));
+        }
     }
 
     private void promotionCheck() {
