@@ -1,8 +1,10 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
+import GUI.GameBoard;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 import static Chess.ChessBoard.isInsideBoard;
@@ -18,6 +20,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     private boolean repeatableMoves;
     protected Location location;
     protected String picPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toString();
+    protected boolean hasMoved;
 
     protected ImageView image;
 
@@ -28,15 +31,23 @@ public abstract class ChessPiece implements Comparable, Cloneable {
      * @param color either whiteImage or blackImage
      * @param repeatableMoves whether moveModifiers extend to the edge of the board
      */
-    protected ChessPiece(PieceType type, PieceColor color, boolean repeatableMoves, Location location){
+    protected ChessPiece(PieceType type, PieceColor color, boolean repeatableMoves, Location location, boolean hasMoved){
         this.color = color;
         this.repeatableMoves = repeatableMoves;
         this.location = location;
+        this.hasMoved = hasMoved;
+
         charValue = type.name().trim().charAt(0);
         if (type.name().equals(PieceType.Knight.name())) {
             charValue = 'N';
         }
     }
+
+    public boolean hasMoved() {
+        return hasMoved;
+    }
+
+
 
     public ImageView getImage() {
         return image;
@@ -65,21 +76,17 @@ public abstract class ChessPiece implements Comparable, Cloneable {
 
 
     //im not sure if this needs to be static, but when it wasn't, cloning "this" was not possible, maybe
-    public static ArrayList<Move> validatedMoves(ChessBoard board, ArrayList<Move> potentialMoves, PieceColor color) {
+    public static ArrayList<Move> validatedMoves(ChessGame game, ArrayList<Move> potentialMoves, PieceColor color) {
         ArrayList<Move> validMoves = new ArrayList<>();
         for (Move move : potentialMoves) {
-            try {
-                ChessBoard clonedBoard = (ChessBoard) board.clone();
+                ChessGame clonedGame = (ChessGame) game.clone();
                 Move clonedMove = (Move) move.clone();
-                if (clonedBoard != null) {
-                    clonedBoard.move(clonedMove);
-                    if (!clonedBoard.isColorInCheck(color)) {
+                if (clonedGame != null) {
+                    clonedGame.getBoard().move(clonedMove);
+                    if (!clonedGame.isColorInCheck(color)) {
                         validMoves.add(move);
                     }
                 }
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
         }
         return validMoves;
     }
@@ -88,7 +95,8 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         return color;
     }
 
-    public ArrayList<Move> potentialMoves(ChessBoard board) {
+    public ArrayList<Move> potentialMoves(ChessGame game) {
+        ChessBoard board = game.getBoard();
         ArrayList<Move> toLocations = new ArrayList<>();
         for (Location moveOffset : moveModifiers()) {
             Location to = location;
@@ -141,12 +149,13 @@ public abstract class ChessPiece implements Comparable, Cloneable {
     abstract public Location[] moveModifiers();
 
     public void setLocation(Location location) {
+        hasMoved = true;
         this.location = location;
     }
 
-    public int numPiecesThreateningThis(ChessBoard board) {
+    public int numPiecesThreateningThis(ChessGame game) {
         int result = 0;
-        ArrayList<Move> opponentMoves = board.getPotentialMoves(opponent());
+        ArrayList<Move> opponentMoves = game.getPotentialMoves(opponent());
 
         for (Move opponentMove : opponentMoves) {
             Location to = opponentMove.getTo();
@@ -158,7 +167,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         return result;
     }
 
-    abstract public ArrayList<Move> validMoves(ChessBoard board);
+    abstract public ArrayList<Move> validMoves(ChessGame game);
 
 
 
@@ -193,6 +202,10 @@ public abstract class ChessPiece implements Comparable, Cloneable {
 
     public PieceColor opponent() {
         return opponentOf(color);
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
     }
 
     @Override

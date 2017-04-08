@@ -1,24 +1,32 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
 
-// TODO: 2/11/2017 castling
-// TODO: 2/11/2017 en passant
-// TODO: 2/11/2017 pawn promotion - must be done during potentialMoves will require Move, to take a (Piece, Piece) instead of (Piece, Location)
-
 /**
- * A Pawn is a piece that can only move one space toward the opponentOf's side of the board, except for its first move, it can move two spaces.
- * A Pawn can only capture on the diagonal tiles toward the opponentOf's side of the board, and can capture a pawn moving two spaces as if it had only moved one space, called "en passant".
+ * A Pawn is a piece that can only move one space toward the opponent's side of the board, except for its first move,
+ * it can move two spaces.
+ * A Pawn can only capture on the diagonal tiles toward the opponent's side of the board, and can capture a pawn moving
+ * two spaces as if it had only moved one space, called "en passant".
  */
 public class Pawn extends ChessPiece {
 
     public static final String LETTER = "P";
 
+    public Pawn(PieceColor color, Location location, boolean hasMoved){
+        super(PieceType.Pawn, color, false, location, hasMoved);
+    }
+
     public Pawn(PieceColor color, Location location){
-        super(PieceType.Pawn, color, false, location);
+        super(PieceType.Pawn, color, false, location, false);
+    }
+
+    public boolean readyToPromote() {
+        return color == PieceColor.Black && location.y == 7 ||
+                color == PieceColor.White && location.y == 0;
     }
 
     @Override
@@ -42,7 +50,9 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public ArrayList<Move> potentialMoves(ChessBoard board) {
+    public ArrayList<Move> potentialMoves(ChessGame game) {
+        ChessBoard board = game.getBoard();
+        Move previousMove = game.getPreviousMove();
         ArrayList<Move> potentialMoves = new ArrayList<>();
         Location moveTo;
 
@@ -52,8 +62,8 @@ public class Pawn extends ChessPiece {
         } else {
             moveTo = new Location(location.x, location.y + 1);
         }
-
-        if (board.getPieceAtLocation(moveTo) == null) {
+        ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
+        if (moveToPiece == null) {
             potentialMoves.add(new Move(this, moveTo));
         }
 
@@ -72,16 +82,15 @@ public class Pawn extends ChessPiece {
 
         //capture to right
         if (color == PieceColor.White) {
-
             moveTo = new Location(location.x + 1, location.y - 1);
+
         } else {
             moveTo = new Location(location.x - 1, location.y + 1);
         }
-        ChessPiece moveToPiece = board.getPieceAtLocation(moveTo);
+        moveToPiece = board.getPieceAtLocation(moveTo);
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
-        moveToPiece = null;
 
         //capture to left
         if (color == PieceColor.White) {
@@ -93,11 +102,34 @@ public class Pawn extends ChessPiece {
         if (moveToPiece != null && moveToPiece.color == this.opponent()) {
             potentialMoves.add(new Move(this, moveTo));
         }
+
+        //white en passant
+        if (color == PieceColor.White) {
+            if (previousMove != null &&
+                    previousMove.getPiece() instanceof Pawn &&
+                    !previousMove.getPiece().hasMoved() &&
+                    Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                    getLocation().y == 3) {
+                potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y - 1)));
+            }
+        }
+
+        //black en passant
+        if (color == PieceColor.Black) {
+            if (previousMove != null &&
+                    previousMove.getPiece() instanceof Pawn &&
+                    !previousMove.getPiece().hasMoved() &&
+                    Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                    getLocation().y == 4) {
+                potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y + 1)));
+            }
+        }
+
         return potentialMoves;
     }
 
     @Override
-    public ArrayList<Move> validMoves(ChessBoard board) {
-        return validatedMoves(board, potentialMoves(board), color);
+    public ArrayList<Move> validMoves(ChessGame game) {
+        return validatedMoves(game, potentialMoves(game), color);
     }
 }

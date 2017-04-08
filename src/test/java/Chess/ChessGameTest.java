@@ -56,6 +56,22 @@ public class ChessGameTest {
     }
 
     @Test
+    public void isColorInCheck() throws Exception {
+        Assert.assertFalse(game.isColorInCheck(ChessPiece.PieceColor.Black));
+        Assert.assertFalse(game.isColorInCheck(ChessPiece.PieceColor.White));
+    }
+
+    @Test
+    public void getAllValidMoves() throws Exception {
+        Assert.assertEquals(initialGame.getAllValidMoves(ChessPiece.PieceColor.White).size(), 20);
+    }
+
+    @Test
+    public void getPotentialMoves() throws Exception {
+        Assert.assertEquals(initialGame.getPotentialMoves(ChessPiece.PieceColor.White).size(), 20);
+    }
+
+    @Test
     public void playMove() throws Exception {
         ChessGame clone = (ChessGame) game.clone();
         Assert.assertTrue(game.playMove(new Location(0, 6), new Location(0, 5)));
@@ -75,15 +91,16 @@ public class ChessGameTest {
 
     @Test
     public void testToString() throws Exception {
-        String startGameString = "[R][N][B][Q][K][B][N][R]\n" +
-                "[P][P][P][P][P][P][P][P]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[p][p][p][p][p][p][p][p]\n" +
-                "[r][n][b][q][k][b][n][r]\n" +
-                "White\n";
+        String startGameString = "[R0][N0][B0][Q0][K0][B0][N0][R0]\n" +
+                "[P0][P0][P0][P0][P0][P0][P0][P0]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[p0][p0][p0][p0][p0][p0][p0][p0]\n" +
+                "[r0][n0][b0][q0][k0][b0][n0][r0]\n" +
+                "White\n" +
+                "true\n";
 
         Assert.assertEquals(initialGame.toString(), startGameString);
 

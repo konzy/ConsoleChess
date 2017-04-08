@@ -43,10 +43,16 @@ public class Move implements Cloneable {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        Move clone = (Move) super.clone();
-        clone.piece = (ChessPiece) piece.clone();
-        clone.to = (Location) to.clone();
+    public Object clone() {
+        Move clone = null;
+        try {
+            clone = (Move) super.clone();
+            clone.piece = (ChessPiece) piece.clone();
+            clone.to = (Location) to.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
         return clone;
     }
 }

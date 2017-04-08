@@ -2,7 +2,9 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.ChessPiece.PieceColor;
-import Console.BoardDisplay;
+import Chess.Pieces.King;
+import Chess.Pieces.Pawn;
+
 import java.util.ArrayList;
 
 /**
@@ -10,9 +12,10 @@ import java.util.ArrayList;
  */
 public class ChessGame implements Cloneable {
 
-    public ChessBoard board;
+    private ChessBoard board;
     private PieceColor currentPlayer;
-
+    private boolean isTwoPlayer = true;
+    private Move previousMove = null;
 
     public enum GameState {
         PLAY,
@@ -20,13 +23,16 @@ public class ChessGame implements Cloneable {
         STALEMATE
     }
 
-
+    public Move getPreviousMove() {
+        return previousMove;
+    }
     /**
      * Starts up the game with initial conditions and displays the board.
      */
     public ChessGame(){
         board = new ChessBoard();
         currentPlayer = PieceColor.White;
+
     }
 
     public ChessGame(ChessBoard board) {
@@ -38,10 +44,51 @@ public class ChessGame implements Cloneable {
         currentPlayer = PieceColor.White;
     }
 
+    public ChessGame(boolean isTwoPlayer){
+        this();
+        this.isTwoPlayer = isTwoPlayer;
+    }
+
+    public ChessGame(ChessBoard board, boolean isTwoPlayer) {
+        this(board);
+        this.isTwoPlayer = isTwoPlayer;
+    }
+
+    public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
+        ArrayList<Move> potentialMoves = new ArrayList<>();
+        for (ChessPiece piece : board.getBoardArrayList()) {
+            if (piece.color().equals(color)) {
+                potentialMoves.addAll(piece.potentialMoves(this));
+            }
+        }
+        return potentialMoves;
+    }
+
+    /**
+     * Gets all the moves that are both possible, in a logistic sense, and legal in a rules sense,
+     * where it does not allow your king to be in check after the move.
+     * @param color
+     * @return
+     */
+    public ArrayList<Move> getAllValidMoves(ChessPiece.PieceColor color) {
+        ArrayList<Move> moves = new ArrayList<>();
+
+        for (ChessPiece chessPiece : getBoard().getAllPiecesLocationForColor(color)) {
+            moves.addAll(chessPiece.validMoves(this));
+        }
+
+        return moves;
+    }
+
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        ChessGame clone = (ChessGame)super.clone();
-        clone.board = (ChessBoard)board.clone();
+    public Object clone() {
+        ChessGame clone = null;
+        try {
+            clone = (ChessGame)super.clone();
+            clone.board = (ChessBoard)board.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         return clone;
     }
 
@@ -57,24 +104,88 @@ public class ChessGame implements Cloneable {
         currentPlayer = color;
     }
 
+
+
     /**
      * Takes the input of a piece to be moved from and to a position and moves the piece if it is a valid move.
      * @param from current position of the game piece
      * @param to future position of the game piece
      */
-    public boolean playMove(Location from, Location to){
+    public boolean playMove(Location from, Location to) {
         ChessPiece piece = board.getPieceAtLocation(from);
         Move move = new Move(piece, to);
-        if (from != null && piece != null && to != null && board.getAllValidMoves(currentPlayer).contains(move)) {
+        if (from != null && piece != null && to != null && getAllValidMoves(currentPlayer).contains(move)) {
+
+            enPassantCheck(move);
+            castlingCheck(move);
+            previousMove = (Move) move.clone();
             board.move(move);
-            System.out.println(board);
-            System.out.println(currentPlayer.toString() + " Moved " + move.getPiece().charValue() + " from " + from.toString() + " to " + to.toString());
+            promotionCheck();
+
             endTurn();
             return true;
         } else {
-            System.out.println("Invalid move!");
+            //System.out.println("Invalid move!");
             return false;
         }
+    }
+
+    private void enPassantCheck(Move move) {
+        if (currentPlayer == PieceColor.White &&
+                previousMove != null &&
+                previousMove.getPiece() instanceof Pawn &&
+                !previousMove.getPiece().hasMoved() &&
+                Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                move.getPiece().getLocation().y == 3) {
+
+            Location loc = new Location(move.getTo().x, move.getPiece().getLocation().y);
+            board.removePiece(loc);
+        } else if (currentPlayer == PieceColor.Black &&
+                previousMove != null &&
+                previousMove.getPiece() instanceof Pawn &&
+                !previousMove.getPiece().hasMoved() &&
+                Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                move.getPiece().getLocation().y == 4) {
+
+            Location loc = new Location(move.getTo().x, move.getPiece().getLocation().y);
+            board.removePiece(loc);
+        }
+
+    }
+
+    private void castlingCheck(Move move) {
+        if (King.canCastleKingSide(move.getPiece(), this) &&
+                move.getTo().equals(new Location(6, move.getPiece().getLocation().y))) {
+
+            ChessPiece rook = board.getPieceAtLocation(new Location(7, move.getPiece().getLocation().y));
+
+            board.move(new Move(rook, new Location(5, rook.getLocation().y)));
+
+        } else if (King.canCastleQueenSide(move.getPiece(), this) &&
+                move.getTo().equals(new Location(2, move.getPiece().getLocation().y))) {
+
+            ChessPiece rook = board.getPieceAtLocation(new Location(0, move.getPiece().getLocation().y));
+
+            board.move(new Move(rook, new Location(3, rook.getLocation().y)));
+        }
+    }
+
+    private void promotionCheck() {
+        ArrayList<ChessPiece> currentPieces = getBoard().getAllPiecesLocationForColor(currentPlayer);
+
+        for (ChessPiece currentPiece : currentPieces) {
+            if (currentPiece instanceof Pawn && ((Pawn) currentPiece).readyToPromote()) {
+                board.promote(currentPiece);
+            }
+        }
+    }
+
+    public boolean playMove(Move move) {
+        if (move == null || move.getPiece() == null || move.getPiece().getLocation() == null || move.getTo() == null) {
+            System.out.println("something is fucked up");
+        }
+
+        return playMove(move.getPiece().getLocation(), move.getTo());
     }
 
     /**
@@ -90,8 +201,8 @@ public class ChessGame implements Cloneable {
      * @return returns the game status
      */
     public GameState getState(){
-        ArrayList<Move> moves = board.getAllValidMoves(currentPlayer);
-        boolean inCheck = board.isColorInCheck(currentPlayer);
+        ArrayList<Move> moves = getAllValidMoves(currentPlayer);
+        boolean inCheck = isColorInCheck(currentPlayer);
         if (moves.size() == 0 && inCheck) {
             return GameState.CHECKMATE;
         } else if (moves.size() == 0 && !inCheck) {
@@ -101,8 +212,43 @@ public class ChessGame implements Cloneable {
         return GameState.PLAY;
     }
 
+    /**
+     * Checks whether the color is is check
+     * @param color
+     * @return
+     */
+    public boolean isColorInCheck(ChessPiece.PieceColor color) {
+        return getBoard().getKingPiece(color).numPiecesThreateningThis(this) > 0;
+    }
+
+    public ArrayList<ChessPiece> getPiecesWeThreaten(ChessPiece.PieceColor color) {
+        ArrayList<ChessPiece> result = new ArrayList<>();
+        for (Move move : getAllValidMoves(color)) {
+            ChessPiece piece = board.getPieceAtLocation(move.getTo());
+            if (piece != null && piece.getColor() != color) {
+                result.add(piece);
+            }
+        }
+        return result;
+    }
+
+    public double differenceInAdvantage() {
+        double currentPlayerScore = 0.0;
+        double opponentScore = 0.0;
+
+        for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(currentPlayer)) {
+            currentPlayerScore += chessPiece.value() + chessPiece.getLocation().getValue();
+        }
+
+        for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(ChessPiece.opponentOf(currentPlayer))) {
+            opponentScore += chessPiece.value() + chessPiece.getLocation().getValue();
+        }
+        return currentPlayerScore - opponentScore;
+    }
+
+
     @Override
     public String toString() {
-        return board + "" + currentPlayer + "\n";
+        return board + "" + currentPlayer + "\n" + isTwoPlayer + "\n";
     }
 }
