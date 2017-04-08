@@ -8,7 +8,6 @@ import Chess.Pieces.*;
 import java.io.*;
 import java.util.ArrayList;
 
-
 import static Data.FileConstants.FILE_LOCATOR;
 
 /**
@@ -16,6 +15,7 @@ import static Data.FileConstants.FILE_LOCATOR;
  * into the autosave for replay purposes.
  */
 public class Load {
+    public static final FileLocator FILE_LOCATOR = new FileLocator();
 
     public static ChessGame Load(String fileStr, ChessGame game) {
         File loadFile = new File(FILE_LOCATOR.toString() +"/resources/main/" + fileStr + ".txt");

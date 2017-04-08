@@ -12,7 +12,6 @@ import static Data.FileConstants.FILE_LOCATOR;
  * Save system for replaying and retaining moves.
  */
 public class Save {
-
     public enum Tags{
         BLACK("[B]"),
         WHITE("[W]"),
@@ -99,7 +98,6 @@ public class Save {
     public static void save(String fromStr,String toStr) throws IOException {
         File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + fromStr + ".txt");
         File saveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + toStr + ".txt");
-
         if(!saveFile.exists()){
             saveFile.createNewFile();
         }

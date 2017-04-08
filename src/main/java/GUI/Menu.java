@@ -108,7 +108,6 @@ public class Menu extends Application {
 
 
         loadBtn.setOnAction((ActionEvent e) -> {
-
             File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt");
             try {
                 InputStream inputAutosave = new FileInputStream(autoSaveFile);
