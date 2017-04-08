@@ -72,7 +72,6 @@ public class TestLoad {
         Load.Load("testFiles/loadTestFile", new ChessGame());
         File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt");
         File expectedFileString = new File (FILE_LOCATOR.toString() + "/resources/main/testFiles/loadTestFile.txt");
-
         InputStream inputAutosave = new FileInputStream(autoSaveFile);
         InputStream expectedAutosave = new FileInputStream(expectedFileString);
         String resultStr = "";

@@ -1,9 +1,10 @@
 apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
-
 
 jar {
     manifest {
@@ -11,12 +12,12 @@ jar {
                 'Implementation-Version': version
     }
 }
+
 repositories {
     mavenCentral()
     maven {
         name = "GradleRIO"
         url = "http://dev.imjac.in/maven"
-
     }
 }
 
@@ -26,11 +27,20 @@ dependencies {
 
 test {
     testLogging {
-        events 'skipped', 'failed', 'standard_error'
+        events 'standardOut', 'started', 'passed', 'skipped', 'failed'
         exceptionFormat 'full'
     }
+    testLogging.showStandardStreams = true;
     maxHeapSize = '512m'
-    include 'src/test/java/chessTests/Chess/**'
-    //exclude file io tests for travis
-    exclude 'src/test/java/chessTests/Data/**'
+    include '**/Chess/**'
+//    //exclude file io tests for travis
+    exclude '**/Data/**'
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport{
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
 }

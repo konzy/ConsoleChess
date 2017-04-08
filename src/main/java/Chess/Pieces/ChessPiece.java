@@ -204,6 +204,10 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         return opponentOf(color);
     }
 
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

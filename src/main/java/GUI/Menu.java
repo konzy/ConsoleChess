@@ -77,7 +77,7 @@ public class Menu extends Application {
         twoPlayerBtn.setOnAction(e -> {
 //            stats.incGames();
 //            stats.storeData();
-            ChessGame game = new ChessGame();
+            ChessGame game = new ChessGame(true);
             GameBoard gamebrd = new GameBoard(game);
             try {
                 gamebrd.start(null);
@@ -92,7 +92,7 @@ public class Menu extends Application {
 //            stats.incGames();
 //            stats.incCPU();
 //            stats.storeData();
-            ChessGame game = new ChessGame();
+            ChessGame game = new ChessGame(false);
             GameBoard gamebrd = new GameBoard(game);
             try {
                 gamebrd.start(null);
@@ -108,7 +108,6 @@ public class Menu extends Application {
 
 
         loadBtn.setOnAction((ActionEvent e) -> {
-
             File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt");
             try {
                 InputStream inputAutosave = new FileInputStream(autoSaveFile);

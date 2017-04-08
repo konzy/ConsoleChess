@@ -91,15 +91,16 @@ public class ChessGameTest {
 
     @Test
     public void testToString() throws Exception {
-        String startGameString = "[R][N][B][Q][K][B][N][R]\n" +
-                "[P][P][P][P][P][P][P][P]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[p][p][p][p][p][p][p][p]\n" +
-                "[r][n][b][q][k][b][n][r]\n" +
-                "White\n";
+        String startGameString = "[R0][N0][B0][Q0][K0][B0][N0][R0]\n" +
+                "[P0][P0][P0][P0][P0][P0][P0][P0]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[p0][p0][p0][p0][p0][p0][p0][p0]\n" +
+                "[r0][n0][b0][q0][k0][b0][n0][r0]\n" +
+                "White\n" +
+                "true\n";
 
         Assert.assertEquals(initialGame.toString(), startGameString);
 

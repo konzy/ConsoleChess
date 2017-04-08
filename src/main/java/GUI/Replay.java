@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import static Data.FileConstants.FILE_LOCATOR;
 
-
 /**
  * Replays all moves from the start of the game using the current autosave file as reference
  */

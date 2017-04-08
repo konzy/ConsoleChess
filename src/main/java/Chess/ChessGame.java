@@ -14,14 +14,8 @@ public class ChessGame implements Cloneable {
 
     private ChessBoard board;
     private PieceColor currentPlayer;
-
-    public Move getPreviousMove() {
-        return previousMove;
-    }
-
+    private boolean isTwoPlayer = true;
     private Move previousMove = null;
-
-
 
     public enum GameState {
         PLAY,
@@ -29,13 +23,16 @@ public class ChessGame implements Cloneable {
         STALEMATE
     }
 
-
+    public Move getPreviousMove() {
+        return previousMove;
+    }
     /**
      * Starts up the game with initial conditions and displays the board.
      */
     public ChessGame(){
         board = new ChessBoard();
         currentPlayer = PieceColor.White;
+
     }
 
     public ChessGame(ChessBoard board) {
@@ -45,6 +42,16 @@ public class ChessGame implements Cloneable {
             this.board = board;
         }
         currentPlayer = PieceColor.White;
+    }
+
+    public ChessGame(boolean isTwoPlayer){
+        this();
+        this.isTwoPlayer = isTwoPlayer;
+    }
+
+    public ChessGame(ChessBoard board, boolean isTwoPlayer) {
+        this(board);
+        this.isTwoPlayer = isTwoPlayer;
     }
 
     public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
@@ -123,7 +130,6 @@ public class ChessGame implements Cloneable {
         }
     }
 
-    // TODO: 4/6/2017 en passant
     private void enPassantCheck(Move move) {
         if (currentPlayer == PieceColor.White &&
                 previousMove != null &&
@@ -147,7 +153,6 @@ public class ChessGame implements Cloneable {
 
     }
 
-    // TODO: 4/6/2017 castling
     private void castlingCheck(Move move) {
         if (King.canCastleKingSide(move.getPiece(), this) &&
                 move.getTo().equals(new Location(6, move.getPiece().getLocation().y))) {
@@ -244,6 +249,6 @@ public class ChessGame implements Cloneable {
 
     @Override
     public String toString() {
-        return board + "" + currentPlayer + "\n";
+        return board + "" + currentPlayer + "\n" + isTwoPlayer + "\n";
     }
 }

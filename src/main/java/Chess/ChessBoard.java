@@ -196,15 +196,6 @@ public class ChessBoard implements Cloneable {
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
     }
 
-    public Tile[][] getBoardArray() {
-        int len = 8;
-        Tile[][] result = new Tile[len][len];
-        for (ChessPiece piece : pieces) {
-            result[piece.getLocation().x][piece.getLocation().y] = new Tile(Tile.TileColor.Black, piece);
-        }
-        return result;
-    }
-
     /**
 
      * A human readable representation of the board
@@ -227,18 +218,27 @@ public class ChessBoard implements Cloneable {
         for(int y = 0; y < 8; y++) { //8 represents height of board
             for (int x = 0; x < 8; x++){ //8 represents width of board
                 if (piece != null && piece.getLocation().equals(new Location(x, y))) {
+
+                    //encoding for type and color
                     String letter = piece.getLetter().toUpperCase();
                     if (piece.getColor().equals(ChessPiece.PieceColor.White)) {
                         letter = letter.toLowerCase();
                     }
-                    string += "[" + letter + "]";
+
+                    //encoding for hasMoved
+                    String hasMoved = "0";
+                    if (piece.hasMoved()) {
+                        hasMoved = "1";
+                    }
+
+                    string += "[" + letter + "" + hasMoved + "]";
                     if (iter.hasNext()) {
                         piece = (ChessPiece) iter.next();
                     } else {
                         piece = null;
                     }
                 } else {
-                    string += ("[ ]");
+                    string += ("[  ]");
                 }
             }
             string += "\n";
