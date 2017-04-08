@@ -134,7 +134,8 @@ public class ChessBoard implements Cloneable {
     }
 
     public ChessPiece getKingPiece(ChessPiece.PieceColor color) {
-        for (ChessPiece piece : pieces) {
+        ArrayList<ChessPiece> clonePieces = (ArrayList<ChessPiece>) pieces.clone();
+        for (ChessPiece piece : clonePieces) {
             if(piece.color() == color && piece instanceof King) {
                 return piece;
             }

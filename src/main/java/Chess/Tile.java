@@ -3,6 +3,7 @@ package Chess;
 
 import Chess.Pieces.ChessPiece;
 
+@Deprecated
 public class Tile implements Cloneable {
 
     private ChessPiece piece;

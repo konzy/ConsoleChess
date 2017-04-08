@@ -1,9 +1,7 @@
 package GUI;
 
 
-import Chess.AI.MCTSearchAI;
 import Chess.AI.MiniMaxAI;
-import Chess.AI.RandomAI;
 import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;

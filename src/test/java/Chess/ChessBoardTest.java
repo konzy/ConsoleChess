@@ -86,17 +86,6 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void isColorInCheck() throws Exception {
-        Assert.assertTrue(board.isColorInCheck(ChessPiece.PieceColor.Black));
-        Assert.assertFalse(board.isColorInCheck(ChessPiece.PieceColor.White));
-    }
-
-    @Test
-    public void getAllValidMoves() throws Exception {
-        Assert.assertEquals(initialGame.getBoard().getAllValidMoves(ChessPiece.PieceColor.White).size(), 20);
-    }
-
-    @Test
     public void testClone() throws Exception {
 
     }
@@ -125,11 +114,6 @@ public class ChessBoardTest {
     @Test
     public void getAllPiecesLocationForColor() throws Exception {
         Assert.assertEquals(initialGame.getBoard().getAllPiecesLocationForColor(ChessPiece.PieceColor.White).size(), 16);
-    }
-
-    @Test
-    public void getPotentialMoves() throws Exception {
-        Assert.assertEquals(initialGame.getBoard().getPotentialMoves(ChessPiece.PieceColor.White).size(), 20);
     }
 
     @Test

@@ -56,6 +56,22 @@ public class ChessGameTest {
     }
 
     @Test
+    public void isColorInCheck() throws Exception {
+        Assert.assertFalse(game.isColorInCheck(ChessPiece.PieceColor.Black));
+        Assert.assertFalse(game.isColorInCheck(ChessPiece.PieceColor.White));
+    }
+
+    @Test
+    public void getAllValidMoves() throws Exception {
+        Assert.assertEquals(initialGame.getAllValidMoves(ChessPiece.PieceColor.White).size(), 20);
+    }
+
+    @Test
+    public void getPotentialMoves() throws Exception {
+        Assert.assertEquals(initialGame.getPotentialMoves(ChessPiece.PieceColor.White).size(), 20);
+    }
+
+    @Test
     public void playMove() throws Exception {
         ChessGame clone = (ChessGame) game.clone();
         Assert.assertTrue(game.playMove(new Location(0, 6), new Location(0, 5)));

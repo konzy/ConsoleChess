@@ -238,9 +238,6 @@ public class ChessGame implements Cloneable {
         for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(ChessPiece.opponentOf(currentPlayer))) {
             opponentScore += chessPiece.value() + chessPiece.getLocation().getValue();
         }
-
-        System.out.println(currentPlayerScore - opponentScore);
-
         return currentPlayerScore - opponentScore;
     }
 
