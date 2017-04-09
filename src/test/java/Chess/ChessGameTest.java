@@ -44,6 +44,32 @@ public class ChessGameTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        ChessGame gameConstructor1 = new ChessGame();
+        ChessGame gameConstructor2 = new ChessGame(new ChessBoard());
+        ChessGame gameConstructor3 = new ChessGame(true);
+        ChessGame gameConstructor4 = new ChessGame(new ChessBoard(), true);
+
+        Assert.assertNotNull(gameConstructor1);
+        Assert.assertNotNull(gameConstructor2);
+        Assert.assertNotNull(gameConstructor3);
+        Assert.assertNotNull(gameConstructor4);
+    }
+
+    @Test
+    public void setCurrentPlayer() throws Exception {
+        ChessGame currentPlayerGame = new ChessGame();
+        currentPlayerGame.setCurrentPlayer(ChessPiece.PieceColor.Black);
+
+        Assert.assertEquals(currentPlayerGame.getCurrentPlayer(), ChessPiece.PieceColor.Black);
+    }
+
+    @Test
+    public void getPiecesWeThreaten() throws Exception {
+        Assert.assertEquals(game.getPiecesWeThreaten(ChessPiece.PieceColor.White).size(), 0);
+    }
+
+    @Test
     public void getBoard() throws Exception {
         Assert.assertNotNull(game.getBoard());
     }

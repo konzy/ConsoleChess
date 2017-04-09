@@ -19,16 +19,8 @@ public class Move implements Cloneable {
         return piece;
     }
 
-    public void setPiece(Location from) {
-        this.piece = piece;
-    }
-
     public Location getTo() {
         return to;
-    }
-
-    public void setTo(Location to) {
-        this.to = to;
     }
 
     @Override

@@ -26,6 +26,14 @@ public class RookTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        Rook rook1 = new Rook(ChessPiece.PieceColor.Black, new Location(0, 0));
+        Assert.assertNotNull(rook1);
+        Rook rook2 = new Rook(ChessPiece.PieceColor.Black, new Location(1, 1), true);
+        Assert.assertNotNull(rook2);
+    }
+
+    @Test
     public void value() throws Exception {
         Assert.assertEquals(rook.value(), 5);
     }

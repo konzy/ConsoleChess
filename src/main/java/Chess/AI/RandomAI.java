@@ -28,9 +28,6 @@ public class RandomAI extends BaseAI {
             return null;
         }
         Move temp = moves.get(Math.abs(random.nextInt()) % moves.size());
-        if (temp == null) {
-            System.out.println("wtf null");
-        }
         return temp;
     }
 }
