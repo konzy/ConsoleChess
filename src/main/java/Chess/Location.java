@@ -23,9 +23,7 @@ public class Location implements Cloneable {
     }
 
     public double getValue() {
-        if (x == 0 || y == 0 || x == 7 || y == 7) {
-            return 1.0;
-        } else if (x == 1 || y == 1 || x == 6 || y == 6) {
+        if (x == 1 || y == 1 || x == 6 || y == 6) {
             return 1.05;
         } else if (x == 2 || y == 2 || x == 5 || y == 5) {
             return 1.1;

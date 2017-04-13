@@ -25,6 +25,14 @@ public class KnightTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        Knight knight1 = new Knight(ChessPiece.PieceColor.Black, new Location(0, 0));
+        Assert.assertNotNull(knight1);
+        Knight knight2 = new Knight(ChessPiece.PieceColor.Black, new Location(1, 1), true);
+        Assert.assertNotNull(knight2);
+    }
+
+    @Test
     public void value() throws Exception {
         Assert.assertEquals(knight.value(), 3);
     }

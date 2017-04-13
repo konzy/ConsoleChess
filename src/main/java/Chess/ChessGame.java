@@ -181,10 +181,6 @@ public class ChessGame implements Cloneable {
     }
 
     public boolean playMove(Move move) {
-        if (move == null || move.getPiece() == null || move.getPiece().getLocation() == null || move.getTo() == null) {
-            System.out.println("something is fucked up");
-        }
-
         return playMove(move.getPiece().getLocation(), move.getTo());
     }
 

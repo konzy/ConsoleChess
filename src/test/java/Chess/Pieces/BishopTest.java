@@ -46,6 +46,14 @@ public class BishopTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        Bishop bishop1 = new Bishop(ChessPiece.PieceColor.White, new Location(0, 0));
+        Assert.assertNotNull(bishop1);
+        Bishop bishop2 = new Bishop(ChessPiece.PieceColor.White, new Location(0, 0), true);
+        Assert.assertNotNull(bishop2);
+    }
+
+    @Test
     public void value() throws Exception {
         Assert.assertEquals(testBishop1.value(), 3);
         Assert.assertEquals(testBishop2.value(), 3);

@@ -111,6 +111,14 @@ public class PawnTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        Pawn pawn1 = new Pawn(ChessPiece.PieceColor.Black, new Location(0, 0));
+        Assert.assertNotNull(pawn1);
+        Pawn pawn2 = new Pawn(ChessPiece.PieceColor.Black, new Location(1, 1), true);
+        Assert.assertNotNull(pawn2);
+    }
+
+    @Test
     public void value() throws Exception {
         Assert.assertEquals(pawn.value(), 1);
     }

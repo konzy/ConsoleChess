@@ -44,6 +44,15 @@ public class ChessPieceTest {
     }
 
     @Test
+    public void setHasMoved() throws Exception {
+        Bishop bishop = new Bishop(ChessPiece.PieceColor.White, new Location(0, 0));
+        bishop.setHasMoved(true);
+
+        Assert.assertTrue(bishop.hasMoved());
+
+    }
+
+    @Test
     public void testCompareTo() throws Exception {
         Assert.assertEquals(king1.compareTo(new Object()), 0);
     }
