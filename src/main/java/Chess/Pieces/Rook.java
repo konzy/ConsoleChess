@@ -32,7 +32,7 @@ public class Rook extends ChessPiece {
     @Override
     public double value(ChessGame game) {
         double threatening = game.getPiecesPieceThreatenes(this).size() * 0.90;
-        return 5 + validMoves(game).size() / 14.0 + threatening;
+        return 5;
     }
 
     @Override

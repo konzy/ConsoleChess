@@ -138,8 +138,14 @@ public class GameBoard extends Application {
                         if (isOnePlayer && !isEndOfGame) {
                             MiniMaxAI miniMaxAI = new MiniMaxAI(game);
                             Move aiMove = miniMaxAI.getNextMove();
-                            game.playMove(aiMove);
-                            Save.autoSave(game);
+                            try {
+                                game.playMove(aiMove);
+                                Save.autoSave(game);
+                            } catch (NullPointerException e1) {
+                                e1.printStackTrace();
+                            }
+
+
                             repaint();
                         } else if (isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());

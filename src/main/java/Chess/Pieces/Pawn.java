@@ -40,7 +40,21 @@ public class Pawn extends ChessPiece {
         if (color == PieceColor.White) {
             addedValue = -addedValue;
         }
-        addedValue *= 0.98;
+        if (addedValue < 3) {
+            addedValue = 0;
+        }
+        if (addedValue == 3) {
+            addedValue = 0.5;
+        }
+        if (addedValue == 4) {
+            addedValue = 1;
+        }
+        if (addedValue == 5) {
+            addedValue = 2;
+        }
+        if (addedValue == 6) {
+            addedValue = 3;
+        }
 
         double connectedPawns = 0;
         ChessPiece p1 = game.getBoard().getPieceAtLocation(new Location(location.x + 1, location.y + 1));
@@ -60,7 +74,7 @@ public class Pawn extends ChessPiece {
             connectedPawns++;
         }
 
-        connectedPawns *= 0.98;
+        connectedPawns *= 0.5;
 
         double threatening = game.getPiecesPieceThreatenes(this).size() * 0.90;
 

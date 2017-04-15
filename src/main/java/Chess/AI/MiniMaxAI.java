@@ -17,7 +17,7 @@ public class MiniMaxAI extends BaseAI {
 
     @Override
     public Move getNextMove() {
-        MinMaxNode node = new MinMaxNode(clonedGame, 2);
+        MinMaxNode node = new MinMaxNode(clonedGame, 4);
         return node.bestMove();
     }
 }

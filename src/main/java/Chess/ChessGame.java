@@ -6,6 +6,7 @@ import Chess.Pieces.King;
 import Chess.Pieces.Pawn;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * Methods for general play of chess.
@@ -78,6 +79,28 @@ public class ChessGame implements Cloneable {
         }
 
         return moves;
+    }
+
+    public ArrayList<Move> getTopMoves(PieceColor color, int numberOfMoves) {
+        ArrayList<Move> moves = getAllValidMoves(color);
+        PriorityQueue<Move> priorityQueue = new PriorityQueue<>();
+        for (Move move : moves) {
+            ChessGame clonedGame = (ChessGame) this.clone();
+            clonedGame.playMove(move);
+            double value = clonedGame.differenceInAdvantage();
+            move.setValue(value);
+            priorityQueue.add(move);
+        }
+
+        ArrayList<Move> result = new ArrayList<>();
+        for (int i = 0; i < numberOfMoves; i++) {
+            Move goodMove = priorityQueue.poll();
+            if (goodMove != null) {
+                result.add(goodMove);
+            }
+        }
+
+        return result;
     }
 
     @Override
