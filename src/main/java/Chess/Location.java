@@ -22,16 +22,7 @@ public class Location implements Cloneable {
         y = location.y;
     }
 
-    public double getValue() {
-        if (x == 1 || y == 1 || x == 6 || y == 6) {
-            return 1.05;
-        } else if (x == 2 || y == 2 || x == 5 || y == 5) {
-            return 1.1;
-        } else if (x == 3 || y == 3 || x == 4 || y == 4) {
-            return 1.15;
-        }
-        return 1.0;
-    }
+
 
     public boolean equals(Location location) {
         return this.x == location.x && this.y == location.y;

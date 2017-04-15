@@ -35,8 +35,36 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public int value() {
-        return 1;
+    public double value(ChessGame game) {
+        double addedValue = location.y;
+        if (color == PieceColor.White) {
+            addedValue = -addedValue;
+        }
+        addedValue *= 0.98;
+
+        double connectedPawns = 0;
+        ChessPiece p1 = game.getBoard().getPieceAtLocation(new Location(location.x + 1, location.y + 1));
+        ChessPiece p2 = game.getBoard().getPieceAtLocation(new Location(location.x - 1, location.y + 1));
+        ChessPiece p3 = game.getBoard().getPieceAtLocation(new Location(location.x + 1, location.y - 1));
+        ChessPiece p4 = game.getBoard().getPieceAtLocation(new Location(location.x - 1, location.y - 1));
+        if (p1 != null && p1.getColor() == color) {
+            connectedPawns++;
+        }
+        if (p2 != null && p2.getColor() == color) {
+            connectedPawns++;
+        }
+        if (p3 != null && p3.getColor() == color) {
+            connectedPawns++;
+        }
+        if (p4 != null && p4.getColor() == color) {
+            connectedPawns++;
+        }
+
+        connectedPawns *= 0.98;
+
+        double threatening = game.getPiecesPieceThreatenes(this).size() * 0.90;
+
+        return 1 + addedValue + connectedPawns + threatening;
     }
 
     @Override

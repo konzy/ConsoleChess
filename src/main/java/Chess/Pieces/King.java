@@ -31,7 +31,7 @@ public class King extends ChessPiece{
     }
 
     @Override
-    public int value() {
+    public double value(ChessGame game) {
         return 4;
     }
 

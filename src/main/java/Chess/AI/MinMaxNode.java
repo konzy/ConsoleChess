@@ -17,18 +17,19 @@ public class MinMaxNode {
     private ArrayList<MinMaxNode> possibleMoves = new ArrayList<>();
     private ChessPiece.PieceColor maxColor;
     private int currentIterations = 0;
-    private int maxIterations = 0;
+    private int maxIterations;
 
-    public MinMaxNode(ChessGame game, ChessPiece.PieceColor maxColor, Move move, int currentIterations) {
+    public MinMaxNode(ChessGame game, ChessPiece.PieceColor maxColor, Move move, int currentIterations, int maxIterations) {
         this.game = game;
         this.move = move;
         this.maxColor = maxColor;
         this.currentIterations = ++currentIterations;
+        this.maxIterations = maxIterations;
 
         if (game.getCurrentPlayer() == maxColor) {
-            value = 1000;
-        } else {
             value = -1000;
+        } else {
+            value = 1000;
         }
 
         createTree();
@@ -49,16 +50,24 @@ public class MinMaxNode {
             for (Move move : moves) {
                 ChessGame tempGame = (ChessGame)game.clone();
                 tempGame.playMove(move);
-                MinMaxNode node = new MinMaxNode(tempGame, maxColor, move, currentIterations);
+                MinMaxNode node = new MinMaxNode(tempGame, maxColor, move, currentIterations, maxIterations);
                 possibleMoves.add(node);
             }
+            double bestValue = value;
+            for (MinMaxNode possibleMove : possibleMoves) {
+                if (game.getCurrentPlayer() == maxColor) {
+                    bestValue = Math.max(possibleMove.value, bestValue);
+                } else {
+                    bestValue = Math.min(possibleMove.value, bestValue);
+                }
+            }
             if (game.getCurrentPlayer() == maxColor) {
-                value = Math.max(game.differenceInAdvantage() - 25, value);
+                value = Math.max(bestValue - 1, value);
             } else {
-                value = Math.min(-game.differenceInAdvantage() + 25, value);
+                value = Math.min(bestValue + 1, value);
             }
         } else {
-            if (currentIterations % 2 == 0) {
+            if (game.getCurrentPlayer() == maxColor) {
                 value = game.differenceInAdvantage();
             } else {
                 value = -game.differenceInAdvantage();
@@ -75,6 +84,7 @@ public class MinMaxNode {
                 bestValue = possibleMove.value;
             }
         }
+        System.out.println(bestValue);
         return result;
     }
 }

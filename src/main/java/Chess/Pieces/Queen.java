@@ -27,8 +27,9 @@ public class Queen extends ChessPiece{
 	}
 
 	@Override
-	public int value() {
-		return 9;
+	public double value(ChessGame game) {
+		double threatening = game.getPiecesPieceThreatenes(this).size() * 0.90;
+		return 9 + validMoves(game).size() / 28.0 + threatening;
 	}
 
 	@Override
