@@ -10,7 +10,6 @@ import static Data.FileConstants.FILE_LOCATOR;
  * Save system for replaying and retaining moves.
  */
 public class Save {
-
     /**
      * Clears out the current autosave to allow for a new game to write to the autosave file
      */
@@ -63,7 +62,6 @@ public class Save {
     public static void save(String fromStr,String toStr) throws IOException {
         File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + fromStr + ".txt");
         File saveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + toStr + ".txt");
-
         if(!saveFile.exists()){
             saveFile.createNewFile();
         }

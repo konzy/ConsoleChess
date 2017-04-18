@@ -16,9 +16,9 @@ import static Data.FileConstants.FILE_LOCATOR;
  */
 public class Load {
     public static final FileLocator FILE_LOCATOR = new FileLocator();
-
     public static final String WHITE_PIECE_REGEX = "[a-z]";
     public static final String PIECE_MOVED_REGEX = "[1]";
+
 
     public static ChessGame Load(String fileStr, ChessGame game) {
         File loadFile = new File(FILE_LOCATOR.toString() +"/resources/main/" + fileStr + ".txt");
