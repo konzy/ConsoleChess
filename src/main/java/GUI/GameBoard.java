@@ -214,11 +214,6 @@ public class GameBoard extends Application {
                 boolean players = game.getIsTwoPlayer();
                 game = new ChessGame(players);
                 game.setMoveCount(0);
-                try {
-                    Save.save("AutoSave", "redo");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
                 Save.clearAutoSave();
             }
             try {
