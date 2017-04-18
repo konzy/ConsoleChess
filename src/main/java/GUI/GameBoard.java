@@ -29,9 +29,12 @@ import java.io.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
+
 import static GUI.GameBoard.GameType.OnePlayer;
 import static GUI.GameBoard.GameType.PuzzleMode;
 import static GUI.GameBoard.GameType.TwoPlayer;
+import static Data.FileConstants.FILE_LOCATOR;
+
 
 /**
  *
@@ -100,8 +103,12 @@ public class GameBoard extends Application {
         loadBtn.setMinHeight(25);
         Button replayBtn = new Button("Replay");
         replayBtn.setMinHeight(25);
+        Button undoBtn = new Button("Undo");
+        replayBtn.setMinHeight(25);
+        Button redoBtn = new Button("Redo");
+        replayBtn.setMinHeight(25);
 
-        hBox.getChildren().addAll(backBtn,saveBtn,loadBtn,replayBtn);
+        hBox.getChildren().addAll(backBtn,saveBtn,loadBtn,replayBtn,undoBtn,redoBtn);
 
         borderPane.setTop(hBox);
         borderPane.setCenter(grid);
@@ -162,7 +169,8 @@ public class GameBoard extends Application {
                     if (game.playMove(from, to)) {
                         System.out.println(game.getBoard().toString());
                         Save.autoSave(game);
-
+                        game.incMoveCount();
+                        Replay.clearRedo();
                         repaint();
                         boolean isEndOfGame = game.getAllValidMoves(game.getCurrentPlayer()).size() == 0;
                         if (gameType == OnePlayer && !isEndOfGame) {
@@ -170,6 +178,8 @@ public class GameBoard extends Application {
                             Move aiMove = miniMaxAI.getNextMove();
                             game.playMove(aiMove);
                             Save.autoSave(game);
+                            game.incMoveCount();
+                            Replay.clearRedo();
                             repaint();
                         } else if (gameType == TwoPlayer && isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
@@ -230,7 +240,49 @@ public class GameBoard extends Application {
         replayBtn.setOnAction((ActionEvent e) -> {
             Replay.replayConsole();
         });
+        undoBtn.setOnAction((ActionEvent e) -> {
 
+            if(game.getMoveCount() >= 2) {
+                game.setMoveCount(game.getMoveCount() - 2);
+                game = Replay.undoMove(game.getMoveCount(), game);
+            }
+            if(game.getMoveCount() < 2) {
+                boolean players = game.getIsTwoPlayer();
+                game = new ChessGame(players);
+                game.setMoveCount(0);
+                try {
+                    Save.save("AutoSave", "redo");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                Save.clearAutoSave();
+            }
+            try {
+                setBoard(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        redoBtn.setOnAction((ActionEvent e) -> {
+            File redoFile = new File(FILE_LOCATOR.toString() + "/resources/main/redo.txt");
+
+            try {
+                InputStream inputRedo = new FileInputStream(redoFile);
+                String resultStr = "";
+                int bytesRead;
+                while((bytesRead = inputRedo.read(new byte[1024])) > 0) {
+                    resultStr = resultStr + bytesRead;
+                }
+
+                if(!resultStr.equals("")) {
+                    game = Replay.redoMove(game.getMoveCount(),game);
+                }
+                setBoard(stage);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     private void repaint() {

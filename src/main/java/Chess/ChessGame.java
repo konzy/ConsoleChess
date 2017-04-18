@@ -16,6 +16,7 @@ public class ChessGame implements Cloneable {
     private PieceColor currentPlayer;
     private boolean isTwoPlayer = true;
     private Move previousMove = null;
+    private int moveCount = 0;
 
     public enum GameState {
         PLAY,
@@ -104,7 +105,21 @@ public class ChessGame implements Cloneable {
         currentPlayer = color;
     }
 
+    public int getMoveCount(){
+        return moveCount;
+    }
 
+    public void incMoveCount(){
+        moveCount++;
+    }
+
+    public void setMoveCount(int i){
+        moveCount = i;
+    }
+
+    public boolean getIsTwoPlayer(){
+        return isTwoPlayer;
+    }
 
     /**
      * Takes the input of a piece to be moved from and to a position and moves the piece if it is a valid move.
