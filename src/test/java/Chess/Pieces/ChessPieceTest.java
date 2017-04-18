@@ -88,7 +88,7 @@ public class ChessPieceTest {
 
         Assert.assertEquals(clone.getLetter(), testBishop1.getLetter());
         Assert.assertEquals(clone.charValue(), testBishop1.charValue());
-        Assert.assertEquals(clone.value(), testBishop1.value());
+        Assert.assertEquals(clone.value(game), testBishop1.value(game), 0);
         Assert.assertEquals(clone.repeatableMoves(), testBishop1.repeatableMoves());
         Assert.assertEquals(clone.opponent(), clone.opponent());
         Assert.assertEquals(clone.color(), testBishop1.color());

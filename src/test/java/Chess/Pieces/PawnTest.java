@@ -32,6 +32,7 @@ public class PawnTest {
     private Bishop whiteBlockingBishop = new Bishop(ChessPiece.PieceColor.White, new Location(5, 5));
     private Bishop blackBlockingBishop = new Bishop(ChessPiece.PieceColor.Black, new Location(5, 2));
 
+    private ChessGame startingGame;
     private ChessGame game;
 
     private ChessGame promotionGame;
@@ -40,6 +41,8 @@ public class PawnTest {
 
     @Before
     public void setUp() throws Exception {
+        startingGame = new ChessGame();
+
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         pieces.add(whiteSingleMovePawn);
         pieces.add(blackSingleMovePawn);
@@ -120,7 +123,7 @@ public class PawnTest {
 
     @Test
     public void value() throws Exception {
-        Assert.assertEquals(pawn.value(), 1);
+        Assert.assertEquals(pawn.value(startingGame), 2.0, 0);
     }
 
     @Test

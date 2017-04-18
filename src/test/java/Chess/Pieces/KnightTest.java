@@ -1,5 +1,6 @@
 package Chess.Pieces;
 
+import Chess.ChessGame;
 import Chess.Pieces.*;
 import Chess.Location;
 import org.junit.After;
@@ -34,7 +35,7 @@ public class KnightTest {
 
     @Test
     public void value() throws Exception {
-        Assert.assertEquals(knight.value(), 3);
+        Assert.assertEquals(knight.value(new ChessGame()), 3.1, 0);
     }
 
     @Test
