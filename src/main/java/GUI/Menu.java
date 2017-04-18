@@ -67,8 +67,8 @@ public class Menu extends Application {
         vBox.getChildren().add(welcomeLabel);
         vBox.getChildren().add(onePlayerBtn);
         vBox.getChildren().add(twoPlayerBtn);
-        vBox.getChildren().add(loadBtn);
         vBox.getChildren().add(puzzleModeBtn);
+        vBox.getChildren().add(loadBtn);
         vBox.getChildren().add(statsBtn);
 
         borderPane.setCenter(vBox);
