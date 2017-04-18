@@ -18,8 +18,7 @@ public class MinMaxNode {
     private ChessPiece.PieceColor maxColor;
     private int currentIterations = 0;
     private int maxIterations;
-    private int numTopMoves = 3;
-
+    private static final int NUM_TOP_MOVES = 3;
 
     public MinMaxNode(ChessGame game, ChessPiece.PieceColor maxColor, Move move, int currentIterations, int maxIterations) {
         this.game = game;
@@ -47,7 +46,7 @@ public class MinMaxNode {
     public void createTree() {
         //Tree creation
         if (currentIterations < maxIterations) {
-            ArrayList<Move> moves = game.getTopMoves(game.getCurrentPlayer(), numTopMoves);
+            ArrayList<Move> moves = game.getTopMoves(game.getCurrentPlayer(), NUM_TOP_MOVES);
             for (Move move : moves) {
                 ChessGame tempGame = (ChessGame)game.clone();
                 tempGame.playMove(move);

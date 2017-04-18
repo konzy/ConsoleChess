@@ -149,6 +149,7 @@ public class GameBoard extends Application {
                             repaint();
                         } else if (isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
+                            Save.clearAutoSave();
                             System.out.println(game.getState().toString());
                         }
                         if (game.getState() == ChessGame.GameState.PLAY) {
