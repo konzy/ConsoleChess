@@ -29,6 +29,10 @@ import java.io.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
+import static GUI.GameBoard.GameType.OnePlayer;
+import static GUI.GameBoard.GameType.PuzzleMode;
+import static GUI.GameBoard.GameType.TwoPlayer;
+
 /**
  *
  */
@@ -43,7 +47,7 @@ public class GameBoard extends Application {
     private int firstClickY = -1;
     private int secondClickX = -1;
     private int secondClickY = -1;
-    private boolean isOnePlayer = false;
+    private GameType gameType = TwoPlayer ;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -52,8 +56,14 @@ public class GameBoard extends Application {
         }
     }
 
-    public void setIsOnePlayer(boolean isOnePlayer) {
-        this.isOnePlayer = isOnePlayer;
+    public void setGameType(GameType type) {
+        this.gameType = type;
+    }
+
+    public enum GameType{
+        OnePlayer,
+        TwoPlayer,
+        PuzzleMode
     }
 
     public void setBoard (Stage stage) throws Exception {
@@ -129,21 +139,45 @@ public class GameBoard extends Application {
                     //reset first click
                     firstClickX = -1;
                     firstClickY = -1;
+                    //possibly place puzzle if stamtent here
+                    if (gameType == PuzzleMode){
+                        if (from.equals(new Location(1,1)) && to.equals(new Location(1,5)) ){
+                            game.playMove(from,to);
+                            game.playMove(new Location(3,3), new Location(3,4));
+                           // repaint();
+                            setBoard(stage);
+                        }
+                        else if (from.equals(new Location(1,5)) && to.equals(new Location(3,5))){
+                            game.playMove(from,to);
+                            setBoard(stage);
+                            displayAlert("Alert Message", "Solved");
+                            Menu menu = new Menu();
+                            menu.start(stage);
+                        }
+                        else{
+                            displayAlert("Alert Message", "Bad Move");
+                            setBoard(stage);
+                        }
+                    }else{
                     if (game.playMove(from, to)) {
                         System.out.println(game.getBoard().toString());
                         Save.autoSave(game);
 
                         repaint();
                         boolean isEndOfGame = game.getAllValidMoves(game.getCurrentPlayer()).size() == 0;
-                        if (isOnePlayer && !isEndOfGame) {
+                        if (gameType == OnePlayer && !isEndOfGame) {
                             MiniMaxAI miniMaxAI = new MiniMaxAI(game);
                             Move aiMove = miniMaxAI.getNextMove();
                             game.playMove(aiMove);
                             Save.autoSave(game);
                             repaint();
-                        } else if (isEndOfGame) {
+                        } else if (gameType == TwoPlayer && isEndOfGame) {
                             JOptionPane.showMessageDialog(null, game.getState().toString());
                             System.out.println(game.getState().toString());
+                        }
+                        //add in puzzle mode
+                        else if(gameType == PuzzleMode){
+
                         }
                         if (game.getState() == ChessGame.GameState.PLAY) {
                             setBoard(stage);
@@ -155,6 +189,7 @@ public class GameBoard extends Application {
                     else{
                         displayAlert("Alert Message", "Invalid move!");
                         setBoard(stage);
+                    }
                     }
                 } catch (Exception e1) {
                         e1.printStackTrace();
