@@ -17,55 +17,6 @@ import static Data.Load.WHITE_PIECE_REGEX;
  * Replays all moves from the start of the game using the current autosave file as reference
  */
 public class Replay {
-
-    public static void replayConsole(){
-        File loadFile = new File(FILE_LOCATOR.toString() + "\\resources\\main\\AutoSave.txt");
-        BufferedReader input = null;
-        ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;
-        ArrayList<ChessPiece> pieces = new ArrayList<>();
-        try {
-			/* FileInputStream to read streams */
-            input = new BufferedReader(new FileReader(loadFile));
-            String line;
-            String[] lineArray;
-            int y = 0;
-            while ((line = input.readLine()) != null) {
-                if(y % 9 == 0) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if(line.equals(ChessPiece.PieceColor.Black.name())){
-                        System.out.println( ChessPiece.PieceColor.White);
-                    } else {
-                        System.out.println( ChessPiece.PieceColor.Black);
-                    }
-                    pieces = new ArrayList<>();
-                } else {
-                    lineArray = line.split("\\]");
-                    for (int i = 0; i < lineArray.length; i = i + 2) {
-                        System.out.print("[" + lineArray[i].substring(1, 2) + "]");
-                    }
-                    System.out.println("");
-                }
-                y++;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (null != input) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     public static ChessGame undoMove(int i,ChessGame game){
         File loadFile = new File(FILE_LOCATOR.toString() +"/resources/main/AutoSave.txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
@@ -76,12 +27,9 @@ public class Replay {
 
         try {
             File tmp = File.createTempFile("tmp", ".txt");
-            File redo = new File(FILE_LOCATOR.toString() + "/resources/main/redo.txt");
-            if(!redo.exists()){
-                redo.createNewFile();
-            }
+            File redotmp = File.createTempFile("redotmp", ".txt");
             BufferedWriter bw1 = new BufferedWriter(new FileWriter(tmp));
-            BufferedWriter bw2 = new BufferedWriter(new FileWriter(redo));
+            BufferedWriter bw2 = new BufferedWriter(new FileWriter(redotmp,true));
             /* FileInputStream to read streams */
             input = new BufferedReader(new FileReader(loadFile));
             String line;
@@ -165,14 +113,39 @@ public class Replay {
             bw2.flush();
             bw2.close();
 
+            File redo = new File(FILE_LOCATOR.toString() + "/resources/main/redo.txt");
+            if(!redo.exists()){
+                redo.createNewFile();
+            }
+            InputStream redoIn = new FileInputStream(redo);
+            OutputStream redoOut = new FileOutputStream(redo,true);
+            InputStream redoTmpIn = new FileInputStream(redotmp);
+            OutputStream redoTmpOut = new FileOutputStream(redotmp, true);
+
+            byte[] buf = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = redoIn.read(buf)) > 0) {
+                redoTmpOut.write(buf, 0, bytesRead);
+            }
+            redoTmpOut.close();
+            redoIn.close();
+
+            clearRedo();
+            buf = new byte[1024];
+            while ((bytesRead = redoTmpIn.read(buf)) > 0) {
+                    redoOut.write(buf, 0, bytesRead);
+            }
+            redoOut.close();
+            redoTmpIn.close();
+
              /* FileInputStream to read streams */
             InputStream tmpStream = new FileInputStream(tmp);
             /* FileOutputStream to write streams */
             OutputStream output = new FileOutputStream(loadFile);
 
             Save.clearAutoSave();
-            byte[] buf = new byte[1024];
-            int bytesRead;
+            buf = new byte[1024];
 
             while ((bytesRead = tmpStream.read(buf)) > 0) {
                 output.write(buf, 0, bytesRead);
