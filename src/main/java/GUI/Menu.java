@@ -2,7 +2,6 @@ package GUI;
 
 import Chess.ChessGame;
 import Chess.StatCollection;
-import Data.FileLocator;
 import Data.Load;
 import Data.Save;
 import javafx.application.Application;
@@ -20,6 +19,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import static Data.FileConstants.FILE_LOCATOR;
+import static GUI.GameBoard.GameType.OnePlayer;
+import static GUI.GameBoard.GameType.PuzzleMode;
+import static GUI.GameBoard.GameType.TwoPlayer;
 
 
 /**
@@ -40,18 +42,21 @@ public class Menu extends Application {
         Button onePlayerBtn = new Button("One Player");
         Button twoPlayerBtn = new Button("Two Player");
         Button loadBtn = new Button("Load");
+        Button puzzleModeBtn = new Button ("Puzzle Mode");
         Button statsBtn = new Button("Stats");
 
         //set widths of buttons to be the same
         onePlayerBtn.setMaxWidth(200);
         twoPlayerBtn.setMaxWidth(200);
         loadBtn.setMaxWidth(200);
+        puzzleModeBtn.setMaxWidth(200);
         statsBtn.setMaxWidth(200);
 
         //set heights of buttons to be the same
         onePlayerBtn.setMinHeight(50);
         twoPlayerBtn.setMinHeight(50);
         loadBtn.setMinHeight(50);
+        puzzleModeBtn.setMinHeight(50);
         statsBtn.setMinHeight(50);
 
         VBox vBox = new VBox();
@@ -62,6 +67,7 @@ public class Menu extends Application {
         vBox.getChildren().add(welcomeLabel);
         vBox.getChildren().add(onePlayerBtn);
         vBox.getChildren().add(twoPlayerBtn);
+        vBox.getChildren().add(puzzleModeBtn);
         vBox.getChildren().add(loadBtn);
         vBox.getChildren().add(statsBtn);
 
@@ -81,7 +87,7 @@ public class Menu extends Application {
             GameBoard gamebrd = new GameBoard(game);
             try {
                 gamebrd.start(null);
-                gamebrd.setIsOnePlayer(false);
+                gamebrd.setGameType(TwoPlayer);
                 gamebrd.setBoard(stage);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -96,7 +102,7 @@ public class Menu extends Application {
             GameBoard gamebrd = new GameBoard(game);
             try {
                 gamebrd.start(null);
-                gamebrd.setIsOnePlayer(true);
+                gamebrd.setGameType(OnePlayer);
                 gamebrd.setBoard(stage);
 
                 //gamebrd.setBoard(stage);
@@ -105,6 +111,7 @@ public class Menu extends Application {
                 e1.printStackTrace();
             }
         });
+
 
 
         loadBtn.setOnAction((ActionEvent e) -> {
@@ -122,6 +129,30 @@ public class Menu extends Application {
                     game = Load.Load("AutoSave", game);
                     GameBoard gamebrd = new GameBoard(game);
 
+                    //Sets up chess game, initial player is white, prints board to console
+                    gamebrd.setBoard(stage);
+                }
+
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        puzzleModeBtn.setOnAction((ActionEvent e) -> {
+            File puzzleModeFile = new File(FILE_LOCATOR.toString() + "/resources/main/PuzzleMode.txt");
+            try {
+                InputStream inputAutosave = new FileInputStream(puzzleModeFile);
+                String resultStr = "";
+                int bytesRead;
+                while((bytesRead = inputAutosave.read(new byte[1024])) > 0) {
+                    resultStr = resultStr + bytesRead;
+                }
+
+                if(!resultStr.equals("")) {
+                    ChessGame game = new ChessGame();
+                    game = Load.Load("PuzzleMode", game);
+                    GameBoard gamebrd = new GameBoard(game);
+                    gamebrd.setGameType(PuzzleMode);
                     //Sets up chess game, initial player is white, prints board to console
                     gamebrd.setBoard(stage);
                 }

@@ -1,5 +1,6 @@
 package Chess.Pieces;
 
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Pieces.ChessPiece;
 import Chess.Pieces.Rook;
@@ -35,7 +36,7 @@ public class RookTest {
 
     @Test
     public void value() throws Exception {
-        Assert.assertEquals(rook.value(), 5);
+        Assert.assertEquals(rook.value(new ChessGame()), 5, 0);
     }
 
     @Test

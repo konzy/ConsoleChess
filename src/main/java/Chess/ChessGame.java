@@ -6,6 +6,7 @@ import Chess.Pieces.King;
 import Chess.Pieces.Pawn;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * Methods for general play of chess.
@@ -81,6 +82,28 @@ public class ChessGame implements Cloneable {
         return moves;
     }
 
+    public ArrayList<Move> getTopMoves(PieceColor color, int numberOfMoves) {
+        ArrayList<Move> moves = getAllValidMoves(color);
+        PriorityQueue<Move> priorityQueue = new PriorityQueue<>();
+        for (Move move : moves) {
+            ChessGame clonedGame = (ChessGame) this.clone();
+            clonedGame.playMove(move);
+            double value = clonedGame.differenceInAdvantage();
+            move.setValue(value);
+            priorityQueue.add(move);
+        }
+
+        ArrayList<Move> result = new ArrayList<>();
+        for (int i = 0; i < numberOfMoves; i++) {
+            Move goodMove = priorityQueue.poll();
+            if (goodMove != null) {
+                result.add(goodMove);
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public Object clone() {
         ChessGame clone = null;
@@ -116,6 +139,7 @@ public class ChessGame implements Cloneable {
     public void setMoveCount(int i){
         moveCount = i;
     }
+
 
     public boolean getIsTwoPlayer(){
         return isTwoPlayer;
@@ -243,16 +267,29 @@ public class ChessGame implements Cloneable {
         return result;
     }
 
+    public ArrayList<ChessPiece> getPiecesPieceThreatenes(ChessPiece piece) {
+        ArrayList<ChessPiece> result = new ArrayList<>();
+        ArrayList<Move> moves = piece.validMoves(this);
+        for (Move move : moves) {
+            ChessPiece threatenedPiece = board.getPieceAtLocation(move.getTo());
+            if (threatenedPiece != null && piece.getColor() != piece.getColor()) {
+                result.add(piece);
+            }
+        }
+
+        return result;
+    }
+
     public double differenceInAdvantage() {
         double currentPlayerScore = 0.0;
         double opponentScore = 0.0;
 
         for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(currentPlayer)) {
-            currentPlayerScore += chessPiece.value() + chessPiece.getLocation().getValue();
+            currentPlayerScore += chessPiece.value(this);// + chessPiece.getValue();
         }
 
         for (ChessPiece chessPiece : board.getAllPiecesLocationForColor(ChessPiece.opponentOf(currentPlayer))) {
-            opponentScore += chessPiece.value() + chessPiece.getLocation().getValue();
+            opponentScore += chessPiece.value(this);// + chessPiece.getValue();
         }
         return currentPlayerScore - opponentScore;
     }

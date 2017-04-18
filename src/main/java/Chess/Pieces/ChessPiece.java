@@ -59,7 +59,7 @@ public abstract class ChessPiece implements Comparable, Cloneable {
 
     public abstract void setImage();
 
-    abstract public int value();
+    abstract public double value(ChessGame game);
 
     @Override
     public int compareTo(Object o) {
@@ -74,6 +74,26 @@ public abstract class ChessPiece implements Comparable, Cloneable {
         return 0;
     }
 
+    public double favorCenter() {
+        double valueAdded = 0;
+        int x = location.x;
+        int y = location.y;
+        if (x == 1 || x == 6) {
+            valueAdded += 0.05;
+        } else if (x == 2 || x == 5) {
+            valueAdded += 0.1;
+        } else if (x == 3 || x == 4) {
+            valueAdded += 0.15;
+        }
+        if (y == 1 || y == 6) {
+            valueAdded += 0.05;
+        } else if (y == 2 || y == 5) {
+            valueAdded += 0.1;
+        } else if (y == 3 || y == 4) {
+            valueAdded += 0.15;
+        }
+        return valueAdded;
+    }
 
     //im not sure if this needs to be static, but when it wasn't, cloning "this" was not possible, maybe
     public static ArrayList<Move> validatedMoves(ChessGame game, ArrayList<Move> potentialMoves, PieceColor color) {

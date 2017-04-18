@@ -303,6 +303,7 @@ public class Replay {
         return game;
     }
 
+
     public static void clearRedo(){
         BufferedWriter writer;
         File redo = new File(FILE_LOCATOR.toString() + "/resources/main/redo.txt");

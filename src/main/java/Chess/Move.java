@@ -5,10 +5,11 @@ import Chess.Pieces.ChessPiece;
 /**
  * Created by konzy on 2/6/2017.
  */
-public class Move implements Cloneable {
+public class Move implements Cloneable, Comparable {
 
-    ChessPiece piece;
-    Location to;
+    private ChessPiece piece;
+    private Location to;
+    private double value;
 
     public Move(ChessPiece piece, Location to) {
         this.piece = piece;
@@ -21,6 +22,14 @@ public class Move implements Cloneable {
 
     public Location getTo() {
         return to;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
     @Override
@@ -46,5 +55,13 @@ public class Move implements Cloneable {
         }
 
         return clone;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Move) {
+            return (int)(value - ((Move) o).value);
+        }
+        return 0;
     }
 }
