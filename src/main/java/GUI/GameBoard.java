@@ -1,6 +1,5 @@
 package GUI;
 
-
 import Chess.AI.MiniMaxAI;
 import Chess.ChessGame;
 import Chess.Location;
@@ -28,6 +27,7 @@ import javafx.scene.image.ImageView;
 import java.io.*;
 import javax.swing.*;
 import java.util.ArrayList;
+
 
 
 import static GUI.GameBoard.GameType.OnePlayer;
@@ -101,14 +101,12 @@ public class GameBoard extends Application {
         saveBtn.setMinHeight(25);
         Button loadBtn = new Button("Load");
         loadBtn.setMinHeight(25);
-        Button replayBtn = new Button("Replay");
-        replayBtn.setMinHeight(25);
         Button undoBtn = new Button("Undo");
-        replayBtn.setMinHeight(25);
+        undoBtn.setMinHeight(25);
         Button redoBtn = new Button("Redo");
-        replayBtn.setMinHeight(25);
+        redoBtn.setMinHeight(25);
+        hBox.getChildren().addAll(backBtn,saveBtn,loadBtn,undoBtn,redoBtn);
 
-        hBox.getChildren().addAll(backBtn,saveBtn,loadBtn,replayBtn,undoBtn,redoBtn);
 
         borderPane.setTop(hBox);
         borderPane.setCenter(grid);
@@ -238,9 +236,7 @@ public class GameBoard extends Application {
                 e1.printStackTrace();
             }
         });
-        replayBtn.setOnAction((ActionEvent e) -> {
-            Replay.replayConsole();
-        });
+
         undoBtn.setOnAction((ActionEvent e) -> {
 
             if(game.getMoveCount() >= 2) {
@@ -251,11 +247,6 @@ public class GameBoard extends Application {
                 boolean players = game.getIsTwoPlayer();
                 game = new ChessGame(players);
                 game.setMoveCount(0);
-                try {
-                    Save.save("AutoSave", "redo");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
                 Save.clearAutoSave();
             }
             try {

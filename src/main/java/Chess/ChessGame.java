@@ -140,6 +140,7 @@ public class ChessGame implements Cloneable {
         moveCount = i;
     }
 
+
     public boolean getIsTwoPlayer(){
         return isTwoPlayer;
     }
