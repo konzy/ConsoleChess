@@ -1,12 +1,12 @@
-14
-3
 0
 0
 0
 0
-1
 0
-5
-4
-2
+0
+0
+0
+0
+0
+0
 The above numbers are whiteMoves, blackMoves, win, loss, whiteTime, blackTime, whiteCaptures, blackCaptures, games, cpuGames, movesUndone

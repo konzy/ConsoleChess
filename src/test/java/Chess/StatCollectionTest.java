@@ -13,7 +13,7 @@ public class StatCollectionTest {
 
     @Before
     public void setUp() throws Exception {
-
+        stats.resetStats();
     }
 
     @After
