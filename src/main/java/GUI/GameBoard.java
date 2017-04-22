@@ -11,9 +11,11 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -122,37 +124,42 @@ public class GameBoard extends Application {
             int col = (int)Math.floor((e.getSceneX())/ 80); //subtract to adjust for stroke size
             int row = (int)Math.floor((e.getSceneY()-25)/ 80);
             if (firstClickX == -1) {
-                firstClickX = col;
-                firstClickY = row;
+                Location location = new Location(col, row);
+                ChessPiece piece = game.getBoard().getPieceAtLocation(location);
+
+                if (piece != null && piece.getColor().equals(game.getCurrentPlayer())){
+                    firstClickX = col;
+                    firstClickY = row;
+
+                    highlightTile(grid, e, col, row);
+                } else if (piece != null) {
+                    displayAlert("Alert Message", "Can't move that piece, it's " + game.getCurrentPlayer().toString() + "'s turn");
+                }
+
             }else{
                 secondClickX = col;
                 secondClickY = row;
-                //reset board if same tile is selected
-                if((firstClickX == secondClickX) && (firstClickY == secondClickY)){
-                    //reset first click
-                    firstClickX = -1;
-                    firstClickY = -1;
-                    try {
-                        setBoard(stage);
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                }else{
+                Location location = new Location(col, row);
+                ChessPiece piece = game.getBoard().getPieceAtLocation(location);
+                if (piece != null && piece.getColor().equals(game.getCurrentPlayer())) {
+                    firstClickX = col;
+                    firstClickY = row;
+                    highlightTile(grid, e, col, row);
+                } else {
                 try {
                     Location from = new Location(firstClickX,firstClickY);
                     Location to = new Location(secondClickX,secondClickY);
                     //reset first click
                     firstClickX = -1;
                     firstClickY = -1;
-                    //possibly place puzzle if stamtent here
+                    //possibly place puzzle if statement here
                     if (gameType == PuzzleMode){
                         if (from.equals(new Location(1,1)) && to.equals(new Location(1,5)) ){
                             game.playMove(from,to);
                             game.playMove(new Location(3,3), new Location(3,4));
                            // repaint();
                             setBoard(stage);
-                        }
-                        else if (from.equals(new Location(1,5)) && to.equals(new Location(3,5))){
+                        } else if (from.equals(new Location(1,5)) && to.equals(new Location(3,5))){
                             game.playMove(from,to);
                             setBoard(stage);
                             displayAlert("Alert Message", "Solved");
@@ -163,42 +170,43 @@ public class GameBoard extends Application {
                             displayAlert("Alert Message", "Bad Move");
                             setBoard(stage);
                         }
-                    }else{
-                    if (game.playMove(from, to)) {
-                        System.out.println(game.getBoard().toString());
-                        Save.autoSave(game);
-                        game.incMoveCount();
-                        Replay.clearRedo();
-                        repaint();
-                        boolean isEndOfGame = game.getAllValidMoves(game.getCurrentPlayer()).size() == 0;
-                        if (gameType == OnePlayer && !isEndOfGame) {
-                            MiniMaxAI miniMaxAI = new MiniMaxAI(game);
-                            Move aiMove = miniMaxAI.getNextMove();
-                            game.playMove(aiMove);
+                    } else {
+                        ChessGame previousGame = (ChessGame) game.clone();
+                        if (game.playMove(from, to)) {
+                            StatsPage.stats.updateFromGameState(previousGame, game, false);
+                            System.out.println(game.getBoard().toString());
                             Save.autoSave(game);
                             game.incMoveCount();
                             Replay.clearRedo();
                             repaint();
-                        } else if (gameType == TwoPlayer && isEndOfGame) {
-                            JOptionPane.showMessageDialog(null, game.getState().toString());
-                            Save.clearAutoSave();
-                            System.out.println(game.getState().toString());
-                        }
-                        //add in puzzle mode
-                        else if(gameType == PuzzleMode){
-
-                        }
-                        if (game.getState() == ChessGame.GameState.PLAY) {
-                            setBoard(stage);
+                            boolean isEndOfGame = game.getAllValidMoves(game.getCurrentPlayer()).size() == 0;
+                            if (gameType == OnePlayer && !isEndOfGame) {
+                                MiniMaxAI miniMaxAI = new MiniMaxAI(game);
+                                Move aiMove = miniMaxAI.getNextMove();
+                                game.playMove(aiMove);
+                                Save.autoSave(game);
+                                game.incMoveCount();
+                                Replay.clearRedo();
+                                repaint();
+                            } else if (isEndOfGame) {
+                                repaint();
+                                JOptionPane.showMessageDialog(null, game.getState().toString());
+                                Save.clearAutoSave();
+                                System.out.println(game.getState().toString());
+                            } if (game.getState() == ChessGame.GameState.PLAY) {
+                                setBoard(stage);
+                            } else {
+                                Menu menu = new Menu();
+                                menu.start(stage);
+                            }
                         } else {
-                            Menu menu = new Menu();
-                            menu.start(stage);
+                            if (game.isColorInCheck(game.getCurrentPlayer())) {
+                                displayAlert("Alert Message", "Cannot move there, king is still in check");
+                            } else {
+                                displayAlert("Alert Message", "Invalid move!");
+                            }
+                            setBoard(stage);
                         }
-                    }
-                    else{
-                        displayAlert("Alert Message", "Invalid move!");
-                        setBoard(stage);
-                    }
                     }
                 } catch (Exception e1) {
                         e1.printStackTrace();
@@ -206,12 +214,7 @@ public class GameBoard extends Application {
                     }
                 }}
 
-                Rectangle rectangle = new Rectangle(80, 80);
-                rectangle.setFill(Color.YELLOW);
-                rectangle.setOpacity(.5);
-                if (e.getSceneX() < 640 && e.getSceneY() < 665) {
-                    grid.add(rectangle, col, row);
-                }
+
             });
         backBtn.setOnAction(e -> {
             Menu menu = new Menu();
@@ -238,7 +241,8 @@ public class GameBoard extends Application {
         });
 
         undoBtn.setOnAction((ActionEvent e) -> {
-
+            ChessGame previousGame = (ChessGame) game.clone();
+            StatsPage.stats.updateFromGameState(previousGame, game, true);
             if(game.getMoveCount() >= 2) {
                 game.setMoveCount(game.getMoveCount() - 2);
                 game = Replay.undoMove(game.getMoveCount(), game);
@@ -257,6 +261,8 @@ public class GameBoard extends Application {
         });
 
         redoBtn.setOnAction((ActionEvent e) -> {
+            ChessGame previousGame = (ChessGame) game.clone();
+            StatsPage.stats.updateFromGameState(previousGame, game, false);
             File redoFile = new File(FILE_LOCATOR.toString() + "/resources/main/redo.txt");
 
             try {
@@ -275,6 +281,35 @@ public class GameBoard extends Application {
                 e1.printStackTrace();
             }
         });
+    }
+
+    private void highlightTile(GridPane grid, MouseEvent e, int col, int row) {
+
+        //set color of tiles
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Rectangle rectangle = new Rectangle(80,80);
+                setRectangleColor(rectangle,i,j);
+                grid.add(rectangle,i,j);
+            }
+        }
+
+        //set pieces
+        ArrayList<ChessPiece> chessPieces = game.getBoard().getBoardArrayList();
+        for (ChessPiece chessPiece : chessPieces) {
+            chessPiece.setImage();
+            ImageView tmpView = chessPiece.getImage();
+            tmpView.setFitHeight(80);
+            tmpView.setFitWidth(80);
+            grid.add(chessPiece.getImage(), chessPiece.getLocation().x, chessPiece.getLocation().y);
+        }
+
+        Rectangle rectangle = new Rectangle(80, 80);
+        rectangle.setFill(Color.YELLOW);
+        rectangle.setOpacity(.5);
+        if (e.getSceneX() < 640 && e.getSceneY() < 665) {
+            grid.add(rectangle, col, row);
+        }
     }
 
     private void repaint() {

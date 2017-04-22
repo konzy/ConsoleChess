@@ -81,8 +81,7 @@ public class Menu extends Application {
         stage.show();
 
         twoPlayerBtn.setOnAction(e -> {
-//            stats.incGames();
-//            stats.storeData();
+            StatsPage.stats.incGames();
             ChessGame game = new ChessGame(true);
             GameBoard gamebrd = new GameBoard(game);
             try {
@@ -95,9 +94,8 @@ public class Menu extends Application {
         });
 
         onePlayerBtn.setOnAction(e -> {
-//            stats.incGames();
-//            stats.incCPU();
-//            stats.storeData();
+            StatsPage.stats.incGames();
+            StatsPage.stats.incCPU();
             ChessGame game = new ChessGame(false);
             GameBoard gamebrd = new GameBoard(game);
             try {
@@ -163,7 +161,6 @@ public class Menu extends Application {
         });
 
         statsBtn.setOnAction(e -> {
-//            stats.retrieveData();
             StatsPage statsPg = new StatsPage();
             try {
                 statsPg.changeScene(stage);

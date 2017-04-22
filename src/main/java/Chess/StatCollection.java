@@ -1,14 +1,42 @@
 package Chess;
 
+import Chess.Pieces.ChessPiece;
+
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.*;
 import java.util.List;
 
 public class StatCollection{
-    private int whiteMoves = 0, blackMoves = 0, win = 0, loss = 0, whiteTime = 0, blackTime = 0, whiteCaptures = 0,
-            blackCaptures = 0, games = 0, cpuGames = 0, movesUndone = 0;
+    public static final String STATS_FILE_RELATIVE_PATH = "./chessStats.txt";
+
+    private int whiteMoves = 0,
+            blackMoves = 0,
+            win = 0,
+            loss = 0,
+            whiteTime = 0,
+            blackTime = 0,
+            whiteCaptures = 0,
+            blackCaptures = 0,
+            games = 0,
+            cpuGames = 0,
+            movesUndone = 0;
+
+    private File statsFile;
+
+    public StatCollection() {
+        statsFile = new File(STATS_FILE_RELATIVE_PATH);
+        try {
+            // create a new file if needed
+            if (!statsFile.createNewFile()) {
+                //if it already exists, load data.
+                retrieveData();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void incWhiteMoves(){
         whiteMoves++;
@@ -116,6 +144,7 @@ public class StatCollection{
 
     public void incGames(){
         games++;
+        storeData();
     }
 
     public int getGames(){
@@ -124,6 +153,7 @@ public class StatCollection{
 
     public void incCPU(){
         cpuGames++;
+        storeData();
     }
 
     public int getCPUGames(){
@@ -136,6 +166,44 @@ public class StatCollection{
 
     public int getMovesUndone(){
         return movesUndone;
+    }
+
+    public void updateFromGameState(ChessGame previousGame, ChessGame currentGame, boolean shouldDecrement){
+        ChessPiece.PieceColor color = previousGame.getCurrentPlayer();
+        int value = 1;
+
+        // undo
+        if (shouldDecrement) {
+            //color = ChessPiece.opponentOf(color);
+            value = -1;
+            movesUndone++;
+        }
+
+        // move
+        if (color.equals(ChessPiece.PieceColor.White)) {
+            whiteMoves += value;
+        } else {
+            blackMoves += value;
+        }
+
+        // capture
+        if (previousGame.getBoard().getBoardArrayList().size() > currentGame.getBoard().getBoardArrayList().size()) {
+            if (color.equals(ChessPiece.PieceColor.White)) {
+                whiteCaptures += value;
+            } else {
+                blackCaptures += value;
+            }
+        }
+
+        // win / loss
+        if (currentGame.getState().equals(ChessGame.GameState.CHECKMATE)) {
+            if (color.equals(ChessPiece.PieceColor.White)) {
+                win++;
+            } else {
+                loss++;
+            }
+        }
+        storeData();
     }
 
     public double getWinPercent(){
@@ -164,8 +232,8 @@ public class StatCollection{
     }
 
     public void storeData(){
-        Path path = Paths.get("./chessStats.txt");
-        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+
+        try (BufferedWriter writer = Files.newBufferedWriter(statsFile.toPath())) {
             writer.write(String.valueOf(whiteMoves));
             writer.write('\n');
             writer.write(String.valueOf(blackMoves));
@@ -192,13 +260,13 @@ public class StatCollection{
         }
         catch(IOException e){
             e.printStackTrace();
-            System.out.println("IO Exception");
+            System.out.println("IO Exception on write to stat file");
         }
     }
 
     public void retrieveData(){
         try {
-            List<String> lines = Files.readAllLines(Paths.get("./chessStats.txt"));
+            List<String> lines = Files.readAllLines(statsFile.toPath());
             whiteMoves = Integer.parseInt(lines.get(0));
             blackMoves = Integer.parseInt(lines.get(1));
             win = Integer.parseInt(lines.get(2));
@@ -210,10 +278,9 @@ public class StatCollection{
             games = Integer.parseInt(lines.get(8));
             cpuGames = Integer.parseInt(lines.get(9));
             movesUndone = Integer.parseInt(lines.get(10));
-        }
-        catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
-            System.out.println("IO Exception");
+            System.out.println("IO Exception on reading stat file");
         }
     }
 }

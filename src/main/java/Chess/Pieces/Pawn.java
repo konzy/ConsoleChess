@@ -151,6 +151,7 @@ public class Pawn extends ChessPiece {
                     previousMove.getPiece() instanceof Pawn &&
                     !previousMove.getPiece().hasMoved() &&
                     Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                    Math.abs(previousMove.getPiece().getLocation().x - getLocation().x) == 1 &&
                     getLocation().y == 3) {
                 potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y - 1)));
             }
@@ -162,6 +163,7 @@ public class Pawn extends ChessPiece {
                     previousMove.getPiece() instanceof Pawn &&
                     !previousMove.getPiece().hasMoved() &&
                     Math.abs(previousMove.getPiece().getLocation().y - previousMove.getTo().y) == 2 &&
+                    Math.abs(previousMove.getPiece().getLocation().x - getLocation().x) == 1 &&
                     getLocation().y == 4) {
                 potentialMoves.add(new Move(this, new Location(previousMove.getTo().x, location.y + 1)));
             }
