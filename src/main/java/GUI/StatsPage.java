@@ -1,5 +1,6 @@
 package GUI;
 
+import Chess.StatCollection;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +15,8 @@ import javafx.stage.Stage;
  * Created by Elizabeth on 1/26/2017.
  */
 public class StatsPage extends Application {
+
+    public static StatCollection stats = new StatCollection();
 
     public StatsPage() {}
     @Override

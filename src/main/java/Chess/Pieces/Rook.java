@@ -1,6 +1,7 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
@@ -15,8 +16,12 @@ import java.util.ArrayList;
 public class Rook extends ChessPiece {
     public static final String LETTER = "R";
 
+    public Rook(PieceColor color, Location location, boolean hasMoved){
+        super(PieceType.Rook, color,true, location, hasMoved);
+    }
+
     public Rook(PieceColor color, Location location){
-        super(PieceType.Rook, color,true, location);
+        super(PieceType.Rook, color,true, location, false);
     }
 
     @Override
@@ -25,7 +30,8 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public int value() {
+    public double value(ChessGame game) {
+        double threatening = game.getPiecesPieceThreatenes(this).size() * 0.90;
         return 5;
     }
 
@@ -41,7 +47,7 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public ArrayList<Move> validMoves(ChessBoard board) {
-        return validatedMoves(board, potentialMoves(board), color);
+    public ArrayList<Move> validMoves(ChessGame game) {
+        return validatedMoves(game, potentialMoves(game), color);
     }
 }

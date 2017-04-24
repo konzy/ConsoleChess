@@ -45,7 +45,11 @@ public class ChessBoard implements Cloneable {
         return null;
     }
 
-
+    public void promote(ChessPiece piece) {
+        pieces.remove(piece);
+        Queen queen = new Queen(piece.getColor(), piece.getLocation(), true);
+        pieces.add(queen);
+    }
 
     /**
      * @deprecated use the single isInsideBoard
@@ -99,46 +103,25 @@ public class ChessBoard implements Cloneable {
         pieces.add(piece);
     }
 
-
-    /**
-     * Checks whether the color is is check
-     * @param color
-     * @return
-     */
-    public boolean isColorInCheck(ChessPiece.PieceColor color) {
-        return getKingPiece(color).numPiecesThreateningThis(this) > 0;
-    }
-
-
-    /**
-     * Gets all the moves that are both possible, in a logistic sense, and legal in a rules sense,
-     * where it does not allow your king to be in check after the move.
-     * @param color
-     * @return
-     */
-    public ArrayList<Move> getAllValidMoves(ChessPiece.PieceColor color) {
-        ArrayList<Move> moves = new ArrayList<>();
-
-        for (ChessPiece chessPiece : getAllPiecesLocationForColor(color)) {
-            moves.addAll(chessPiece.validMoves(this));
-        }
-
-        return moves;
-    }
-
     /**
      *
      * @return A deep copy of ChessBoard
      * @throws CloneNotSupportedException
      */
-    public Object clone() throws CloneNotSupportedException {
+    public Object clone() {
 
-        ChessBoard clone = (ChessBoard)super.clone();
-        ArrayList<ChessPiece> clonedPieces = new ArrayList<>();
-        for (ChessPiece piece : pieces) {
-            clonedPieces.add((ChessPiece)piece.clone());
+        ChessBoard clone = null;
+        try {
+            clone = (ChessBoard)super.clone();
+            ArrayList<ChessPiece> clonedPieces = new ArrayList<>();
+            for (ChessPiece piece : pieces) {
+                clonedPieces.add((ChessPiece)piece.clone());
+            }
+            clone.pieces = clonedPieces;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
-        clone.pieces = clonedPieces;
+
         return clone;
 
     }
@@ -151,7 +134,8 @@ public class ChessBoard implements Cloneable {
     }
 
     public ChessPiece getKingPiece(ChessPiece.PieceColor color) {
-        for (ChessPiece piece : pieces) {
+        ArrayList<ChessPiece> clonePieces = (ArrayList<ChessPiece>) pieces.clone();
+        for (ChessPiece piece : clonePieces) {
             if(piece.color() == color && piece instanceof King) {
                 return piece;
             }
@@ -212,27 +196,6 @@ public class ChessBoard implements Cloneable {
         pieces.add(new King(ChessPiece.PieceColor.White, new Location(4, 7)));
     }
 
-    public Tile[][] getBoardArray() {
-        int len = 8;
-        Tile[][] result = new Tile[len][len];
-        for (ChessPiece piece : pieces) {
-            result[piece.getLocation().x][piece.getLocation().y] = new Tile(Tile.TileColor.Black, piece);
-        }
-        return result;
-    }
-
-    public ArrayList<Move> getPotentialMoves(ChessPiece.PieceColor color) {
-        ArrayList<Move> potentialMoves = new ArrayList<>();
-        for (ChessPiece piece : pieces) {
-            if (piece.color().equals(color)) {
-                potentialMoves.addAll(piece.potentialMoves(this));
-            }
-        }
-        return potentialMoves;
-    }
-
-
-
     /**
 
      * A human readable representation of the board
@@ -255,18 +218,27 @@ public class ChessBoard implements Cloneable {
         for(int y = 0; y < 8; y++) { //8 represents height of board
             for (int x = 0; x < 8; x++){ //8 represents width of board
                 if (piece != null && piece.getLocation().equals(new Location(x, y))) {
+
+                    //encoding for type and color
                     String letter = piece.getLetter().toUpperCase();
                     if (piece.getColor().equals(ChessPiece.PieceColor.White)) {
                         letter = letter.toLowerCase();
                     }
-                    string += "[" + letter + "]";
+
+                    //encoding for hasMoved
+                    String hasMoved = "0";
+                    if (piece.hasMoved()) {
+                        hasMoved = "1";
+                    }
+
+                    string += "[" + letter + "" + hasMoved + "]";
                     if (iter.hasNext()) {
                         piece = (ChessPiece) iter.next();
                     } else {
                         piece = null;
                     }
                 } else {
-                    string += ("[ ]");
+                    string += ("[  ]");
                 }
             }
             string += "\n";

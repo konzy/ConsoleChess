@@ -1,7 +1,5 @@
 package Data;
 
-import Data.FileLocator;
-import Data.Save;
 import Chess.ChessBoard;
 import Chess.ChessGame;
 import Chess.Location;
@@ -9,7 +7,6 @@ import Chess.Pieces.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -102,8 +99,7 @@ public class TestSave {
         while((line = expectedAutosaveInput.readLine())!= null){
             expectedStr = expectedStr + line + "\n";
         }
-
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation + "/resources/main/Autosave.txt");
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
 
         String resultStr = "";
@@ -118,8 +114,7 @@ public class TestSave {
     public void save() throws Exception {
         Save.autoSave(boardToSave);
         Save.save("AutoSave","testFiles/saveTestFile");
-
-        File autoSaveFile = new File(FILE_LOCATOR.baseFileLocation + "/resources/main/Autosave.txt");
+        File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/Autosave.txt");
         BufferedReader inputAutosave = new BufferedReader (new FileReader(autoSaveFile));
         String line;
         String expectedStr = "";
@@ -136,4 +131,5 @@ public class TestSave {
         }
         assertEquals(expectedStr, resultStr);
     }
+
 }

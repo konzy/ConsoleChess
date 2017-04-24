@@ -86,17 +86,6 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void isColorInCheck() throws Exception {
-        Assert.assertTrue(board.isColorInCheck(ChessPiece.PieceColor.Black));
-        Assert.assertFalse(board.isColorInCheck(ChessPiece.PieceColor.White));
-    }
-
-    @Test
-    public void getAllValidMoves() throws Exception {
-        Assert.assertEquals(initialGame.getBoard().getAllValidMoves(ChessPiece.PieceColor.White).size(), 20);
-    }
-
-    @Test
     public void testClone() throws Exception {
 
     }
@@ -128,20 +117,18 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void getPotentialMoves() throws Exception {
-        Assert.assertEquals(initialGame.getBoard().getPotentialMoves(ChessPiece.PieceColor.White).size(), 20);
-    }
-
-    @Test
     public void testToString() throws Exception {
-        String startBoardString = "[R][N][B][Q][K][B][N][R]\n" +
-                "[P][P][P][P][P][P][P][P]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[p][p][p][p][p][p][p][p]\n" +
-                "[r][n][b][q][k][b][n][r]\n";
+        System.out.println(initialGame);
+
+
+        String startBoardString = "[R0][N0][B0][Q0][K0][B0][N0][R0]\n" +
+                "[P0][P0][P0][P0][P0][P0][P0][P0]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[p0][p0][p0][p0][p0][p0][p0][p0]\n" +
+                "[r0][n0][b0][q0][k0][b0][n0][r0]\n";
 
         Assert.assertEquals(initialGame.getBoard().toString(), startBoardString);
     }

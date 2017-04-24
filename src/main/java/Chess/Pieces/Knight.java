@@ -1,6 +1,7 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
@@ -14,8 +15,12 @@ public class Knight extends ChessPiece{
 
     public static final String LETTER = "N";
 
+    public Knight(ChessPiece.PieceColor color, Location location, boolean hasMoved){
+        super(PieceType.Knight, color, false, location, hasMoved);
+    }
+
     public Knight(ChessPiece.PieceColor color, Location location){
-        super(PieceType.Knight, color, false, location);
+        super(PieceType.Knight, color, false, location, false);
     }
 
     @Override
@@ -24,8 +29,9 @@ public class Knight extends ChessPiece{
     }
 
     @Override
-    public int value() {
-        return 3;
+    public double value(ChessGame game) {
+        double threatening = game.getPiecesPieceThreatenes(this).size() * 0.50;
+        return 3 + favorCenter() + threatening;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class Knight extends ChessPiece{
     }
 
     @Override
-    public ArrayList<Move> validMoves(ChessBoard board) {
-        return validatedMoves(board, potentialMoves(board), color);
+    public ArrayList<Move> validMoves(ChessGame game) {
+        return validatedMoves(game, potentialMoves(game), color);
     }
 }

@@ -44,6 +44,32 @@ public class ChessGameTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        ChessGame gameConstructor1 = new ChessGame();
+        ChessGame gameConstructor2 = new ChessGame(new ChessBoard());
+        ChessGame gameConstructor3 = new ChessGame(true);
+        ChessGame gameConstructor4 = new ChessGame(new ChessBoard(), true);
+
+        Assert.assertNotNull(gameConstructor1);
+        Assert.assertNotNull(gameConstructor2);
+        Assert.assertNotNull(gameConstructor3);
+        Assert.assertNotNull(gameConstructor4);
+    }
+
+    @Test
+    public void setCurrentPlayer() throws Exception {
+        ChessGame currentPlayerGame = new ChessGame();
+        currentPlayerGame.setCurrentPlayer(ChessPiece.PieceColor.Black);
+
+        Assert.assertEquals(currentPlayerGame.getCurrentPlayer(), ChessPiece.PieceColor.Black);
+    }
+
+    @Test
+    public void getPiecesWeThreaten() throws Exception {
+        Assert.assertEquals(game.getPiecesWeThreaten(ChessPiece.PieceColor.White).size(), 0);
+    }
+
+    @Test
     public void getBoard() throws Exception {
         Assert.assertNotNull(game.getBoard());
     }
@@ -53,6 +79,22 @@ public class ChessGameTest {
         Assert.assertEquals(game.getCurrentPlayer(), ChessPiece.PieceColor.White);
         game.playMove(new Location(0, 6), new Location(0, 5));
         Assert.assertEquals(game.getCurrentPlayer(), ChessPiece.PieceColor.Black);
+    }
+
+    @Test
+    public void isColorInCheck() throws Exception {
+        Assert.assertFalse(game.isColorInCheck(ChessPiece.PieceColor.Black));
+        Assert.assertFalse(game.isColorInCheck(ChessPiece.PieceColor.White));
+    }
+
+    @Test
+    public void getAllValidMoves() throws Exception {
+        Assert.assertEquals(initialGame.getAllValidMoves(ChessPiece.PieceColor.White).size(), 20);
+    }
+
+    @Test
+    public void getPotentialMoves() throws Exception {
+        Assert.assertEquals(initialGame.getPotentialMoves(ChessPiece.PieceColor.White).size(), 20);
     }
 
     @Test
@@ -75,15 +117,16 @@ public class ChessGameTest {
 
     @Test
     public void testToString() throws Exception {
-        String startGameString = "[R][N][B][Q][K][B][N][R]\n" +
-                "[P][P][P][P][P][P][P][P]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[ ][ ][ ][ ][ ][ ][ ][ ]\n" +
-                "[p][p][p][p][p][p][p][p]\n" +
-                "[r][n][b][q][k][b][n][r]\n" +
-                "White\n";
+        String startGameString = "[R0][N0][B0][Q0][K0][B0][N0][R0]\n" +
+                "[P0][P0][P0][P0][P0][P0][P0][P0]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[  ][  ][  ][  ][  ][  ][  ][  ]\n" +
+                "[p0][p0][p0][p0][p0][p0][p0][p0]\n" +
+                "[r0][n0][b0][q0][k0][b0][n0][r0]\n" +
+                "White\n" +
+                "true\n";
 
         Assert.assertEquals(initialGame.toString(), startGameString);
 

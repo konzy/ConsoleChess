@@ -22,6 +22,8 @@ public class Location implements Cloneable {
         y = location.y;
     }
 
+
+
     public boolean equals(Location location) {
         return this.x == location.x && this.y == location.y;
     }

@@ -1,6 +1,7 @@
 package Chess.Pieces;
 
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import Chess.Move;
 import java.util.ArrayList;
@@ -13,8 +14,12 @@ public class Bishop extends ChessPiece {
     public static final String LETTER = "B";
 
 
+    public Bishop(PieceColor color, Location location, boolean hasMoved){
+        super(PieceType.Bishop, color, true, location, hasMoved);
+    }
+
     public Bishop(PieceColor color, Location location){
-        super(PieceType.Bishop, color, true, location);
+        super(PieceType.Bishop, color, true, location, false);
     }
 
     @Override
@@ -23,8 +28,10 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public int value() {
-        return 3;
+    public double value(ChessGame game) {
+        ArrayList<Move> moves = validMoves(game);
+        double threatening = game.getPiecesPieceThreatenes(this).size() * 0.90;
+        return 3  + moves.size() / 14.0 + threatening;
     }
 
     @Override
@@ -39,7 +46,8 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public ArrayList<Move> validMoves(ChessBoard board) {
-        return validatedMoves(board, potentialMoves(board), color);
+    public ArrayList<Move> validMoves(ChessGame game) {
+
+        return validatedMoves(game, potentialMoves(game), color);
     }
 }

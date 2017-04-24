@@ -1,7 +1,7 @@
 package Chess.Pieces;
 
-import Chess.Pieces.*;
 import Chess.ChessBoard;
+import Chess.ChessGame;
 import Chess.Location;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,7 +16,7 @@ import java.util.Collections;
  */
 public class ChessPieceTest {
 
-    private ChessBoard board;
+    private ChessGame game;
     private Bishop testBishop1 = new Bishop(ChessPiece.PieceColor.White, new Location(1,1));
     private Bishop testBishop2 = new Bishop(ChessPiece.PieceColor.White, new Location(1,1));
     private Pawn pawn1 = new Pawn(ChessPiece.PieceColor.Black, new Location(0,2));
@@ -35,11 +35,20 @@ public class ChessPieceTest {
         pieces.add(pawn1);
         pieces.add(king1);
 
-        board = new ChessBoard(pieces);
+        game = new ChessGame(new ChessBoard(pieces));
     }
 
     @After
     public void tearDown() throws Exception {
+
+    }
+
+    @Test
+    public void setHasMoved() throws Exception {
+        Bishop bishop = new Bishop(ChessPiece.PieceColor.White, new Location(0, 0));
+        bishop.setHasMoved(true);
+
+        Assert.assertTrue(bishop.hasMoved());
 
     }
 
@@ -79,7 +88,7 @@ public class ChessPieceTest {
 
         Assert.assertEquals(clone.getLetter(), testBishop1.getLetter());
         Assert.assertEquals(clone.charValue(), testBishop1.charValue());
-        Assert.assertEquals(clone.value(), testBishop1.value());
+        Assert.assertEquals(clone.value(game), testBishop1.value(game), 0);
         Assert.assertEquals(clone.repeatableMoves(), testBishop1.repeatableMoves());
         Assert.assertEquals(clone.opponent(), clone.opponent());
         Assert.assertEquals(clone.color(), testBishop1.color());
@@ -89,9 +98,9 @@ public class ChessPieceTest {
         Assert.assertEquals(clone.getLocation().y, testBishop1.getLocation().y);
         Assert.assertEquals(clone.getLocation(), testBishop1.getLocation());
 
-        Assert.assertEquals(clone.validMoves(board), testBishop1.validMoves(board));
-        Assert.assertEquals(clone.numPiecesThreateningThis(board), testBishop1.numPiecesThreateningThis(board));
-        Assert.assertEquals(clone.potentialMoves(board), testBishop1.potentialMoves(board));
+        Assert.assertEquals(clone.validMoves(game), testBishop1.validMoves(game));
+        Assert.assertEquals(clone.numPiecesThreateningThis(game), testBishop1.numPiecesThreateningThis(game));
+        Assert.assertEquals(clone.potentialMoves(game), testBishop1.potentialMoves(game));
 
         Assert.assertEquals(clone, testBishop1);
 

@@ -1,5 +1,6 @@
 package Chess.Pieces;
 
+import Chess.ChessGame;
 import Chess.Pieces.*;
 import Chess.Location;
 import org.junit.After;
@@ -25,8 +26,21 @@ public class KingTest {
     }
 
     @Test
+    public void constructors() throws Exception {
+        King king1 = new King(ChessPiece.PieceColor.Black, new Location(0, 0));
+        Assert.assertNotNull(king1);
+        King king2 = new King(ChessPiece.PieceColor.Black, new Location(1, 1), true);
+        Assert.assertNotNull(king2);
+    }
+
+    @Test
+    public void canCastle() throws Exception {
+
+    }
+
+    @Test
     public void value() throws Exception {
-        Assert.assertEquals(king.value(), 4);
+        Assert.assertEquals(king.value(new ChessGame()), 100.0, 0);
     }
 
     @Test
