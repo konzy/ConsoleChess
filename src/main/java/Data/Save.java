@@ -39,8 +39,8 @@ public class Save {
      */
     public static void autoSave(ChessGame game) throws IOException {
         BufferedWriter autoSaveFile = new BufferedWriter(
-                new FileWriter(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt",
-                        true));
+
+                new FileWriter(FILE_LOCATOR.toString() + "/resources/main/AutoSave.txt",true));
 
         autoSaveFile.append(game.toString());
         autoSaveFile.newLine();
@@ -60,6 +60,7 @@ public class Save {
      * @throws IOException
      */
     public static void save(String fromStr,String toStr) throws IOException {
+
         File autoSaveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + fromStr + ".txt");
         File saveFile = new File(FILE_LOCATOR.toString() + "/resources/main/" + toStr + ".txt");
         if(!saveFile.exists()){

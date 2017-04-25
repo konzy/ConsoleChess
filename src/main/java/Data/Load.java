@@ -21,7 +21,7 @@ public class Load {
 
 
     public static ChessGame Load(String fileStr, ChessGame game) {
-        File loadFile = new File(FILE_LOCATOR.toString() +"/resources/main/" + fileStr + ".txt");
+        File loadFile = new File(FILE_LOCATOR.baseFileLocation +"/resources/main/" + fileStr + ".txt");
         ArrayList<ChessPiece> pieces = new ArrayList<>();
         BufferedReader input = null;
         ChessPiece.PieceColor currentPlayer = ChessPiece.PieceColor.White;

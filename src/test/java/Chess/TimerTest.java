@@ -28,11 +28,13 @@ public class TimerTest {
         Assert.assertEquals(timer.getP1Time(), 300);
     }
 
-//    @Test
-//    public void p1Timer() throws Exception{
-//        timer.countDown();
-//        Assert.assertNotEquals(timer.getP1Time(), 300);
-//    }
+    @Test
+    public void p1Timer() throws Exception{
+        while(timer.getP1Time() >= 300) {
+            timer.countDown();
+        }
+        Assert.assertEquals(timer.getP1Time(), 299);
+    }
 
     @Test
     public void getP2Time() throws Exception{
@@ -52,11 +54,13 @@ public class TimerTest {
         Assert.assertEquals(timer.getCurrentTurn(), 1);
     }
 
-//    @Test
-//    public void p2Timer() throws Exception{
-//        timer.turnSwitch();
-//        timer.countDown();
-//        Assert.assertNotEquals(timer.getP2Time(), 300);
-//    }
+    @Test
+    public void p2Timer() throws Exception{
+        timer.turnSwitch();
+        while(timer.getP2Time() >= 300) {
+            timer.countDown();
+        }
+        Assert.assertEquals(timer.getP2Time(), 299);
+    }
 
 }
