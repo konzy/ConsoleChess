@@ -42,7 +42,7 @@ public class StatsPage extends Application {
         Label blackMoves = new Label("Black Moves: " + stats.getBlackMoves());
         Label wins = new Label("Wins: " + stats.getWin());
         Label losses = new Label("Losses: " + stats.getLoss());
-        Label winPcnt = new Label("Win Percent: " + stats.getWinPercent());
+        Label winPcnt = new Label("Win Percent: " + String.format("%.2f", stats.getWinPercent()));
         Label whiteCaptures = new Label("White Captures: " + stats.getWhiteCaptures());
         Label blackCaptures = new Label("Black Captures: " + stats.getBlackCaptures());
         Label games = new Label("Games: " + stats.getGames());

@@ -127,6 +127,7 @@ public class GameBoard extends Application {
                 Location location = new Location(col, row);
                 ChessPiece piece = game.getBoard().getPieceAtLocation(location);
 
+
                 if (piece != null && piece.getColor().equals(game.getCurrentPlayer())){
                     firstClickX = col;
                     firstClickY = row;
@@ -141,7 +142,11 @@ public class GameBoard extends Application {
                 secondClickY = row;
                 Location location = new Location(col, row);
                 ChessPiece piece = game.getBoard().getPieceAtLocation(location);
-                if (piece != null && piece.getColor().equals(game.getCurrentPlayer())) {
+                if (firstClickX == col && firstClickY == row) {
+                    firstClickX = -1;
+                    firstClickY = -1;
+                    resetView(grid);
+                } else if (piece != null && piece.getColor().equals(game.getCurrentPlayer())) {
                     firstClickX = col;
                     firstClickY = row;
                     highlightTile(grid, e, col, row);
@@ -283,8 +288,7 @@ public class GameBoard extends Application {
         });
     }
 
-    private void highlightTile(GridPane grid, MouseEvent e, int col, int row) {
-
+    private void resetView(GridPane grid) {
         //set color of tiles
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -303,7 +307,10 @@ public class GameBoard extends Application {
             tmpView.setFitWidth(80);
             grid.add(chessPiece.getImage(), chessPiece.getLocation().x, chessPiece.getLocation().y);
         }
+    }
 
+    private void highlightTile(GridPane grid, MouseEvent e, int col, int row) {
+        resetView(grid);
         Rectangle rectangle = new Rectangle(80, 80);
         rectangle.setFill(Color.YELLOW);
         rectangle.setOpacity(.5);
